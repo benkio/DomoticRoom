@@ -1,2 +1,14 @@
 \section{Requirements}
 \labelsec{Requirements}
+
+\subsection{Step 1}
+
+Is required to design and build a system that manage the status of a room in terms of temperature, humidity, pressure and light.
+
+The user can interact with the system through a web interface and insert in input the ranges of every parameters above. The system have to monitor the room in realtime through specified sensors and check if some of the parameters goes off the range inserted from the user. When this happen the system must show a notification of the exception in the web interface.
+
+The user can change the ranges dinamically when the system is running and also watch, from the web interface, the realtime data and the historic data, with particular enphasis when the environment goes out of the range and when the ranges changed.
+
+\subsection{Step 2}
+
+Implement an android application that allow to interact with the system in the same way as the web interface and implement a special notification if the android device, with the GPS enables, is near the room (fixed range, 1KM).

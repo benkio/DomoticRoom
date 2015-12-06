@@ -26,7 +26,28 @@
 \setlength{\textwidth}{13.5cm}
 \setlength{\textheight}{19cm}
 \setlength{\footskip}{3cm}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{1em}
 
+               %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+               %    Reduce Section Spaceing       %
+               %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% sudo apt-get install texlive-latex-extra required.
+
+
+%% Save the class definition of \subparagraph
+\let\llncssubparagraph\subparagraph
+%% Provide a definition to \subparagraph to keep titlesec happy
+\let\subparagraph\paragraph
+%% Load titlesec
+\usepackage[compact]{titlesec}
+%% Revert \subparagraph to the llncs definition
+\let\subparagraph\llncssubparagraph
+
+\titlespacing{\section}{0pt}{2ex}{1ex}
+\titlespacing{\subsection}{0pt}{1ex}{0ex}
+\titlespacing{\subsubsection}{0pt}{0.5ex}{0ex}
 
                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                % Commands inseriti per il template %
