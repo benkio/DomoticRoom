@@ -24,3 +24,4 @@
 *.out
 *.synctex.gz
 
+*.DS_Store
