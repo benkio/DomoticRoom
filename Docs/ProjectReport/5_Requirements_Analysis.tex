@@ -25,6 +25,30 @@ Il sistema \'e stato volutamente suddiviso in tre parti distinte con l'idea di s
 \subsection{Scenario}
 \labelssec{Scenarios}
 
+In questa sezione verranno illustrati le principali modalita' di utilizzo del sistema, includendo anche varianti che esulano da quello standard. Tutti gli scenari elencati di seguito riguardano l'utente e di conseguenza si prevede l'accesso da parte di questo all'interfaccia di input.
+
+\subsubsection{Inserimento Range}
+
+\begin{enumerate}
+  \item Attraverso un apposito men\'u l'utente \'e in grado di accedere alla funzionalit\'a di settaggio dei range associati ai parametri ambientali.
+  \item Il server sa gia' i sensori che sono collegati al raspberry, per via di un protocollo di comunicazione allo startup del sistema, e quindi l'utente e' in grado di visualizzare i controlli relativi ad ogni tipologia di sensore attualmente connesso. Conseguentemente l'utente e' in grado di modificare tali intervalli.
+  \item Al termine della modifica degli intervalli l'utente dovr\'a confermare le modifiche attraverso un'apposito pulsante.
+  \item Il sistema mostra un messaggio di conferma o di errore.
+\end{enumerate}
+
+\subsubsection{Visualizzazione Stato Realtime}
+
+\paragraph{} All'accesso del sistema l'utente visualizza lo stato realtime dei valori dei sensori ed eventuali notifiche:
+\begin{itemize}
+  \item Se i valori vanno oltre gli intervalli correnti.
+  \item Sullo stato dei sensori (malfunzionamenti - disconnessioni)
+\end{itemize}
+
+In questa modalita' l'utente non puo' effettuare alcuna operazione.
+
+\subsubsection{Visualizzazione Dati}
+
+\paragraph{} Attraverso un apposito men\'u l'utente \'e in grado di accedere alla visualizzazione dei dati storici dei vari sensori.
 
 \subsection{Modello del Dominio}
 
