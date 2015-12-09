@@ -1,14 +1,8 @@
-\section{Requirements}
+\section{Requisiti}
 \labelsec{Requirements}
 
-\subsection{Step 1}
+Si vuole monitorare lo stato ambientale di una stanza. In particolare si vogliono monitorare lo stato di: luce, temperatura e movimento, mantenendo la possibilita' di aggiungere altre tipologie di sensori.
 
-Is required to design and build a system that manage the status of a room in terms of temperature, humidity, sound evironment and light.
+Il sistema dovra' dare all'utente la possibilita' di inserire attraverso un'interfaccia web, per ogni valore misurato, un'apposito range che indichi i valori ammessi all'intero della stanza in modo che, se uno dei valori misurati non e' conforme alle specifiche, venga indicata una notifica di allarme sull'interfaccia stessa. Questo con l'idea di simulare la possibilita' di eseguire delle azioni collegate all'allarme (ad esempio, accensione delle luci o del riscaldamento)
 
-The user can interact with the system through a web interface and insert in input the ranges of every parameters above. The system have to monitor the room in realtime through specified sensors and check if some of the parameters goes off the range inserted from the user. When this happen the system must show a notification of the exception in the web interface.
-
-The user can change the ranges dinamically when the system is running and also watch, from the web interface, the realtime data and the historic data, with particular enphasis when the environment goes out of the range and when the ranges changed.
-
-\subsection{Step 2}
-
-Implement an android application that allow to interact with the system in the same way as the web interface and implement a special notification if the android device, with the GPS enables, is near the room (fixed range, 1KM).
+L'utente potra' inoltre visualizzare all'interno del sito i valori misurati in tempo reale e il valore dei vari sensori nel tempo, potendone quindi consultare la storia.
