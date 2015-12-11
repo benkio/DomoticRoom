@@ -17,7 +17,7 @@ Nell'immagine sopra si possono vedere quali sono le macro operazioni principali 
   \item Utente: con questo attore rappresenta l'utente che puo' interagire con il sistema.
 \end{itemize}
 
-Il sistema \'e stato volutamente suddiviso in tre parti distinte con l'idea di seguire un modello MVC dove per\'o la parte di modello non viene aggiornato attraverso l'input inserito dall'utente, ma direttamente dall'input dei sensori. L'organizzazione hardware ha fortemente influito su questa suddivisione.
+Il sistema \'e stato volutamente suddiviso in tre parti distinte con l'idea di seguire un modello MVC dove per\'o la parte di modello non viene aggiornato solamente attraverso l'input inserito dall'utente, ma anche e soprattutto dall'input dei sensori. L'organizzazione hardware ha fortemente influito su questa suddivisione.
 
 \'E inoltre possibile visualizzare le macro operazioni che devono essere effettuate e modellate dal sistema. Si vedano gli scenari di seguito per avere una piu' dettagliata visualizzazione dell'interazione tra le varie parti che lo schema sovrastante vuole rappresentare.
 
@@ -27,11 +27,13 @@ Il sistema \'e stato volutamente suddiviso in tre parti distinte con l'idea di s
 
 In questa sezione verranno illustrati le principali modalita' di utilizzo del sistema, includendo anche varianti che esulano da quello standard. Tutti gli scenari elencati di seguito riguardano l'utente e di conseguenza si prevede l'accesso da parte di questo all'interfaccia di input.
 
+Si prevede che il sistema sia opportunamente configurato e settato a livello hardware, senza errori durante la fase di start up.
+
 \subsubsection{Inserimento Range}
 
 \begin{enumerate}
   \item Attraverso un apposito men\'u l'utente \'e in grado di accedere alla funzionalit\'a di settaggio dei range associati ai parametri ambientali.
-  \item Il server sa gia' i sensori che sono collegati al raspberry, per via di un protocollo di comunicazione allo startup del sistema, e quindi l'utente e' in grado di visualizzare i controlli relativi ad ogni tipologia di sensore attualmente connesso. Conseguentemente l'utente e' in grado di modificare tali intervalli.
+  \item Il server sa gia' i sensori che sono collegati al raspberry appena questi inviano qualche dato e quindi l'utente \'e in grado di visualizzare i controlli relativi ad ogni tipologia di sensore attualmente connesso. Conseguentemente l'utente \'e in grado di modificare tali intervalli.
   \item Al termine della modifica degli intervalli l'utente dovr\'a confermare le modifiche attraverso un'apposito pulsante.
   \item Il sistema mostra un messaggio di conferma o di errore.
 \end{enumerate}
@@ -41,7 +43,7 @@ In questa sezione verranno illustrati le principali modalita' di utilizzo del si
 \paragraph{} All'accesso del sistema l'utente visualizza lo stato realtime dei valori dei sensori ed eventuali notifiche:
 \begin{itemize}
   \item Se i valori vanno oltre gli intervalli correnti.
-  \item Sullo stato dei sensori (malfunzionamenti - disconnessioni)
+  \item Sullo stato dei sensori, se sono attivi al momento oppure no.
 \end{itemize}
 
 In questa modalita' l'utente non puo' effettuare alcuna operazione.
@@ -79,7 +81,7 @@ Per quanto riguarda il sistema embedded \'e necessario prima effettuare delle in
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{Figures/DomainModel/EmbeddedSystem/Structure.jpg}
-\caption{Casi d'Uso}
+\caption{Sistema Embedded, Struttura}
 \end{figure}
 
 Dalla struttura si possono subito individuare le entit\'a principali che sono presenti nei requisiti, in particolare la presenza di una specifica gerarchia per i sensori che condividono la stessa interfaccia che consente agilmente di ottenere il valore corrente del sensore. Sono stati inseriti solamente i sensori citati nei requisiti, ma si pu\'o facilmente intuire come qualsiasi tipo di sensore sia facilmente modellabile secondo questa struttura.
@@ -93,7 +95,7 @@ Infine sono presenti le entit\'a che si occupano, attivamente, di interrogare i 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{Figures/DomainModel/EmbeddedSystem/Interaction.jpg}
-\caption{Casi d'Uso}
+\caption{Sistema Embedded, Interazione}
 \end{figure}
 
 Prima di iniziare si vuole evidenziare come viene riportato solamente un diagramma di interazione perch\'e \'e presente solamente un'entit\'a attiva, ma nel futuro potrebbero esserci pi\'u task e quindi saranno necessari pi\'u diagrammi dell'interazione.
@@ -106,8 +108,8 @@ Terminata la fase di \textit{Init} inizia il loop infinito che appunto aspetta i
 
 \begin{figure}[ht]
 \centering
-\includegraphics[]{Figures/DomainModel/EmbeddedSystem/Behaviour.jpg}
-\caption{Casi d'Uso}
+\includegraphics[scale=0.5]{Figures/DomainModel/EmbeddedSystem/Behaviour.jpg}
+\caption{Sistema Embedded, Comportamento}
 \end{figure}
 
 
@@ -115,7 +117,30 @@ Nel diagramma del comportamento semplicemente viene riportato quanto \'e stato p
 
 \subsubsection{Server}
 
+\paragraph{}La parte server \'e quella pi\'u importante di tutto il sistema in quanto \'e quella che concentra tutta la logica applicativa del sistema stesso.
+
+\begin{figure}[pH]
+\centering
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Figures/DomainModel/Server/Structure.jpg}
+\caption{Server, Struttura}
+\end{figure}
+
+\afterpage{\clearpage}
+
+\newpage
+
 \paragraph{Struttura}
+
+Le entit\'a principali di questo schema sono:
+\begin{itemize}
+  \item IPersistentStore, che si occuper\'a di salvare opportunamente i dati provenienti dai sensori e dall'utente
+  \item IDataReceiver, che sar\'a sempre in ascolto di ogni messaggio proveniente dal sistema embedded e quindi notificher\'a opportunamente il sistema ad ogni nuovo arrivo
+  \item IPresentator che si occuper\'a di ottenere i dati necessari per le viste da mostrare all'utente quanto una nuova richiesta viene inoltrata.
+\end{itemize}
+
+Chiaramente ogniuna di queste entit\'a \'e in parte citata nei casi d'uso.
+
+Si veda i diagrammi dell'interazione per i dettagli di come avviene la comunicazione di tutte queste entit\'a al fronte di garantire il funzionamento e il soddisfacimento dei requisiti.
 
 \paragraph{Interazione}
 

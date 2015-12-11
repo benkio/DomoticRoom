@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="13.3">
-  <zoom_level>8</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>160</x>
-      <y>168</y>
-      <w>64</w>
-      <h>80</h>
+      <x>119</x>
+      <y>21</y>
+      <w>70</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>ISensor
 --
 getValue()
-getName()</panel_attributes>
+getName()
+getType()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>128</x>
-      <y>304</y>
-      <w>176</w>
-      <h>56</h>
+      <x>98</x>
+      <y>154</y>
+      <w>154</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>/Sensor/
 --
@@ -32,10 +33,10 @@ getName()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>176</x>
-      <y>240</y>
-      <w>24</w>
-      <h>80</h>
+      <x>140</x>
+      <y>98</y>
+      <w>21</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
@@ -43,25 +44,25 @@ getName()</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>32</x>
-      <y>424</y>
-      <w>216</w>
-      <h>56</h>
+      <x>14</x>
+      <y>259</y>
+      <w>189</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>TemperatureSensor
 --
 -convertor : IConvertor
 -value     : Int
-</panel_attributes>
+-type      : SensorType</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>352</y>
-      <w>72</w>
-      <h>88</h>
+      <x>84</x>
+      <y>196</y>
+      <w>63</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>70.0;10.0;70.0;50.0;10.0;50.0;10.0;90.0</additional_attributes>
@@ -69,36 +70,38 @@ getName()</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>280</x>
-      <y>424</y>
-      <w>88</w>
-      <h>56</h>
+      <x>231</x>
+      <y>259</y>
+      <w>112</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>LightSensor
 --
--value : Int</panel_attributes>
+-value : Int
+-type  : SensorType</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>384</x>
-      <y>424</y>
-      <w>168</w>
-      <h>56</h>
+      <x>371</x>
+      <y>259</y>
+      <w>147</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>MotionSensor
 --
--isMotionDetected : Boolean</panel_attributes>
+-isMotionDetected : Boolean
+-type             : SensorType</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>160</x>
-      <y>352</y>
-      <w>184</w>
-      <h>80</h>
+      <x>126</x>
+      <y>196</y>
+      <w>161</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0;210.0;50.0;210.0;80.0</additional_attributes>
@@ -106,21 +109,21 @@ getName()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>160</x>
-      <y>352</y>
-      <w>328</w>
-      <h>88</h>
+      <x>126</x>
+      <y>196</y>
+      <w>336</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0;390.0;50.0;390.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0;460.0;50.0;460.0;90.0</additional_attributes>
   </element>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>144</x>
-      <y>544</y>
+      <x>105</x>
+      <y>364</y>
       <w>112</w>
-      <h>64</h>
+      <h>56</h>
     </coordinates>
     <panel_attributes>IConvertor
 --
@@ -130,10 +133,10 @@ convertValue(value)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>120</x>
-      <y>640</y>
-      <w>160</w>
-      <h>24</h>
+      <x>91</x>
+      <y>448</y>
+      <w>140</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>TemperatureConvertor</panel_attributes>
     <additional_attributes/>
@@ -141,10 +144,10 @@ convertValue(value)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>200</x>
-      <y>600</y>
-      <w>24</w>
-      <h>56</h>
+      <x>161</x>
+      <y>413</y>
+      <w>21</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -152,21 +155,21 @@ convertValue(value)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>104</x>
-      <y>472</y>
-      <w>104</w>
-      <h>104</h>
+      <x>77</x>
+      <y>315</y>
+      <w>91</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;110.0;110.0;110.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0;110.0;90.0</additional_attributes>
   </element>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>560</x>
-      <y>160</y>
-      <w>80</w>
-      <h>64</h>
+      <x>476</x>
+      <y>28</y>
+      <w>70</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>IDataFetcher
 </panel_attributes>
@@ -175,28 +178,28 @@ convertValue(value)</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>776</x>
-      <y>160</y>
-      <w>64</w>
-      <h>64</h>
+      <x>644</x>
+      <y>28</y>
+      <w>224</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>ISender
 --
-sendData()</panel_attributes>
+sendData(data, sensorName, sensorType)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>504</x>
-      <y>280</y>
-      <w>200</w>
-      <h>96</h>
+      <x>427</x>
+      <y>133</y>
+      <w>175</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>type=actclass
 SensorsDataFetcher
 --
--dataSources : List&lt;IDataSource&gt;
+-dataSources : List&lt;ISensor&gt;
 -observers   : ISender
 --
 -fetchDataAndNotify()
@@ -204,35 +207,12 @@ SensorsDataFetcher
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLInterface</id>
-    <coordinates>
-      <x>152</x>
-      <y>72</y>
-      <w>80</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes>IDataSource
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>184</x>
-      <y>120</y>
-      <w>24</w>
-      <h>72</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>592</x>
-      <y>232</y>
-      <w>24</w>
-      <h>64</h>
+      <x>504</x>
+      <y>91</y>
+      <w>21</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
@@ -240,10 +220,10 @@ SensorsDataFetcher
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>768</x>
-      <y>280</y>
-      <w>120</w>
-      <h>96</h>
+      <x>658</x>
+      <y>133</y>
+      <w>105</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>type=actclass
 SensorDataSender
@@ -254,10 +234,10 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>800</x>
-      <y>232</y>
-      <w>24</w>
-      <h>64</h>
+      <x>714</x>
+      <y>91</y>
+      <w>21</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
@@ -265,10 +245,10 @@ SensorDataSender
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>880</x>
-      <y>160</y>
-      <w>112</w>
-      <h>88</h>
+      <x>777</x>
+      <y>140</y>
+      <w>98</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>The sender class send the data in a "Fire and Forget" mode, asyncronously</panel_attributes>
     <additional_attributes/>
@@ -276,23 +256,23 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>192</x>
-      <y>80</y>
-      <w>328</w>
-      <h>232</h>
+      <x>154</x>
+      <y>28</y>
+      <w>287</w>
+      <h>133</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>390.0;270.0;350.0;270.0;350.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>390.0;170.0;350.0;170.0;350.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>696</x>
-      <y>168</y>
-      <w>120</w>
-      <h>168</h>
+      <x>595</x>
+      <y>35</y>
+      <w>168</w>
+      <h>147</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;190.0;40.0;190.0;40.0;10.0;130.0;10.0</additional_attributes>
+    <additional_attributes>10.0;190.0;40.0;190.0;40.0;10.0;220.0;10.0</additional_attributes>
   </element>
 </diagram>
