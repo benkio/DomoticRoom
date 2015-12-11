@@ -70,6 +70,10 @@ In particolare le parti individuate sono tre:
 
 \subsubsection{Sistema Embedded}
 
+Per quanto riguarda il sistema embedded \'e necessario prima effettuare delle indagini su come interagire e comunicare con i sensori in modo da modellare adeguatamente il tutto e quindi assicurarsi che in seguito sar\'a semplice riuscire a integrare il tutto con la tecnologia che avremo intenzione di utilizzare. Quindi questa \'e una piccola eccezione che \'e necessario fare a questo livello, anche se in particolare si fa riferimento a un paradigma pi\'u che ad una tecnologia specifica.
+
+\textbf{Il modello di interrogazione dei sensori \'e a polling} di consequenza il nostro modello dovr\'a riflettere questa modalit\'a di interazione. Sfortunatamente questo implica che a livello di modello gi\'a \textbf{un'entit\'a attiva} che si occupa di reperire i valori visto, che in una modalit\'a a polling devo esplicitamente chiedere ai sensori i valori.
+
 \paragraph{Struttura}
 
 \paragraph{Interazione}
