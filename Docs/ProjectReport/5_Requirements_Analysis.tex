@@ -52,5 +52,52 @@ In questa modalita' l'utente non puo' effettuare alcuna operazione.
 
 \subsection{Modello del Dominio}
 
+In questa sezione vogliamo cercare di modellare le entit\'a inserite all'interno dei requisiti senza fare riferimento alla parte tecnologica e alla parte hardware. In questo modo siamo in grado di decidere noi le interfaccie con cui vogliamo lavorare e costruire la parte software aumentando il disaccoppiamento con la parte fisica e quindi aumentando anche la possibilit\'a di utilizzare volendo lo stesso software su diverse configurazioni. In questo progetto ad ogni modo si utilizzer\'a solamente la configurazione che trovate descritta in questo report.
+
+\paragraph{Suddivisione del Sistema:} visto che \'e emerso gi\'a dai casi d'uso la separazione del sistema in varie parti, ci \'e sembrato giusto iniziare a modellare dividendolo fin da subito in modo da:
+\begin{itemize}
+  \item semplificare il processo
+  \item suddividere il lavoro di implementazione successivamente tra i membri del gruppo.
+\end{itemize}
+
+In particolare le parti individuate sono tre:
+
+\begin{itemize}
+  \item Sistema Embedded: che nel nostro caso si occuper\'a di catturare, convertire e inviare i dati alle altre parti
+  \item Server: Sar\'a la parte che riceve i dati e si occupa di effettuare le varie elaborazioni come ad esempio, il salvataggio dei dati, il calcolo delle statistiche e il controllo dei range. Infine questa parte dovra' rendere disponibili i risultati alla parte successiva.
+  \item Web site: parte che, prende i risultati dalle parti precedenti e li mostra all'utente rispettando i casi d'uso predecenti.
+\end{itemize}
+
+\subsubsection{Sistema Embedded}
+
+\paragraph{Struttura}
+
+\paragraph{Interazione}
+
+\paragraph{Comportamento}
+
+\subsubsection{Server}
+
+\paragraph{Struttura}
+
+\paragraph{Interazione}
+
+\paragraph{Comportamento}
+
+\subsubsection{Web Site}
+
+\paragraph{Struttura}
+
+\paragraph{Interazione}
+
+\paragraph{Comportamento}
+
 \subsection{Piani di Test}
 
+In questa fase saranno presenti i piani di test che vengono costruiti sulla base dei modelli precedenti, ancora privi di implementazione. Ci\'o e' possibile perch\'e a questo punto abbiamo gi\'a individuato le interfaccie delle entiti\'a principali e le loro operazioni pubbliche.
+
+Chiaramente a questo punto i test non possono funzionare perche' manca l'implementazione. Anche in questa fase si divide il tutto sulle 3 parti precedenti.
+
+\subsubsection{Sistema Embedded}
+\subsubsection{Server}
+\subsubsection{Web Site}
