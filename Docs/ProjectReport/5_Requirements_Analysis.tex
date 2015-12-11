@@ -76,9 +76,42 @@ Per quanto riguarda il sistema embedded \'e necessario prima effettuare delle in
 
 \paragraph{Struttura}
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{Figures/DomainModel/EmbeddedSystem/Structure.jpg}
+\caption{Casi d'Uso}
+\end{figure}
+
+Dalla struttura si possono subito individuare le entit\'a principali che sono presenti nei requisiti, in particolare la presenza di una specifica gerarchia per i sensori che condividono la stessa interfaccia che consente agilmente di ottenere il valore corrente del sensore. Sono stati inseriti solamente i sensori citati nei requisiti, ma si pu\'o facilmente intuire come qualsiasi tipo di sensore sia facilmente modellabile secondo questa struttura.
+
+Si noti inoltre come viene anche inserita l'entit\'a IConvertor che si occoper\'a di convertire il valore di uno specifico sensore in un'unit\'a pi\'u consona per la sua gestione. Chiaramente questo viene affrontato fin da questo livello perch\'e si immagina l'operazione di conversione come un'operazione quasi istantanea e necessaria.
+
+Infine sono presenti le entit\'a che si occupano, attivamente, di interrogare i sensori ogni intervallo di tempo predefinito e quindi inviarli altrove, In questo caso e' stato tutto ridotto ad un singolo endpoint, anche se poi possono essere facilmente pi\'u di uno. Come si pu\'o visionare nel commento, l'invio dei dati avviene con una metodologia di tipo \textit{fire and forget}, quindi non avvengono reinvii dei dati e vengono ignorati eventuali errori. Chiaramente tutto questo \'e dovuto all'idea che i cicli di invio siano abbastanza brevi da potersi permettere eventuali perdite.
+
 \paragraph{Interazione}
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{Figures/DomainModel/EmbeddedSystem/Interaction.jpg}
+\caption{Casi d'Uso}
+\end{figure}
+
+Prima di iniziare si vuole evidenziare come viene riportato solamente un diagramma di interazione perch\'e \'e presente solamente un'entit\'a attiva, ma nel futuro potrebbero esserci pi\'u task e quindi saranno necessari pi\'u diagrammi dell'interazione.
+
+Nello schema di interazione vengono evidenziate le varie fasi del Sistema, in particolare la fase iniziale di setup dove, conoscendo quali sensori sono presenti, questi vengono aggiunti nella memoria dell'entit\'a principale in modo che poi in seguito siano facilmente interrogabili.
+
+Terminata la fase di \textit{Init} inizia il loop infinito che appunto aspetta inizialmente un piccolo lasso di tempo e poi va a interrodage iterativamente tutti i sensori che sono stati aggiunti precedentemente, raccoglie i dati e interroga asincronamente l'entit\'a di invio, per poi ricominciare il ciclo stesso.
+
 \paragraph{Comportamento}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[]{Figures/DomainModel/EmbeddedSystem/Behaviour.jpg}
+\caption{Casi d'Uso}
+\end{figure}
+
+
+Nel diagramma del comportamento semplicemente viene riportato quanto \'e stato precedentemente discusso semplicemente attraverso una state machine.
 
 \subsubsection{Server}
 
