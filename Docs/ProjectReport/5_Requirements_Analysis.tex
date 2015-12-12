@@ -14,18 +14,18 @@ Nell'immagine sopra si possono vedere quali sono le macro operazioni principali 
 
 \begin{itemize}
   \item La stanza: con questo attore si intendono i vari parametri che si possono rilevare attraverso i sensori e che quindi saranno di input per il sistema.
-  \item Utente: con questo attore rappresenta l'utente che puo' interagire con il sistema.
+  \item Utente: con questo attore rappresenta l'utente che pu\'o interagire con il sistema.
 \end{itemize}
 
 Il sistema \'e stato volutamente suddiviso in tre parti distinte con l'idea di seguire un modello MVC dove per\'o la parte di modello non viene aggiornato solamente attraverso l'input inserito dall'utente, ma anche e soprattutto dall'input dei sensori. L'organizzazione hardware ha fortemente influito su questa suddivisione.
 
-\'E inoltre possibile visualizzare le macro operazioni che devono essere effettuate e modellate dal sistema. Si vedano gli scenari di seguito per avere una piu' dettagliata visualizzazione dell'interazione tra le varie parti che lo schema sovrastante vuole rappresentare.
+\'E inoltre possibile visualizzare le macro operazioni che devono essere effettuate e modellate dal sistema. Si vedano gli scenari di seguito per avere una pi\'u dettagliata visualizzazione dell'interazione tra le varie parti che lo schema sovrastante vuole rappresentare.
 
 
 \subsection{Scenario}
 \labelssec{Scenarios}
 
-In questa sezione verranno illustrati le principali modalita' di utilizzo del sistema, includendo anche varianti che esulano da quello standard. Tutti gli scenari elencati di seguito riguardano l'utente e di conseguenza si prevede l'accesso da parte di questo all'interfaccia di input.
+In questa sezione verranno illustrati le principali modalit\'a di utilizzo del sistema. Gli scenari elencati di seguito riguardano l'utente e di conseguenza si prevede l'accesso da parte di questo all'interfaccia di input.
 
 Si prevede che il sistema sia opportunamente configurato e settato a livello hardware, senza errori durante la fase di start up.
 
@@ -33,7 +33,7 @@ Si prevede che il sistema sia opportunamente configurato e settato a livello har
 
 \begin{enumerate}
   \item Attraverso un apposito men\'u l'utente \'e in grado di accedere alla funzionalit\'a di settaggio dei range associati ai parametri ambientali.
-  \item Il server sa gia' i sensori che sono collegati al raspberry appena questi inviano qualche dato e quindi l'utente \'e in grado di visualizzare i controlli relativi ad ogni tipologia di sensore attualmente connesso. Conseguentemente l'utente \'e in grado di modificare tali intervalli.
+  \item Il server sa gi\'a i sensori che sono collegati al raspberry appena questi inviano qualche dato e quindi l'utente \'e in grado di visualizzare i controlli relativi ad ogni tipologia di sensore attualmente connesso. Conseguentemente l'utente \'e in grado di modificare tali intervalli.
   \item Al termine della modifica degli intervalli l'utente dovr\'a confermare le modifiche attraverso un'apposito pulsante.
   \item Il sistema mostra un messaggio di conferma o di errore.
 \end{enumerate}
@@ -46,7 +46,7 @@ Si prevede che il sistema sia opportunamente configurato e settato a livello har
   \item Sullo stato dei sensori, se sono attivi al momento oppure no.
 \end{itemize}
 
-In questa modalita' l'utente non puo' effettuare alcuna operazione.
+In questa modalit\'a l'utente non pu\'o effettuare alcuna operazione.
 
 \subsubsection{Visualizzazione Dati}
 
@@ -66,19 +66,23 @@ In particolare le parti individuate sono tre:
 
 \begin{itemize}
   \item Sistema Embedded: che nel nostro caso si occuper\'a di catturare, convertire e inviare i dati alle altre parti
-  \item Server: Sar\'a la parte che riceve i dati e si occupa di effettuare le varie elaborazioni come ad esempio, il salvataggio dei dati, il calcolo delle statistiche e il controllo dei range. Infine questa parte dovra' rendere disponibili i risultati alla parte successiva.
+  \item Server: Sar\'a la parte che riceve i dati e si occupa di effettuare le varie elaborazioni come ad esempio, il salvataggio dei dati, il calcolo delle statistiche e il controllo dei range. Infine questa parte dovr\'a rendere disponibili i risultati alla parte successiva.
   \item Web site: parte che, prende i risultati dalle parti precedenti e li mostra all'utente rispettando i casi d'uso predecenti.
 \end{itemize}
 
+Chiaramente in questa fase tutto viene semplificato e ridotto a poche entit\'a. Questo per\'o non significa che, ogni entit\'a presente negli schemi sottostanti, non si riveli essere poi a sua volta un sottosistema pi\'u complesso.
+
+Lo scopo di questa fase \'e appunto quella ri riflettere, in un primo modello, i requisiti. Poi da questo modello iniziare a sviluppare il progetto cercando di mantenere coerenza nelle interfaccie principali che indicano le interazioni pi\'u importanti.
+
 \subsubsection{Sistema Embedded}
 
-Per quanto riguarda il sistema embedded \'e necessario prima effettuare delle indagini su come interagire e comunicare con i sensori in modo da modellare adeguatamente il tutto e quindi assicurarsi che in seguito sar\'a semplice riuscire a integrare il tutto con la tecnologia che avremo intenzione di utilizzare. Quindi questa \'e una piccola eccezione che \'e necessario fare a questo livello, anche se in particolare si fa riferimento a un paradigma pi\'u che ad una tecnologia specifica.
+\paragraph{}Per quanto riguarda il sistema embedded \'e necessario prima effettuare delle indagini su come interagire e comunicare con i sensori in modo da modellare adeguatamente il tutto e quindi assicurarsi che in seguito sar\'a semplice riuscire a integrare il tutto con la tecnologia che avremo intenzione di utilizzare. Quindi questa \'e una piccola eccezione che \'e necessario fare a questo livello, anche se in particolare si fa riferimento a un paradigma pi\'u che ad una tecnologia specifica.
 
 \textbf{Il modello di interrogazione dei sensori \'e a polling} di consequenza il nostro modello dovr\'a riflettere questa modalit\'a di interazione. Sfortunatamente questo implica che a livello di modello gi\'a \textbf{un'entit\'a attiva} che si occupa di reperire i valori visto, che in una modalit\'a a polling devo esplicitamente chiedere ai sensori i valori.
 
 \paragraph{Struttura}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{Figures/DomainModel/EmbeddedSystem/Structure.jpg}
 \caption{Sistema Embedded, Struttura}
@@ -88,11 +92,11 @@ Dalla struttura si possono subito individuare le entit\'a principali che sono pr
 
 Si noti inoltre come viene anche inserita l'entit\'a IConvertor che si occoper\'a di convertire il valore di uno specifico sensore in un'unit\'a pi\'u consona per la sua gestione. Chiaramente questo viene affrontato fin da questo livello perch\'e si immagina l'operazione di conversione come un'operazione quasi istantanea e necessaria.
 
-Infine sono presenti le entit\'a che si occupano, attivamente, di interrogare i sensori ogni intervallo di tempo predefinito e quindi inviarli altrove, In questo caso e' stato tutto ridotto ad un singolo endpoint, anche se poi possono essere facilmente pi\'u di uno. Come si pu\'o visionare nel commento, l'invio dei dati avviene con una metodologia di tipo \textit{fire and forget}, quindi non avvengono reinvii dei dati e vengono ignorati eventuali errori. Chiaramente tutto questo \'e dovuto all'idea che i cicli di invio siano abbastanza brevi da potersi permettere eventuali perdite.
+Infine sono presenti le entit\'a che si occupano, attivamente, di interrogare i sensori ogni intervallo di tempo predefinito e quindi inviarli altrove, In questo caso \'e stato tutto ridotto ad un singolo endpoint, anche se poi possono essere facilmente pi\'u di uno. Come si pu\'o visionare nel commento, l'invio dei dati avviene con una metodologia di tipo \textit{fire and forget}, quindi non avvengono reinvii dei dati e vengono ignorati eventuali errori. Chiaramente tutto questo \'e dovuto all'idea che i cicli di invio siano abbastanza brevi da potersi permettere eventuali perdite.
 
 \paragraph{Interazione}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{Figures/DomainModel/EmbeddedSystem/Interaction.jpg}
 \caption{Sistema Embedded, Interazione}
@@ -106,7 +110,7 @@ Terminata la fase di \textit{Init} inizia il loop infinito che appunto aspetta i
 
 \paragraph{Comportamento}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{Figures/DomainModel/EmbeddedSystem/Behaviour.jpg}
 \caption{Sistema Embedded, Comportamento}
@@ -148,17 +152,15 @@ Si veda i diagrammi dell'interazione per i dettagli di come avviene la comunicaz
 
 \subsubsection{Web Site}
 
-\paragraph{Struttura}
+\paragraph{}Dopo un'attenta analisi abbiamo ritenuto superflua la necessit\'a di modellare e analizzare la parte di visualizzazione in quanto non \'e effettivamente presente nessuna business logic ma solamente la parte che effettua le richieste di dati alle parti precedenti e visualizza tutto su schermo.
 
-\paragraph{Interazione}
-
-\paragraph{Comportamento}
+La documentazione relativa a questa parte si limiter\'a solamente a come utilizzare poi il software attraverso l'interfaccia.
 
 \subsection{Piani di Test}
 
-In questa fase saranno presenti i piani di test che vengono costruiti sulla base dei modelli precedenti, ancora privi di implementazione. Ci\'o e' possibile perch\'e a questo punto abbiamo gi\'a individuato le interfaccie delle entiti\'a principali e le loro operazioni pubbliche.
+In questa fase saranno presenti i piani di test che vengono costruiti sulla base dei modelli precedenti, ancora privi di implementazione. Ci\'o \'e possibile perch\'e a questo punto abbiamo gi\'a individuato le interfaccie delle entiti\'a principali e le loro operazioni pubbliche.
 
-Chiaramente a questo punto i test non possono funzionare perche' manca l'implementazione. Anche in questa fase si divide il tutto sulle 3 parti precedenti.
+Chiaramente a questo punto i test non possono funzionare perch\'e manca l'implementazione. Anche in questa fase si divide il tutto sulle 3 parti precedenti.
 
 \subsubsection{Sistema Embedded}
 \subsubsection{Server}
