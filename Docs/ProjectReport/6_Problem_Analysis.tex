@@ -3,5 +3,19 @@
 %===========================================================================
 \subsection{Logic architecture}
 \subsection{Abstraction gap}
+
+In questa sezione aggiungeremo tutti i tipi di astrazioni che sono richieste per affrontare il progetto e che non sono direttamente fruibili attraverso la tecnologia di riferimento.
+
+\begin{enumerate}
+  \item Web Server: Vista la necessit\'a di comunicare attraverso la rete \'e necessario che si utilizzi un paradigma a message-passing, soprattutto per la comunicazione che avviene tra il raspberry e il server. Chiaramente vogliamo cercare di sfruttare qualche tecnologia gi\'a esistente che ci garantisca di elevarci rispetto ad un livello basso come pu\'o essere l'utilizzo di socket.
+  \item Continuous Integration, Testing and collaborative source control: Lavorando in gruppo sullo stesso repository \'e necessario impostare il lavoro affinch\'e sia possibile effettuare le modifiche in maniera indipendente gli uni dagli altri e allo stesso modo sia possibile controllare automaticamente che i test predisposti e le modifiche effettuate siano coerenti con le specifiche e che il building del progetto sia in ogni caso garantito.
+\end{enumerate}
+
 \subsection{Risk analysis}
+
+In questa sezione vanno elencati invece i rischi che si possono intraprendere in un progetto di questo tipo e quindi formalizzarli fin da subito, prima di eseguire l'effettiva realizzazione dello stesso in modo da poterli affontare e discutere preventivamente per essere pronti se questi si verificano.
+
+\begin{itemize}
+  \item Aumento dei Costi: \'e necessario porre particolare attenzione alla struttura hardware del sistema e di come i singoli componenti vanno ad interconnettersi assieme per evitare che si debbano affrontare dei costi aggiuntivi, una volta che il progetto \'e gi\'a avviato, causati da una qualche mancanza o per via di un'estensione del progetto in corso d'opera.
+\end{itemize}
 

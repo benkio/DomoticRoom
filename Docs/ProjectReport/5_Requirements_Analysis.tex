@@ -148,6 +148,36 @@ Si veda i diagrammi dell'interazione per i dettagli di come avviene la comunicaz
 
 \paragraph{Interazione}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Figures/DomainModel/Server/NewDataInteraction.jpg}
+\caption{Server, Comportamento, Dati dai Sensori}
+\end{figure}
+
+Abbiamo deciso di omettere la parte di inizializzazione del sistema in questa fase anche perch\'e sar\'a meglio defita nell'analisi del problema dovendo aggiungere entit\'a che non sono direttamente correlate con i requisiti principali ma con requisiti non funzionali.
+
+Nello schema sovrastante si pu\'o osservare l'interazione nel caso i sensori emettano un nuovo valore. Si vuole porre particolare enfasi su come l'entit\'a che riceve i dati rimane sempre in ascolto di nuovi arrivi delegando, tramite una chiamata asincrona alle altre entit\'a il compito di salvare i dati appena arrivati.
+
+\noindent\rule[0.5ex]{\linewidth}{1pt}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Figures/DomainModel/Server/GetOperationInteraction.jpg}
+\caption{Server, Comportamento, Richiesta Visualizzazione Dati}
+\end{figure}
+
+In quest'altro schema dell'interazione si pu\'o osservare che entit\'a vengono conivolte a fronte di una chiamata di visualizzazione dati da parte dell'utente. Anche in questo caso la chiamata iniziale \'e stata effettuata in maniera asincrona in modo da lasciare libero il sistema di rispondere ad eventuali altre richieste e gestirle concorrentemente.
+
+\noindent\rule[0.5ex]{\linewidth}{1pt}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Figures/DomainModel/Server/NewRangeInteraction.jpg}
+\caption{Server, Comportamento, Nuovo Range}
+\end{figure}
+
+In questo caso invece viene illustata l'interazione per quanto riguarda la richiesta da parte dell'utente dell'inserimento di un nuovo range. Si vede come la chiamata questa volta arriva all'entit\'a che gestisce gli eventi essendo questo effettivamente un caso incui avviene un cambiamento nei dati e quindi tutto va gestito appropriatamente per evitare i conflitti.
+
 \paragraph{Comportamento}
 
 \subsubsection{Web Site}
@@ -156,11 +186,20 @@ Si veda i diagrammi dell'interazione per i dettagli di come avviene la comunicaz
 
 La documentazione relativa a questa parte si limiter\'a solamente a come utilizzare poi il software attraverso l'interfaccia.
 
+Possiamo per\'o pensare di definire i link a cui l'interfaccia dovr\'a rispondere appropriatamente attraverso una pagina web. Questo ci consente di impostare comunque dei test che esulano dal contenuto della pagina, ma ci garantiscono che questa sia effettivamente online in maniera automatica.
+
+gli URL scelti sono:
+\begin{itemize}
+  \item \textit{http://...../DomoticRoom/Status}
+  \item \textit{http://...../DomoticRoom/NewRange}
+  \item \textit{http://...../DomoticRoom/Analysis}
+\end{itemize}
+
 \subsection{Piani di Test}
 
 In questa fase saranno presenti i piani di test che vengono costruiti sulla base dei modelli precedenti, ancora privi di implementazione. Ci\'o \'e possibile perch\'e a questo punto abbiamo gi\'a individuato le interfaccie delle entiti\'a principali e le loro operazioni pubbliche.
 
-Chiaramente a questo punto i test non possono funzionare perch\'e manca l'implementazione. Anche in questa fase si divide il tutto sulle 3 parti precedenti.
+Chiaramente a questo punto la maggior parte dei test non possono funzionare perch\'e manca l'implementazione. Anche in questa fase si divide il tutto sulle 3 parti precedenti.
 
 \subsubsection{Sistema Embedded}
 \subsubsection{Server}
