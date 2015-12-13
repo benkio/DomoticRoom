@@ -151,7 +151,7 @@ Si veda i diagrammi dell'interazione per i dettagli di come avviene la comunicaz
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{Figures/DomainModel/Server/NewDataInteraction.jpg}
-\caption{Server, Comportamento, Dati dai Sensori}
+\caption{Server, Interazione, Dati dai Sensori}
 \end{figure}
 
 Abbiamo deciso di omettere la parte di inizializzazione del sistema in questa fase anche perch\'e sar\'a meglio defita nell'analisi del problema dovendo aggiungere entit\'a che non sono direttamente correlate con i requisiti principali ma con requisiti non funzionali.
@@ -163,7 +163,7 @@ Nello schema sovrastante si pu\'o osservare l'interazione nel caso i sensori eme
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{Figures/DomainModel/Server/GetOperationInteraction.jpg}
-\caption{Server, Comportamento, Richiesta Visualizzazione Dati}
+\caption{Server, Interazione, Richiesta Visualizzazione Dati}
 \end{figure}
 
 In quest'altro schema dell'interazione si pu\'o osservare che entit\'a vengono conivolte a fronte di una chiamata di visualizzazione dati da parte dell'utente. Anche in questo caso la chiamata iniziale \'e stata effettuata in maniera asincrona in modo da lasciare libero il sistema di rispondere ad eventuali altre richieste e gestirle concorrentemente.
@@ -173,12 +173,25 @@ In quest'altro schema dell'interazione si pu\'o osservare che entit\'a vengono c
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{Figures/DomainModel/Server/NewRangeInteraction.jpg}
-\caption{Server, Comportamento, Nuovo Range}
+\caption{Server, Interazione, Nuovo Range}
 \end{figure}
 
 In questo caso invece viene illustata l'interazione per quanto riguarda la richiesta da parte dell'utente dell'inserimento di un nuovo range. Si vede come la chiamata questa volta arriva all'entit\'a che gestisce gli eventi essendo questo effettivamente un caso incui avviene un cambiamento nei dati e quindi tutto va gestito appropriatamente per evitare i conflitti.
 
 \paragraph{Comportamento}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Figures/DomainModel/Server/Behaviour.jpg}
+\caption{Server, Comportamento}
+\end{figure}
+
+
+In questa fase si mostrano le entit\'a che sono effettivamente attive e che quindi operano cambiamenti sul sistema. Si \'e deciso di omettere tutte le entit\'a che vengono solamente chiamate ed effettuano una unica operazione al fine di evitare di formalizzare troppe cose a questo livello.
+
+Si vuole far notare inoltre come tutte queste entit\'a abbiano effettivamente uno stato di attesa di un qualche messaggio o evento. Questo aspetto pu\'o essere molto importante in seguito nelle scelte per la progettazione.
+
+\newpage
 
 \subsubsection{Web Site}
 
