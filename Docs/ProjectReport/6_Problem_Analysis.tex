@@ -16,7 +16,7 @@ Per ulteriori informazioni pi\'u dettagliate sul paradigma si rimanda ad un'altr
 Per la costruzione dell'architettura logica ci si baser\'a ovviamente sulla precedente analisi dei requisiti in modo da mantenere il contatto con questi e non rischiare di uscire fuori specifica. Anche in questo caso si andr\'a separare l'analisi in due parti:
 
 \begin{itemize}
-\item Embedded System
+\item Sistema Embedded
 \item Server e Website
 \end{itemize}
 
@@ -28,6 +28,36 @@ Prima di iniziare a costruire la modellazione sulla base del paradigma appena ci
 
 Con questi schemi ci viene concesso ancora una volta di concentrarci prima sul ''cosa'' e non sul ''come'' che invece viene delegata alla parte progettuale, dove si cercher\'a effettivamnete di implementare il risultato finale dell'analisi
 
+\subsubsection{Sistema Embedded}
+
+Alla luce del paradigma di programmazione che si \'e deciso di adottare sono stati effettuati dei cambiamenti anche alla struttura che \'e stata esposta precedentemente proprio perch\'e ci sono state fornite da questa assunzione nuovi livelli di astrazione, primo tra tutti il concetto di \textbf{Stream/Flusso}. Quindi in questa fase abbiamo ritenuto molto utile iniziare a visualizzare effettivamente questi flussi tramite un'apposito diagramma.
+
+% Figura fatta con draw.io
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{Figures/LogicArchitecture/EmbeddedSystem/FlowDiagram.png}
+\caption{Diagramma di flusso, per sensore, dei dati}
+\end{figure}
+
+
+In particolare si puo' notare come in questo diagramma il compito di convertire i valori di un sensore sia stato disaccoppiato dal sensore stesso che quindi si deve solamente occupare di invitare i dati all'interno del flusso. \'E stato inoltre aggiunto anche una nuova entit\'a \textit{packager} che si occuper\'a di formattare i valori secondo il protocollo che deve essere definito tra client e server per l'apposita comunicazione. In particolare ogni dato proveniente da un sensore avr\'a un suo formato per via: della differenziazione dei dati, della tempistica di rilevazione che pu\'o anche risultare diversa e dell'idea percui la comunicazione in ogni caso debba essere asincrona.
+
+Sulla base di questa ultima frase si vuole sottolineare che ogni sensore quindi avr\'a un suo flusso asincrono, ma che in quest'immagine si \'e deciso di condensare in un'unica immagine per comodit\'a.
+
+Di seguito si indica un primo marable diagram che mostra le varie trasformazioni che verranno applicate. Questo serve soprattutto per iniziare a capire poi come interpretare eventuali altri schemi come questo.
+
+% Figura fatta con draw.io
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.7]{Figures/LogicArchitecture/EmbeddedSystem/MarableDiagram.png}
+\caption{Marable diagram dei singoli dati proveniente da una sorgente}
+\end{figure}
+
+
+\afterpage{\clearpage}
+
+\newpage
+
 
 \subsection{Gap di Astrazione}
 
@@ -36,7 +66,7 @@ In questa sezione aggiungeremo tutti i tipi di astrazioni che sono richieste per
 \begin{enumerate}
   \item Web Server: Vista la necessit\'a di comunicare attraverso la rete \'e necessario che si utilizzi un paradigma a message-passing o attraverso chiamate asincrone, soprattutto per la comunicazione che avviene tra il raspberry e il server.
   \item Continuous Integration, Testing and collaborative source control: Lavorando in gruppo sullo stesso repository \'e necessario impostare il lavoro affinch\'e sia possibile effettuare le modifiche in maniera indipendente gli uni dagli altri e allo stesso modo sia possibile controllare automaticamente che i test predisposti e le modifiche effettuate siano coerenti con le specifiche e che il building del progetto sia in ogni caso garantito.
-  \item{Paradigmi Eterogenei}: si \'e deciso di utilizzare dei paradigmi diversi dal OOP classico e questo pu\'o portare a problematiche di utilizzo, per via dell'inesperienza e comunque non vengono fornite direttamente dal linguaggio e quindi vanno trovate soluzioni al problema.
+  \item{Paradigmi Eterogenei}: si \'e deciso di utilizzare dei paradigmi diversi dal OOP classico e questo pu\'o portare a problematiche di utilizzo, per via dell'inesperienza.Tutto questo pu\'o causare dei ritardi durante la realizzazione.
 \end{enumerate}
 
 \subsection{Analisi dei Rischi}
