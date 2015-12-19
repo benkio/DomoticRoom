@@ -1,14 +1,33 @@
 \section{Analisi del Problema}
 \labelsec{ProblemAnalysis}
 %===========================================================================
-\subsection{Architettura Logica}
 
 \paragraph{Assunzioni}
 Prima di iniziare l'analisi del problema abbiamo ritenuto neccessario effettuare delle assuzioni riguardanti al paradigma che ci consentirebbe di effettuare un prodotto di qualit\'a migliore e con meno sforzi.
 
-Il paradigma di programmazione di riferimento \'e il reactive programming perch\'e la concezione di flusso di dati \'e proprio quello che ci interessa modellare in quanto anche nel nostro sistema sar\'a presente un flusso di dati dal client al server. Per la comunicazione attraverso la rete questo ci consente di sfruttare chiamate asincrore aumentando il disaccoppiamento tra client e server.
+Il paradigma di programmazione di riferimento \'e il \textit{reactive programming} perch\'e la concezione di flusso di dati \'e proprio quello che ci interessa modellare in quanto anche nel nostro sistema sar\'a presente un flusso di dati dal client al server. Per la comunicazione attraverso la rete questo ci consente di sfruttare chiamate asincrore aumentando il disaccoppiamento tra client e server.
 
 Per questo abbiamo deciso di utilizzare per i dati un database NoSQL per via dell'estremo dinamismo, in quanto ci consente di aggiungere dei campi anche in seguito e miglioramento di performance nell'accesso a dati che normalmente richiederebbero dei join.
+
+Per ulteriori informazioni pi\'u dettagliate sul paradigma si rimanda ad un'altra sede. 
+
+\subsection{Architettura Logica}
+
+Per la costruzione dell'architettura logica ci si baser\'a ovviamente sulla precedente analisi dei requisiti in modo da mantenere il contatto con questi e non rischiare di uscire fuori specifica. Anche in questo caso si andr\'a separare l'analisi in due parti:
+
+\begin{itemize}
+\item Embedded System
+\item Server e Website
+\end{itemize}
+
+La parte del website \'e stata incorpata direttamente nella parte server proprio per la sua assenza di business logic.
+
+\paragraph{Modellazione Reactive}
+
+Prima di iniziare a costruire la modellazione sulla base del paradigma appena citato \'e necessario capire come fare a modellare lo stream stesso all'interno della nostra architettura logica, conseguentemente si \'e deciso di utilizzare i \textit{marable diagrams}. Questi sono una rappresentazione di come il flusso di dati nel tempo avviene e quali tipologie di trasformazioni consentono di effettuare.
+
+Con questi schemi ci viene concesso ancora una volta di concentrarci prima sul ''cosa'' e non sul ''come'' che invece viene delegata alla parte progettuale, dove si cercher\'a effettivamnete di implementare il risultato finale dell'analisi
+
 
 \subsection{Gap di Astrazione}
 
