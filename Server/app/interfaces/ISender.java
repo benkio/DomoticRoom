@@ -1,4 +1,4 @@
-package interfeces;
+package interfaces;
 
 import model.*;
 
