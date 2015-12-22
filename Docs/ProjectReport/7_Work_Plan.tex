@@ -7,24 +7,24 @@ Il piano di lavoro che abbiamo intenzione di attuare si divide in varie fasi:
 \begin{enumerate}
   \item{Controllo del Funzionamento Hardware:} la prima cosa che \'e necessario fare \'e quella di controllare che tutta la sensoristica sia effettivamente compatibile e che la parte sistemistica sia assemblabile e funzionante.
   \item{Ricerca e Analisi Problematiche} Viste le problematiche sollevate precedentemente nell'abstraction gap \'e necessario soffermarsi prima di partire con il progetto per andare ad individuare i tools che possono coprire queste mancanze e quindi avere un'impatto significativo sulla realizzazione del progetto stesso. Queste possono cambiare drasticamente anche la realizzazione del progetto stesso che per\'o deve rimanere fedele all'analisi del problema.
-  \item{Modello del Progetto:} contruzione del modello del progetto alla luce delle considerazioni precedenti
+  \item{Modello del Progetto:} costruzione del modello del progetto alla luce delle considerazioni precedenti
   \item{Impostazione dell'Environment:} setup di tutti i tools precedenti e controllo del loro corretto funzionamento
-  \item{Suddivisione dei Compiti:} quando tutto \'e formalizzato adeguatamente si possono suddividere i vari compiti e quindi parallelizzare il lavoro
+  \item{Suddivisione dei Compiti:} quando tutto \'e formalizzato adeguatamente \'e possibile suddividere i vari compiti e quindi parallelizzare il lavoro
   \item{Cicli di Feedback:} \'e molto utile ai fini della realizzazione del progetto, organizzare dei meeting periodici al fine di effettuare un check sullo stato dei lavori e quindi controllare eventuali incongruenze, discutere i problemi, rivedere i modelli precedenti e altro
   \item{Integrazione:} Integrare tutti i progetti assieme per costruire tutto il sistema assicurandosi che sia corretta l'interazione tra le parti
   \item{Testing:} La parte di testing deve essere sviluppata assieme al codice stesso se possibile sulla base del modello in modo da arrivare alle fasi finali da poter automaticamente capire cosa funziona e cosa no.
-  \item{Deploy:} Per la parte di deploy non si porr\'a particolare attenzione in questa prima versione perch\'e non \'e effettivamente richiesta una particolare complessit\'a nel deploy su pi\'u macchine. Comunque si tratta di un'aspetto che pu\'o essere affrontato anche a progetto finito e vedere di apportare le modifiche richieste per realizzare un deploy pi\'u articolato.
+  \item{Deploy:} Per la parte di deploy non si porr\'a particolare attenzione in questa prima versione dal momemento in cui non \'e effettivamente richiesta una particolare complessit\'a nel deploy su pi\'u macchine. Comunque si tratta di un'aspetto che pu\'o essere affrontato anche a progetto finito nel quale si potrebbe procedere ad apportare le modifiche richieste per realizzare un deploy pi\'u articolato.
 \end{enumerate}
 
 \subsection{Strumenti e Framework}
 
-In questa sottosezione vengono illustrati i tools utilizzati durante questo progetto e che servono per cercare di colmare l'abstraction gap e per il supporto alla gestione del progetto stesso.
+In questa sottosezione vengono illustrati i tools utilizzati durante questo progetto utili a cercare di colmare l'abstraction gap e per il supporto alla gestione del progetto stesso.
 
 \begin{itemize}
  \item{Umlet:} Questo tool \'e stato utilizzato per creare gli schemi UML che realizzano i modelli di tutto il progetto.
- \item {Play Framework and Akka:} framework creato da Typesafe che consente di gestire un web server con REST API e di gestire autonomamente le chiamate in maniera asincrona. Akka \'e tutta l'infrastruttura sottostante che consente di gestire tutto questo. Per ulteriori informazioni basta cercare nel web.
+ \item {Play Framework and Akka:} framework creato da Typesafe che consente di gestire un web server con REST API e di gestire autonomamente le chiamate in maniera asincrona. Akka \'e tutta l'infrastruttura sottostante che consente di gestire tutto questo. Per ulteriori informazioni è sufficente cercare nel web.
  \item {Activator Template:} tool associato al framework precedente che consente di gestire le proprie applicazioni secondo degli standard affermati e delle configurazioni di defalut in modo da velocizzare lo startup di tutto il progetto.
- \item {Scala Build Tool:} anche se \'e stato pensato per progetti in scala questo strumento funziona correttamnete anche per java e consente di gestire tutte le dipendenze, eventuali librerie aggiuntive e configurazioni, molti dei progetti precedenti vengono inseriti all'interno del sistema attraverso questo.
+ \item {Scala Build Tool:} anche se \'e stato pensato per progetti in scala questo strumento funziona correttamnete anche per java e consente di gestire tutte le dipendenze, eventuali librerie aggiuntive e configurazioni. Molti dei progetti precedenti vengono inseriti all'interno del sistema attraverso questo.
  \item {Bootstrap:} \ldots  
  \item {New Relic:} \ldots
  \item {Quickcheck:} \ldots

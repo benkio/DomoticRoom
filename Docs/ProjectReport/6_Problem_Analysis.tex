@@ -3,11 +3,11 @@
 %===========================================================================
 
 \paragraph{Assunzioni}
-Prima di iniziare l'analisi del problema abbiamo ritenuto neccessario effettuare delle assuzioni riguardanti al paradigma che ci consentirebbe di effettuare un prodotto di qualit\'a migliore e con meno sforzi.
+Prima di iniziare l'analisi del problema abbiamo ritenuto neccessario effettuare delle assuzioni riguardanti al paradigma che ci consentirebbero di effettuare un prodotto di qualit\'a migliore e con meno sforzi.
 
 Il paradigma di programmazione di riferimento \'e il \textit{reactive programming} perch\'e la concezione di flusso di dati \'e proprio quello che ci interessa modellare in quanto anche nel nostro sistema sar\'a presente un flusso di dati dal client al server. Per la comunicazione attraverso la rete questo ci consente di sfruttare chiamate asincrore aumentando il disaccoppiamento tra client e server.
 
-Per questo abbiamo deciso di utilizzare per i dati un database NoSQL per via dell'estremo dinamismo, in quanto ci consente di aggiungere dei campi anche in seguito e miglioramento di performance nell'accesso a dati che normalmente richiederebbero dei join.
+Per questo abbiamo deciso di utilizzare per i dati un database NoSQL per via dell'estrema dinamicità, in quanto ci consente di aggiungere dei campi anche in seguito e un miglioramento di performance nell'accesso a dati che normalmente richiederebbero dei join.
 
 Per ulteriori informazioni pi\'u dettagliate sul paradigma si rimanda ad un'altra sede. 
 
@@ -67,20 +67,20 @@ Di seguito si indica un primo marable diagram che mostra le varie trasformazioni
 
 \subsection{Gap di Astrazione}
 
-In questa sezione aggiungeremo tutti i tipi di astrazioni che sono richieste per affrontare il progetto e che non sono direttamente fruibili attraverso la tecnologia di riferimento.
+In questa sezione aggiungeremo tutti i tipi di astrazioni richiesti per affrontare il progetto e che non sono direttamente fruibili attraverso la tecnologia di riferimento.
 
 \begin{enumerate}
-  \item Web Server: Vista la necessit\'a di comunicare attraverso la rete \'e necessario che si utilizzi un paradigma a message-passing o attraverso chiamate asincrone, soprattutto per la comunicazione che avviene tra il raspberry e il server.
-  \item Continuous Integration, Testing and collaborative source control: Lavorando in gruppo sullo stesso repository \'e necessario impostare il lavoro affinch\'e sia possibile effettuare le modifiche in maniera indipendente gli uni dagli altri e allo stesso modo sia possibile controllare automaticamente che i test predisposti e le modifiche effettuate siano coerenti con le specifiche e che il building del progetto sia in ogni caso garantito.
-  \item{Paradigmi Eterogenei}: si \'e deciso di utilizzare dei paradigmi diversi dal OOP classico e questo pu\'o portare a problematiche di utilizzo, per via dell'inesperienza.Tutto questo pu\'o causare dei ritardi durante la realizzazione.
+  \item Web Server: Data la necessit\'a di comunicare attraverso la rete \'e necessario che si utilizzi un paradigma a message-passing o attraverso chiamate asincrone, soprattutto per la comunicazione che avviene tra il raspberry e il server.
+  \item Continuous Integration, Testing and collaborative source control: Lavorando in gruppo sullo stesso repository \'e necessario impostare il lavoro affinch\'e sia possibile effettuare modifiche in maniera indipendente gli uni dagli altri e allo stesso modo sia possibile controllare automaticamente che i test predisposti e le modifiche effettuate siano coerenti con le specifiche e che il building del progetto sia in ogni caso garantito.
+  \item{Paradigmi Eterogenei}: si \'e deciso di utilizzare dei paradigmi diversi dal OOP classico e questo pu\'o portare a problematiche di utilizzo per via dell'inesperienza. Tuttavia queste non vengono fornite direttamente dal linguaggio e quindi si necessitano soluzioni al problema.
 \end{enumerate}
 
 \subsection{Analisi dei Rischi}
 
-In questa sezione vanno elencati invece i rischi che si possono intraprendere in un progetto di questo tipo e quindi formalizzarli fin da subito, prima di eseguire l'effettiva realizzazione dello stesso in modo da poterli affontare e discutere preventivamente per essere pronti se questi si verificano.
+In questa sezione verranno elencati i rischi che si potranno incontrare in un progetto di questo tipo fonrmalizzandoli fin da subito, prima di eseguire l'effettiva realizzazione dello stesso, in modo da poterli affontare e discutere preventivamente per essere pronti nel caso questi si verifichino.
 
 \begin{itemize}
-  \item Aumento dei Costi: \'e necessario porre particolare attenzione alla struttura hardware del sistema e di come i singoli componenti vanno ad interconnettersi assieme per evitare che si debbano affrontare dei costi aggiuntivi, una volta che il progetto \'e gi\'a avviato, causati da una qualche mancanza o per via di un'estensione del progetto in corso d'opera.
+  \item Aumento dei Costi: \'e necessario porre particolare attenzione alla struttura hardware del sistema e di come i singoli componenti vanno ad interconnettersi assieme per evitare che si debbano affrontare dei costi aggiuntivi, a progetto gi\'a avviato, causati da una qualche mancanza o per via di un'estensione del progetto in corso d'opera.
   \item Quantitativo della memoria: l'adozione di un database NoSQL porta con se un certo livello di ridondanza e quindi questo pu\'o portare ad un aumento di utilizzo della memoria e di spazio. Il tutto va valutato accuratamente durante il progetto, magari attraverso una serie di prove in base a come \'e stutturato il dato inizialmente. Se il rischio quindi \'e reale e quanto \'e critico.
   \item Integrazione tra le tecnologie: un possibile rischio riguarda la difficolt\'a nell'integrare tutte le tecnologie che devono essere sfruttate nel progetto per riuscire a colmare l'abstraction gap e quindi riuscire a completare il progetto attraverso l'analisi appena completata.
 \end{itemize}
