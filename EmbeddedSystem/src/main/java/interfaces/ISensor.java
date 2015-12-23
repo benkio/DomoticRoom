@@ -1,6 +1,6 @@
 package interfaces;
 
-import model.*;
+import models.*;
 
 public interface ISensor {
 	double getValue();

@@ -8,21 +8,21 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import models.TemperatureConverter;
+import models.LightConverter;
 
-public class TemperatureConvertorTestPlan {
+public class LightConvertorTestPlan {
 
-	private TemperatureConverter tc = new TemperatureConverter();
+	private LightConverter lc = new LightConverter();
 	
 	@Test
 	public void convertValueIdentityTest() {
-		List<String> goodValues = Arrays.asList("22","40", "9", "5", "13");
+		List<String> goodValues = Arrays.asList("0","1");
 		List<String> badValues = Arrays.asList("-2","95", "59", "-32", "bello");
 		
-		goodValues.forEach(s -> Assert.assertEquals(tc.convertValue(s), Double.parseDouble(s)));
+		goodValues.forEach(s -> Assert.assertEquals(lc.convertValue(s), Double.parseDouble(s)));
 		badValues.forEach(s ->{ 
 			try{
-				tc.convertValue(s);
+				lc.convertValue(s);
 				Assert.fail();
 			}catch(Exception e){}
 		});	
