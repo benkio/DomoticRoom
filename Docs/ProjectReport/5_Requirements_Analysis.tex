@@ -88,7 +88,7 @@ Lo scopo di questa fase \'e appunto quella riflettere, in un primo modello, i re
 \caption{Sistema Embedded, Struttura}
 \end{figure}
 
-Dalla struttura è possibile individuare subito le entit\'a principali presenti nei requisiti. In particolare la presenza di una specifica gerarchia per i sensori che condividono la stessa interfaccia che consente agilmente di ottenere il valore corrente del sensore. Sono stati inseriti solamente i sensori citati nei requisiti, ma si pu\'o facilmente intuire come qualsiasi tipo di sensore sia facilmente modellabile secondo questa struttura.
+Dalla struttura \'e possibile individuare subito le entit\'a principali presenti nei requisiti. In particolare la presenza di una specifica gerarchia per i sensori che condividono la stessa interfaccia che consente agilmente di ottenere il valore corrente del sensore. Sono stati inseriti solamente i sensori citati nei requisiti, ma si pu\'o facilmente intuire come qualsiasi tipo di sensore sia facilmente modellabile secondo questa struttura.
 
 Si noti inoltre come viene anche inserita l'entit\'a IConvertor che si occoper\'a di convertire il valore di uno specifico sensore in un'unit\'a pi\'u consona per la sua gestione. Chiaramente questo viene affrontato fin da questo livello perch\'e si immagina l'operazione di conversione come un'operazione quasi istantanea e necessaria.
 
@@ -139,7 +139,7 @@ Le entit\'a principali di questo schema sono:
 \begin{itemize}
   \item IPersistentStore, che si occuper\'a di salvare opportunamente i dati provenienti dai sensori e dall'utente
   \item IDataReceiver, che sar\'a sempre in ascolto per ogni messaggio proveniente dal sistema embedded e quindi notificher\'a opportunamente il sistema ad ogni nuovo arrivo
-  \item IPresentator che si occuper\'a di ottenere i dati necessari per le viste da mostrare all'utente nel momento in cui una nuova richiesta verrà inoltrata.
+  \item IPresentator che si occuper\'a di ottenere i dati necessari per le viste da mostrare all'utente nel momento in cui una nuova richiesta verr\'a inoltrata.
 \end{itemize}
 
 Chiaramente ognuna di queste entit\'a \'e in parte citata nei casi d'uso.
@@ -154,7 +154,7 @@ Si vedano i diagrammi dell'interazione per i dettagli di come avviene la comunic
 \caption{Server, Interazione, Dati dai Sensori}
 \end{figure}
 
-Abbiamo deciso di omettere la parte di inizializzazione del sistema in questa fase dal momento che risulterà meglio definita nell'analisi del problema, dovendo aggiungere entit\'a che non sono direttamente correlate con i requisiti principali ma con requisiti non funzionali.
+Abbiamo deciso di omettere la parte di inizializzazione del sistema in questa fase dal momento che risulter\'a meglio definita nell'analisi del problema, dovendo aggiungere entit\'a che non sono direttamente correlate con i requisiti principali ma con requisiti non funzionali.
 
 Nello schema sovrastante si pu\'o osservare l'interazione nel caso in cui i sensori emettano un nuovo valore. Si vuole porre particolare enfasi su come l'entit\'a che riceve i dati rimanga sempre in ascolto di nuovi arrivi delegando, tramite una chiamata asincrona alle altre entit\'a, il compito di salvare i dati appena ricevuti.
 
