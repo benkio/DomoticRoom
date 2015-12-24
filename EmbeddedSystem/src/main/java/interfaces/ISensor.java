@@ -1,9 +1,9 @@
 package interfaces;
 
-import models.*;
+import model.*;
 
-public interface ISensor {
-	double getValue();
+public interface ISensor<T> {
+	T getValue();
 	String getName();
 	SensorType getType();
 }

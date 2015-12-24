@@ -1,5 +1,5 @@
 package interfaces;
 
-public interface IConvertor {
-	double convertValue(String value);
+public interface IConvertor<T> {
+	T convertValue(String value);
 }

@@ -1,6 +1,6 @@
 package interfaces;
 
-import models.*;
+import model.*;
 
 public interface ISender {
 	void send(double data, String sensorName, SensorType sensorType);

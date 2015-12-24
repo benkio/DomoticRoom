@@ -8,18 +8,19 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import models.TemperatureConverter;
+import interfaces.IConvertor;
+import model.convertors.TemperatureConverter;
 
 public class TemperatureConvertorTestPlan {
 
-	private TemperatureConverter tc = new TemperatureConverter();
+	private IConvertor<Double> tc = new TemperatureConverter();
 	
 	@Test
 	public void convertValueIdentityTest() {
 		List<String> goodValues = Arrays.asList("22","40", "9", "5", "13");
 		List<String> badValues = Arrays.asList("-2","95", "59", "-32", "bello");
 		
-		goodValues.forEach(s -> Assert.assertEquals(tc.convertValue(s), Double.parseDouble(s)));
+		goodValues.forEach(s -> Assert.assertEquals((double) tc.convertValue(s), Double.parseDouble(s)));
 		badValues.forEach(s ->{ 
 			try{
 				tc.convertValue(s);

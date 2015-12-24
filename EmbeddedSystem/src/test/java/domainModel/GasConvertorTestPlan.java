@@ -8,24 +8,30 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import models.GasConverter;
+import interfaces.IConvertor;
+import model.convertors.GasConverter;
 
 public class GasConvertorTestPlan {
 
-	private GasConverter gc = new GasConverter();
+	private IConvertor<Boolean> gc = new GasConverter();
 	
 	@Test
 	public void convertValueIdentityTest() {
 		List<String> goodValues = Arrays.asList("0","1");
 		List<String> badValues = Arrays.asList("-2","95", "59", "-32", "bello");
 		
-		goodValues.forEach(s -> Assert.assertEquals(gc.convertValue(s), Double.parseDouble(s)));
+		goodValues.forEach(s -> {
+			boolean expected;
+			if (s.equals("0")) expected = true; else expected = false;
+		Assert.assertEquals(gc.convertValue(s), expected);
+		});
 		badValues.forEach(s ->{ 
 			try{
 				gc.convertValue(s);
 				Assert.fail();
 			}catch(Exception e){}
 		});	
+	}
 	}
 
 }
