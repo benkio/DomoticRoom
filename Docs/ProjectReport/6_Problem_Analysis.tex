@@ -61,6 +61,18 @@ Di seguito si indica un primo marable diagram che mostra le varie trasformazioni
 
 \paragraph{Struttura} Chiaramente la struttura, che si basa sul precedente step di analisi dei requisiti, risulta cambiata anche alla luce delle assunzioni effettuate e quindi si possono notare l'introduzione di alcune entit\'a che servono per la gestione del sistema embedded e per impostare i flussi di dati provenienti dai sensori.
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Figures/LogicArchitecture/EmbeddedSystem/Structure}
+\caption{Sistema Embedded, Struttura Logica}
+\end{figure}
+
+Come si mostra nel sistema soprastante, la struttura logica non ne esce particolarmente modificata rispetto all'analisi iniziale.
+E' stato eliminato il SensorDataFetcher, poich\`e grazie al paradigma Reactive non vien più implementato un controllo a polling sui sensori della Domotic Room.
+La nuova entit\'a DomoticRoomBuilder ha il ruolo centrale di inizializzare il sistema, creando l'architettura e la configurazione iniziale dei suoi componenti.
+L'entit\'a Convertor si occupa di convertire i dati che riceve dalla sorgente Sensore a cui è sottoscritto; inoltre genera un nuovo Stream dati a cui è possibile sottoscriversi.
+L'entit\'a Packager si occupa di sottoscriversi a tutti i Convertor e unire i flussi generati dai singoli in un unico flusso a cui è applicata una funzione di Packaging preparando il dato per essere spedito. A questo punto crea a sua volta uno stream dati che sarà osservato dall'entità ISender che si limiterà ad inviare i dati così "impacchettati" nella rete.
+
 \paragraph{Interazione} La parte di interazione viene drasticamente modificata proprio perch\'e l'assunzione del paradigma reactive risulta principalmente improntato su questo, in particolare \'e possibile condensare in meno codice, e pi\'u dichiarativo. Vengono in ogni caso mostrati le varie operazioni effettuate sullo stream per mantenere il contatto con quanto mostrato attraverso i marable diagrams. Particolare attenzione va posta poi sulla parte che converte da \textit{procedure calls} a \textit{reactive streams}.
 
 \paragraph{Comportamento}
