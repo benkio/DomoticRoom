@@ -4,7 +4,7 @@
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>77</x>
+      <x>105</x>
       <y>21</y>
       <w>126</w>
       <h>84</h>
@@ -19,7 +19,7 @@ getType() :SensorType</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>84</x>
+      <x>112</x>
       <y>140</y>
       <w>154</w>
       <h>63</h>
@@ -35,7 +35,7 @@ getType() :SensorType</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>126</x>
+      <x>154</x>
       <y>98</y>
       <w>21</w>
       <h>56</h>
@@ -46,7 +46,7 @@ getType() :SensorType</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
+      <x>28</x>
       <y>259</y>
       <w>189</w>
       <h>35</h>
@@ -59,7 +59,7 @@ getType() :SensorType</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>70</x>
+      <x>98</x>
       <y>196</y>
       <w>63</w>
       <h>77</h>
@@ -70,7 +70,7 @@ getType() :SensorType</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>217</x>
+      <x>245</x>
       <y>259</y>
       <w>112</w>
       <h>35</h>
@@ -83,7 +83,7 @@ getType() :SensorType</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>357</x>
+      <x>385</x>
       <y>259</y>
       <w>154</w>
       <h>35</h>
@@ -96,7 +96,7 @@ getType() :SensorType</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
+      <x>140</x>
       <y>196</y>
       <w>161</w>
       <h>77</h>
@@ -107,7 +107,7 @@ getType() :SensorType</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
+      <x>140</x>
       <y>196</y>
       <w>336</w>
       <h>77</h>
@@ -118,7 +118,7 @@ getType() :SensorType</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>49</x>
+      <x>77</x>
       <y>364</y>
       <w>154</w>
       <h>56</h>
@@ -131,7 +131,7 @@ convertValue(value :String) :T</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>70</x>
+      <x>98</x>
       <y>525</y>
       <w>140</w>
       <h>21</h>
@@ -142,7 +142,7 @@ convertValue(value :String) :T</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>119</x>
+      <x>147</x>
       <y>406</y>
       <w>21</w>
       <h>133</h>
@@ -153,7 +153,7 @@ convertValue(value :String) :T</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>63</x>
+      <x>91</x>
       <y>287</y>
       <w>70</w>
       <h>105</h>
@@ -164,7 +164,7 @@ convertValue(value :String) :T</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>700</x>
+      <x>728</x>
       <y>28</y>
       <w>70</w>
       <h>56</h>
@@ -176,7 +176,7 @@ convertValue(value :String) :T</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>868</x>
+      <x>896</x>
       <y>28</y>
       <w>224</w>
       <h>56</h>
@@ -189,7 +189,7 @@ sendData(data, sensorName, sensorType)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>651</x>
+      <x>679</x>
       <y>133</y>
       <w>175</w>
       <h>84</h>
@@ -207,7 +207,7 @@ SensorsDataFetcher
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>728</x>
+      <x>756</x>
       <y>91</y>
       <w>21</w>
       <h>56</h>
@@ -218,7 +218,7 @@ SensorsDataFetcher
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>882</x>
+      <x>910</x>
       <y>133</y>
       <w>105</w>
       <h>84</h>
@@ -232,7 +232,7 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>938</x>
+      <x>966</x>
       <y>91</y>
       <w>21</w>
       <h>56</h>
@@ -243,7 +243,7 @@ SensorDataSender
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1001</x>
+      <x>1029</x>
       <y>140</y>
       <w>98</w>
       <h>77</h>
@@ -254,7 +254,7 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
+      <x>168</x>
       <y>28</y>
       <w>525</w>
       <h>133</h>
@@ -265,7 +265,7 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>819</x>
+      <x>847</x>
       <y>35</y>
       <w>168</w>
       <h>147</h>
@@ -276,7 +276,7 @@ SensorDataSender
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>224</x>
+      <x>252</x>
       <y>525</y>
       <w>98</w>
       <h>21</h>
@@ -287,7 +287,7 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>119</x>
+      <x>147</x>
       <y>406</y>
       <w>154</w>
       <h>133</h>
@@ -298,7 +298,7 @@ SensorDataSender
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>210</x>
+      <x>238</x>
       <y>455</y>
       <w>98</w>
       <h>21</h>
@@ -309,7 +309,7 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>119</x>
+      <x>147</x>
       <y>406</y>
       <w>154</w>
       <h>105</h>
@@ -320,7 +320,7 @@ SensorDataSender
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>322</x>
+      <x>350</x>
       <y>455</y>
       <w>105</w>
       <h>21</h>
@@ -331,7 +331,7 @@ SensorDataSender
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>336</x>
+      <x>364</x>
       <y>525</y>
       <w>77</w>
       <h>21</h>
@@ -342,7 +342,7 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>119</x>
+      <x>147</x>
       <y>406</y>
       <w>259</w>
       <h>105</h>
@@ -353,7 +353,7 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>119</x>
+      <x>147</x>
       <y>406</y>
       <w>266</w>
       <h>133</h>
@@ -364,7 +364,7 @@ SensorDataSender
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>399</x>
+      <x>427</x>
       <y>490</y>
       <w>70</w>
       <h>21</h>
@@ -375,7 +375,7 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>119</x>
+      <x>147</x>
       <y>406</y>
       <w>294</w>
       <h>105</h>
@@ -386,7 +386,7 @@ SensorDataSender
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>525</x>
+      <x>553</x>
       <y>259</y>
       <w>98</w>
       <h>35</h>
@@ -399,7 +399,7 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
+      <x>140</x>
       <y>196</y>
       <w>469</w>
       <h>77</h>
@@ -410,7 +410,7 @@ SensorDataSender
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>301</x>
+      <x>329</x>
       <y>315</y>
       <w>84</w>
       <h>35</h>
@@ -423,7 +423,7 @@ SensorDataSender
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
+      <x>140</x>
       <y>196</y>
       <w>245</w>
       <h>133</h>
@@ -434,7 +434,7 @@ SensorDataSender
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>0</x>
+      <x>28</x>
       <y>427</y>
       <w>497</w>
       <h>133</h>
@@ -442,6 +442,19 @@ SensorDataSender
     <panel_attributes>model.convertors
 --
 bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>0</x>
+      <y>112</y>
+      <w>665</w>
+      <h>245</h>
+    </coordinates>
+    <panel_attributes>model.Sensors
+--
+bg=green</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
