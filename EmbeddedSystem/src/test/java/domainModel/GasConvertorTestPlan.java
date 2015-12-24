@@ -29,9 +29,8 @@ public class GasConvertorTestPlan {
 			try{
 				gc.convertValue(s);
 				Assert.fail();
-			}catch(Exception e){}
+			}
+			catch(Exception e){}
 		});	
 	}
-	}
-
 }

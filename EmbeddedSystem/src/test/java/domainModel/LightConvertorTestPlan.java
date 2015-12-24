@@ -22,9 +22,12 @@ public class LightConvertorTestPlan {
 		
 		goodValues.forEach(s -> {
 			boolean expected;
-			if (s.equals("0")) expected = true; else expected = false;
-		Assert.assertEquals(lc.convertValue(s), expected);
+			if (s.equals("0"))
+				expected = true; 
+			else expected = false;
+			Assert.assertEquals(lc.convertValue(s), expected);
 		});
+		
 		badValues.forEach(s ->{ 
 			try{
 				lc.convertValue(s);
@@ -32,6 +35,4 @@ public class LightConvertorTestPlan {
 			}catch(Exception e){}
 		});	
 	}
-	}
-
 }
