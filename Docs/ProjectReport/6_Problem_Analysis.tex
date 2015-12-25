@@ -30,7 +30,7 @@ Con questi schemi ci viene concesso ancora una volta di concentrarci prima sul '
 
 \subsubsection{Sistema Embedded}
 
-Alla luce del paradigma di programmazione che si \'e deciso di adottare sono stati effettuati dei cambiamenti anche alla struttura che \'e stata esposta precedentemente proprio perch\'e ci sono state fornite da questa assunzione nuovi livelli di astrazione, primo tra tutti il concetto di \textbf{Stream/Flusso}. Quindi in questa fase abbiamo ritenuto molto utile iniziare a visualizzare effettivamente questi flussi tramite un'apposito diagramma.
+\paragraph{Flussi Dati} Alla luce del paradigma di programmazione che si \'e deciso di adottare sono stati effettuati dei cambiamenti anche alla struttura che \'e stata esposta precedentemente proprio perch\'e ci sono state fornite da questa assunzione nuovi livelli di astrazione, primo tra tutti il concetto di \textbf{Stream/Flusso}. Quindi in questa fase abbiamo ritenuto molto utile iniziare a visualizzare effettivamente questi flussi tramite un'apposito diagramma.
 
 % Figura fatta con draw.io
 \begin{figure}[ht]
@@ -74,6 +74,25 @@ L'entit\'a Convertor si occupa di convertire i dati che riceve dalla sorgente Se
 L'entit\'a Packager si occupa di sottoscriversi a tutti i Convertor e unire i flussi generati dai singoli in un unico flusso a cui è applicata una funzione di Packaging preparando il dato per essere spedito. A questo punto crea a sua volta uno stream dati che sarà osservato dall'entità ISender che si limiterà ad inviare i dati così "impacchettati" nella rete.
 
 \paragraph{Interazione} La parte di interazione viene drasticamente modificata proprio perch\'e l'assunzione del paradigma reactive risulta principalmente improntato su questo, in particolare \'e possibile condensare in meno codice, e pi\'u dichiarativo. Vengono in ogni caso mostrati le varie operazioni effettuate sullo stream per mantenere il contatto con quanto mostrato attraverso i marable diagrams. Particolare attenzione va posta poi sulla parte che converte da \textit{procedure calls} a \textit{reactive streams}.
+
+\paragraph{Comportamento}
+
+\subsection{Server}
+
+\paragraph{Interazione}
+
+\textbf{Flussi Dati:} Anche per quanto riguarda la parte server \'e necessario definire gli steam che saranno presenti all'interno del sistema. Inquanto questa parte \'e notevolmente pi\'u corposa rispetto a quella dell'embedded system per varie ragioni, prima tra tutte la capacit\'a di calcolo, saranno necessari pi\'u stream, in particolare si \'e pensato di creare uno stream per ogni funzionalit\'a sulla base delle operazioni che quindi sono da compiere.
+
+Il primo flusso che andremo ad analizzare riguarda la ricezione dei dati da parte del sistema embedded. In particolare si vuole cercare di riutilizzare le entit\'a che si sono introdotte nell'analisi dei requisiti proprio perch\'e queste sono maggiormente collegate al dominio. Si pu\o' inoltre notare un'altra entit\'a chiamata \textit{IDataFormatter}, questa entit\'a \'e utile per preparare la corretta formattazione dei dati provenienti dal flusso per essere salvati poi sul database. Si \'e deciso in particolare di inserirlo per andare a separare i compiti il pi\'u possibile.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Figures/LogicArchitecture/Server/FlowDiagramReceiveData}
+\caption{Server, Flusso Dati Ricezione}
+\end{figure}
+
+
+\paragraph{Struttura}
 
 \paragraph{Comportamento}
 
