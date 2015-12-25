@@ -91,6 +91,15 @@ Il primo flusso che andremo ad analizzare riguarda la ricezione dei dati da part
 \caption{Server, Flusso Dati Ricezione}
 \end{figure}
 
+Il secondo flusso che si vuole introdurre invece riguarda l'aggiornamento del range da parte dell'utente, in particolare anche in questo caso l'IEventManager viene chiamato in causa il quale si occuper\'a di notificare il cambiamento sia a livello di database che al componente incaricato di controllare il range. Questa parte non subisce particolari cambiamenti rispetto a quella dell'analisi dei requisiti perch\'e rimane molto coerente anche a fronte del cambio di paradigma. Un cambiamento significativo riguarda il fatto che il cambiamento del range non avviene pi\'u direttamente dall'event manager ma dal database, questo per enfatizzare che il cambiamento del range non \'e effettivo se non viene prima registrato in maniera permanente.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Figures/LogicArchitecture/Server/FlowDiagramNewRange}
+\caption{Server, Flusso Dati Nuovo Range}
+\end{figure}
+
+
 
 \paragraph{Struttura}
 
