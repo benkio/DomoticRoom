@@ -68,7 +68,7 @@ Di seguito si indica un primo marable diagram che mostra le varie trasformazioni
 \end{figure}
 
 Come si mostra nel sistema soprastante, la struttura logica non ne esce particolarmente modificata rispetto all'analisi iniziale.
-E' stato eliminato il SensorDataFetcher, poich\`e grazie al paradigma Reactive non vien più implementato un controllo a polling sui sensori della Domotic Room.
+E' stato eliminato il SensorDataFetcher, poich\`e grazie al paradigma Reactive non vien più implementato un controllo a polling sui sensori della Domotic Room, ma si sfrutter\'a un'interazione a procedure call attraverso i listeners.
 La nuova entit\'a DomoticRoomBuilder ha il ruolo centrale di inizializzare il sistema, creando l'architettura e la configurazione iniziale dei suoi componenti.
 L'entit\'a Convertor si occupa di convertire i dati che riceve dalla sorgente Sensore a cui è sottoscritto; inoltre genera un nuovo Stream dati a cui è possibile sottoscriversi.
 L'entit\'a Packager si occupa di sottoscriversi a tutti i Convertor e unire i flussi generati dai singoli in un unico flusso a cui è applicata una funzione di Packaging preparando il dato per essere spedito. A questo punto crea a sua volta uno stream dati che sarà osservato dall'entità ISender che si limiterà ad inviare i dati così "impacchettati" nella rete.
@@ -99,6 +99,15 @@ Il secondo flusso che si vuole introdurre invece riguarda l'aggiornamento del ra
 \caption{Server, Flusso Dati Nuovo Range}
 \end{figure}
 
+L'ultimo flusso di dati che verr\'a trattato riguardano le richieste di dati stessi per la visualizzazione da parte dell'utente. Probabilmente per quanto riguarda le seguenti operazioni si poteva anche pensare di gestire il tutto attraverso delle semplici chiamate a procedura, ma, per mantenere una certa coerenza, per sfruttare la dichiarativit\'a del paradigma reactive e per evitare di incorrere nel problema noto come \textit{Callback Hell} si \'e scelto di utilizzare comunque un flusso. Concludendo si vuole far notare la presenza di un'entit\'a che entra in campo quando viene richiesta un'analisi sui dati e non semplicemente una sua visualizzazione. Questa possibilit\'a \'e possibile grazie proprio alla componibilit\'a degli stream.
+
+\newpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Figures/LogicArchitecture/Server/FlowDiagramViewData}
+\caption{Server, Flusso Dati Richieste Dati}
+\end{figure}
 
 
 \paragraph{Struttura}
