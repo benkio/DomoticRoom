@@ -99,7 +99,7 @@ Il secondo flusso che si vuole introdurre invece riguarda l'aggiornamento del ra
 \caption{Server, Flusso Dati Nuovo Range}
 \end{figure}
 
-L'ultimo flusso di dati che verr\'a trattato riguardano le richieste di dati stessi per la visualizzazione da parte dell'utente. Probabilmente per quanto riguarda le seguenti operazioni si poteva anche pensare di gestire il tutto attraverso delle semplici chiamate a procedura, ma, per mantenere una certa coerenza, per sfruttare la dichiarativit\'a del paradigma reactive e per evitare di incorrere nel problema noto come \textit{Callback Hell} si \'e scelto di utilizzare comunque un flusso. Concludendo si vuole far notare la presenza di un'entit\'a che entra in campo quando viene richiesta un'analisi sui dati e non semplicemente una sua visualizzazione. Questa possibilit\'a \'e possibile grazie proprio alla componibilit\'a degli stream.
+L'ultimo flusso di dati che verr\'a trattato riguardano le richieste di dati stessi per la visualizzazione da parte dell'utente. Probabilmente per quanto riguarda le seguenti operazioni si poteva anche pensare di gestire il tutto attraverso delle semplici chiamate a procedura, ma, per mantenere una certa coerenza, per sfruttare la dichiarativit\'a del paradigma reactive e per evitare di incorrere nel problema noto come \textit{Callback Hell} si \'e scelto di utilizzare comunque un flusso. Un'ulteriore vantaggio di gestire attraverso l'infrastruttura reactive consiste nella possibilit\'a di aggiornare realtime l'interfaccia ogni qualvolta avviene l'inserimento di un nuovo valore. Concludendo si vuole far notare la presenza di un'entit\'a che entra in campo quando viene richiesta un'analisi sui dati e non semplicemente una sua visualizzazione. La forma a nuvola indica proprio la possibilit\'a che questo oggetto entri a far parte o meno nel flusso.
 
 \newpage
 
@@ -122,6 +122,17 @@ Nella struttura dell'analisi del problema abbiamo varie differenze, anche a live
 \item \'E stato ampliato la parte del persistenceStore in modo da differenziare i vari compiti di salvataggio e caricamento attraverso diversi oggetti.
 \item Il DataReceiver \'e stato differenziato tra dati provenienti dai sensori e dati provenienti dall'utente, come le richieste di un nuovo range o la richiesta di dati. Questo ha di fatto portato all'eliminazione dell'oggetto presentator individuato precedentemente.
 \end{itemize}
+
+\begin{sidewaysfigure}[h]
+\centering
+\includegraphics[width=\textwidth]{Figures/LogicArchitecture/Server/Structure}
+\caption{Server, Struttura Architettura Logica}
+\end{sidewaysfigure}
+
+\afterpage{\clearpage}
+
+\newpage
+
 
 \paragraph{Comportamento}
 
