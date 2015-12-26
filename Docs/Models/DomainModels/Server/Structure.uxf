@@ -128,8 +128,8 @@ newRange(range, sensorType)</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>108</x>
-      <y>18</y>
+      <x>48</x>
+      <y>78</y>
       <w>144</w>
       <h>60</h>
     </coordinates>
@@ -143,7 +143,7 @@ updateRange(range,sensorType)</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>102</x>
-      <y>108</y>
+      <y>24</y>
       <w>186</w>
       <h>30</h>
     </coordinates>
@@ -155,24 +155,24 @@ currentRanges : Map&lt;sensorType,range&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>180</x>
-      <y>66</y>
+      <x>114</x>
+      <y>48</y>
       <w>18</w>
-      <h>54</h>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>204</x>
-      <y>132</y>
-      <w>18</w>
-      <h>186</h>
+      <x>186</x>
+      <y>114</y>
+      <w>36</w>
+      <h>204</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;290.0;10.0;10.0</additional_attributes>
+    <additional_attributes>40.0;320.0;40.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLInterface</id>
@@ -196,7 +196,7 @@ analyze2()</panel_attributes>
       <w>114</w>
       <h>30</h>
     </coordinates>
-    <panel_attributes>DahaAnalyzer
+    <panel_attributes>DataAnalyzer
 --
 store : IPersistentStore
 </panel_attributes>

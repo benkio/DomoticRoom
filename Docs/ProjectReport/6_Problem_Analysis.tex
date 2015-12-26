@@ -83,7 +83,7 @@ L'entit\'a Packager si occupa di sottoscriversi a tutti i Convertor e unire i fl
 
 \textbf{Flussi Dati:} Anche per quanto riguarda la parte server \'e necessario definire gli steam che saranno presenti all'interno del sistema. Inquanto questa parte \'e notevolmente pi\'u corposa rispetto a quella dell'embedded system per varie ragioni, prima tra tutte la capacit\'a di calcolo, saranno necessari pi\'u stream, in particolare si \'e pensato di creare uno stream per ogni funzionalit\'a sulla base delle operazioni che quindi sono da compiere.
 
-Il primo flusso che andremo ad analizzare riguarda la ricezione dei dati da parte del sistema embedded. In particolare si vuole cercare di riutilizzare le entit\'a che si sono introdotte nell'analisi dei requisiti proprio perch\'e queste sono maggiormente collegate al dominio. Si pu\o' inoltre notare un'altra entit\'a chiamata \textit{IDataFormatter}, questa entit\'a \'e utile per preparare la corretta formattazione dei dati provenienti dal flusso per essere salvati poi sul database. Si \'e deciso in particolare di inserirlo per andare a separare i compiti il pi\'u possibile.
+Il primo flusso che andremo ad analizzare riguarda la ricezione dei dati da parte del sistema embedded. In particolare si vuole cercare di riutilizzare le entit\'a che si sono introdotte nell'analisi dei requisiti proprio perch\'e queste sono maggiormente collegate al dominio. Si pu\o' inoltre notare altre entit\'a chiamate \textit{IRawDataFormatter e IDBDataFormatter}, queste entit\'a sono utili per preparare la corretta formattazione dei dati provenienti dal flusso e dalla successiva elaborazione per essere salvati poi sul database. Si \'e deciso in particolare di inserirlo per andare a separare i compiti il pi\'u possibile e per facilitare la modifica nel caso si voglia adottare uno standard dei dati interno rispetto a quello del client in modo da effettuare una netta indipendenza tra server e client. Soprattutto perch\'e in un'eventuale futuro si pu\'o facilmente immaginare un'eterogeneit\'a dei dati dovuti ai vari client disponibili e dalla loro provenienza (altre aziende, protocolli proprietari \ldots)
 
 \begin{figure}[h]
 \centering
@@ -111,6 +111,15 @@ L'ultimo flusso di dati che verr\'a trattato riguardano le richieste di dati ste
 
 
 \paragraph{Struttura}
+
+Nella struttura dell'analisi del problema abbiamo varie differenze, anche a livello di interfaccia, dovute al cambio di paradigma o ad altre motivazioni, di seguito verranno elencate per rendendere tutto pi\'u chiaro:
+
+\begin{itemize}
+\item IDataReceiver: non esiste pi\'u il metodo \textit{Receive} perch\'e non si ipotizza pi\'u un'approccio a polling e quindi non \'e necessaria questa funzionalit\'a, mentre invece viene esposto un metodo che da la possibilit\'a di ottenere lo stream di dati associato all'arrivo di un nuovo valore dall'esterno.
+\item Tutto ci\'o che in precedenza, nel diagramma dell'interazione, era modellato attraverso una chiamata a procedura e veniva effettuata all'arrivo di un nuovo dato, ora viene convertito in funzioni che prendono in ingresso un dato stream e lo modificano restituendo un nuovo stream all'inizio del sistema in modo che, in questa fase, si \'e in grado di costruire e comporre i vari flussi che poi verranno elaborati attraverso l'infrastruttura.
+\item Per separare ancora di pi\'u i vari flussi di stream indicati precedentemente e per separare i compiti di creazione dei vari stream si sono ideate delle classi \textit{buider} che assembleranno i vari componenti a tale scopo.
+  \item Sono stati impostati come oggetti sigleton i componenti \textit{EventManager e PersistenceStore}
+\end{itemize}
 
 \paragraph{Comportamento}
 
