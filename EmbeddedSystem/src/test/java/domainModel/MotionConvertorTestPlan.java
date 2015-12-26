@@ -8,11 +8,12 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import interfaces.IConvertor;
 import model.convertors.MotionConverter;
 
 public class MotionConvertorTestPlan {
 
-	private MotionConverter pc = new MotionConverter();
+	private IConvertor<Boolean> pc = new MotionConverter();
 	
 	@Test
 	public void convertValueIdentityTest() {
