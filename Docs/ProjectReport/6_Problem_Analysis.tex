@@ -110,6 +110,15 @@ L'ultimo flusso di dati che verr\'a trattato riguardano le richieste di dati ste
 \end{figure}
 
 
+Prima di passare alla struttura \'e secondo noi utile andare a definire l'interazione del configurator in quanto \'e l'unica entit\'a attiva che non si basa effettivamente sui flussi e che contiene l'entry point di tutto il server.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Figures/LogicArchitecture/Server/IConfiguratorInteraction}
+\caption{Server, IConfigurator Interaction}
+\end{figure}
+
+
 \paragraph{Struttura}
 
 Nella struttura dell'analisi del problema abbiamo varie differenze, anche a livello di interfaccia, dovute al cambio di paradigma o ad altre motivazioni, di seguito verranno elencate per rendendere tutto pi\'u chiaro:
@@ -141,12 +150,27 @@ Per quanto riguarda il comportamento delle varie parti del sistema verranno illu
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{Figures/LogicArchitecture/Server/IConfiguratorBehavior}
-\caption{Server, IConfiguratorBehavior}
+\caption{Server, IConfigurator Behavior}
 \end{figure}
 
 Come si pu\'o vedere dalla figura sovrastante il componente IConfigurator sar\'a quello che si occuper\'a di attivare tutto il sistema server occupandosi di rendere tutto operativo e pronto per le richieste da soddisfare. Questo avviene appunto in fasi, incui prima viene settato il tutto attraverso una fase di creazione di tutti i componenti necessari, poi avviene la creazione dei flussi che si occuperanno del flow dei dati ed infine si attiveranno questi flussi in modo che siano attivi.
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Figures/LogicArchitecture/Server/IPersistenceStoreBehavior}
+\caption{Server, IPersistenceStore Behavior}
+\end{figure}
 
+Il comportamento del persistence store rimane molto semplice: una volta creato, attende la richiesta da parte del sistema per la memorizzazione dei dati.
+Quando una richiesta avviene allora si attiva una delle parti che si occupano di leggere o scrivere all'interno del persistence store e effettuano l'operazione, per poi tornare in attesa di ulteriori operazioni. Si aggiunge inoltre che questo componente come l'eventManager sono componenti singleton, e quindi \'e presente solamente un'istanza di questo in tutto il sistema.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Figures/LogicArchitecture/Server/IStreamBuiderBehavior}
+\caption{Server, IStreamBuilder Behavior}
+\end{figure}
+
+Lo stream builder anch'esso risulta molto semplice perch\'e viene chiamato da altri componenti, nel suo caso dal configurator stesso, e per questo presenta due stati come il caso precedente, \textit{New e Wait}. All'arrivo di una richiesta il componente richiede i vari blocchi necessari per la costruzione dello stream direttamente dal componentRepository e, una volta ottenuti li collega assieme per costruire il flusso che poi restituir\'a al configurator stesso.
 
 \subsection{Gap di Astrazione}
 

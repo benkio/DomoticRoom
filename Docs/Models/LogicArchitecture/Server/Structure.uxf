@@ -160,14 +160,14 @@ newRange(range, sensorType)</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>485</x>
+      <x>480</x>
       <y>240</y>
-      <w>100</w>
+      <w>190</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>IStreamBuider
 --
-buildStream():Observable</panel_attributes>
+buildStream(cr: IComponentRepository):Observable</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -993,13 +993,13 @@ presentData(data):View </panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>535</x>
+      <x>575</x>
       <y>245</y>
-      <w>275</w>
+      <w>235</w>
       <h>85</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>530.0;150.0;390.0;150.0;390.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>450.0;150.0;310.0;150.0;310.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLPackage</id>
