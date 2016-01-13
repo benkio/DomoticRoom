@@ -63,17 +63,24 @@ Di seguito si indica un primo marable diagram che mostra le varie trasformazioni
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{Figures/LogicArchitecture/EmbeddedSystem/Structure}
-\caption{Sistema Embedded, Struttura Logica}
+\includegraphics[scale=0.7]{Figures/LogicArchitecture/EmbeddedSystem/Structure}
+\caption{Logic Architecture, Structure}
 \end{figure}
 
-Come si mostra nel sistema soprastante, la struttura logica non ne esce particolarmente modificata rispetto all'analisi iniziale.
-E' stato eliminato il SensorDataFetcher, poich\`e grazie al paradigma Reactive non vien più implementato un controllo a polling sui sensori della Domotic Room, ma si sfrutter\'a un'interazione a procedure call attraverso i listeners.
-La nuova entit\'a DomoticRoomBuilder ha il ruolo centrale di inizializzare il sistema, creando l'architettura e la configurazione iniziale dei suoi componenti.
-L'entit\'a Convertor si occupa di convertire i dati che riceve dalla sorgente Sensore a cui è sottoscritto; inoltre genera un nuovo Stream dati a cui è possibile sottoscriversi.
-L'entit\'a Packager si occupa di sottoscriversi a tutti i Convertor e unire i flussi generati dai singoli in un unico flusso a cui è applicata una funzione di Packaging preparando il dato per essere spedito. A questo punto crea a sua volta uno stream dati che sarà osservato dall'entità ISender che si limiterà ad inviare i dati così "impacchettati" nella rete.
+Come si mostra nello schema soprastante, la struttura logica non ne esce particolarmente modificata rispetto all'analisi iniziale.\\
+Il \textit{SensorDataFetcher} è stato eliminato, poich\`e l'implementazione di polling per ricevere dati dai sensori viene sostituita dal pattern Observable, utilizzato per sfruttare tutte le potenzialità del paradigma Reactive. \\
+La nuova entit\'a \textit{DomoticRoomBuilder} ha il ruolo centrale di inizializzare il sistema, creando l'architettura e la configurazione iniziale dei suoi componenti.\\
+L'entit\'a \textit{Sensor} ha il ruolo centrale di ricevere i dati dai sensori e inviarli su uno stream dati osservabile.
+L'entit\'a \textit{Convertor} si occupa di convertire i dati che riceve dalla sorgente \textbf{Sensor} a cui è sottoscritto; inoltre genera un nuovo Stream dove invia i dati convertiti che riceve dai \textit{Sensor} a cui è sottoscritto.\\
+L'entit\'a \textit{Packager} unisce tutti i flussi in entrata, dai \textit{Converter} in un unico flusso, il suo compito è preparare i dati ad essere inviati al Server.\\
+L'entit\'a \textit{Sender} si occupa di inviare i dati che riceve dal Packager sulla rete, come pensato nella struttura iniziale.
 
-\paragraph{Interazione} La parte di interazione viene drasticamente modificata proprio perch\'e l'assunzione del paradigma reactive risulta principalmente improntato su questo, in particolare \'e possibile condensare in meno codice, e pi\'u dichiarativo. Vengono in ogni caso mostrati le varie operazioni effettuate sullo stream per mantenere il contatto con quanto mostrato attraverso i marable diagrams. Particolare attenzione va posta poi sulla parte che converte da \textit{procedure calls} a \textit{reactive streams}.
+\paragraph{Interazione} La parte di interazione viene drasticamente modificata proprio perch\'e l'assunzione del paradigma reactive risulta principalmente improntato su questo, in particolare \'e possibile condensare in meno codice, e pi\'u dichiarativo. Vengono in ogni caso mostrati le varie operazioni effettuate sullo stream per mantenere il contatto con quanto mostrato attraverso i marable diagrams. Particolare attenzione va posta poi sulla parte che converte da \textit{procedure calls} a \textit{reactive streams}. \\
+Il sistema non ha una interazione continua; come invece suggerisce il paradigma, esso "reagisce" al verificarsi di un evento di particolare interesse.\\
+In questo caso, il sistema reagisce autonomamente alla ricezione di un valore inviato dal sensore. L'entit\'a \textit{Sensor} si occupa di incanalare queste letture periodiche in un flusso potenzialmente infinito di valori.\\
+L'entit\'a \textit{Convertor} \'e a sua volta interessata all'arrivo di un nuovo valore sul flusso creato dal \textit{Sensor}; il Convertor applicher\'a ad ogni nuovo dato una funzione atta a convertire in valore in un dato di maggiore utilità per il sistema.\\
+L'entit\'a \textit{Packager} sarà invece di ascolto sui flussi generati da ogni \textit{Convertor}, appena un nuovo valore convertito è inviato sul flusso; a questo punto il suo compito \'e "impacchettare" il dato, secondo un protocollo di trasmissione per poterlo inviare al Server.\\
+Quest'ultima parte \'e gestita dal \textit{Sender} che appena un dato impacchettato \'e pronto lo invier\'a al Server.
 
 \paragraph{Comportamento}
 
