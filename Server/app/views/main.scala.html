@@ -1,5 +1,9 @@
 @(title: String)(content: Html)
 
+@activeLink(currentPath:String) = @{
+if(request.path.equals(currentPath)) "sidebar-brand"
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,18 +17,18 @@
 
     <title>@title</title>
 
-     <!-- Latest compiled and minified CSS -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Bootstrap Core CSS -->
+    <link href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")" rel="stylesheet">
 
-     <!-- Optional theme -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-     <!-- Latest compiled and minified JavaScript -->
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <!-- Custom CSS -->
     <link href="@routes.Assets.versioned("stylesheets/simple-sidebar.css")" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- jQuery -->
+    <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -41,13 +45,13 @@
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
-                <li class="sidebar-brand">
+                <li class="@activeLink("/domoticRoom/status")">
                    <a href='@routes.Application.status()'>Domotic Room Status</a>
                 </li>
-                <li>
-                    <a href="@routes.Application.analysis()">Data Analysis</a>
+                <li class="@activeLink("/domoticRoom/analysis")" >
+                    <a  href="@routes.Application.analysis()">Data Analysis</a>
                 </li>
-                <li>
+                <li class="@activeLink("/domoticRoom/newrange")">
                     <a href="@routes.Application.newRange()">Insert New Range</a>
                 </li>
             </ul>
