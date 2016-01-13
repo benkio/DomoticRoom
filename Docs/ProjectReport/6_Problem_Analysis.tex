@@ -136,6 +136,18 @@ Nella struttura dell'analisi del problema abbiamo varie differenze, anche a live
 
 \paragraph{Comportamento}
 
+Per quanto riguarda il comportamento delle varie parti del sistema verranno illustrate quelle principali e descritti gli stati principali incui questi componenti verranno a trovarsi. In particolare verranno omessi tutti quei componenti che effettivamente si occupano solamente della trasformazione degli stream in quanto non posseggono effettivamente uno stato, ma consistono in degli algoritmi che, dato un flusso in ingresso, gli applicano delle apposite trasformazioni e restituiscono un flusso in uscita.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Figures/LogicArchitecture/Server/IConfiguratorBehavior}
+\caption{Server, IConfiguratorBehavior}
+\end{figure}
+
+Come si pu\'o vedere dalla figura sovrastante il componente IConfigurator sar\'a quello che si occuper\'a di attivare tutto il sistema server occupandosi di rendere tutto operativo e pronto per le richieste da soddisfare. Questo avviene appunto in fasi, incui prima viene settato il tutto attraverso una fase di creazione di tutti i componenti necessari, poi avviene la creazione dei flussi che si occuperanno del flow dei dati ed infine si attiveranno questi flussi in modo che siano attivi.
+
+
+
 \subsection{Gap di Astrazione}
 
 In questa sezione aggiungeremo tutti i tipi di astrazioni richiesti per affrontare il progetto e che non sono direttamente fruibili attraverso la tecnologia di riferimento.
