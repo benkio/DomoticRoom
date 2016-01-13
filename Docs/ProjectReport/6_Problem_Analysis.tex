@@ -30,7 +30,11 @@ Con questi schemi ci viene concesso ancora una volta di concentrarci prima sul '
 
 \subsubsection{Sistema Embedded}
 
-\paragraph{Flussi Dati} Alla luce del paradigma di programmazione che si \'e deciso di adottare sono stati effettuati dei cambiamenti anche alla struttura che \'e stata esposta precedentemente proprio perch\'e ci sono state fornite da questa assunzione nuovi livelli di astrazione, primo tra tutti il concetto di \textbf{Stream/Flusso}. Quindi in questa fase abbiamo ritenuto molto utile iniziare a visualizzare effettivamente questi flussi tramite un'apposito diagramma.
+\begin{center}
+  \textbf{Flussi Dati}
+\end{center}
+
+Alla luce del paradigma di programmazione che si \'e deciso di adottare sono stati effettuati dei cambiamenti anche alla struttura che \'e stata esposta precedentemente proprio perch\'e ci sono state fornite da questa assunzione nuovi livelli di astrazione, primo tra tutti il concetto di \textbf{Stream/Flusso}. Quindi in questa fase abbiamo ritenuto molto utile iniziare a visualizzare effettivamente questi flussi tramite un'apposito diagramma.
 
 % Figura fatta con draw.io
 \begin{figure}[ht]
@@ -58,8 +62,11 @@ Di seguito si indica un primo marable diagram che mostra le varie trasformazioni
 
 \newpage
 
+\begin{center}
+  \textbf{Struttura}
+\end{center}
 
-\paragraph{Struttura} Chiaramente la struttura, che si basa sul precedente step di analisi dei requisiti, risulta cambiata anche alla luce delle assunzioni effettuate e quindi si possono notare l'introduzione di alcune entit\'a che servono per la gestione del sistema embedded e per impostare i flussi di dati provenienti dai sensori.
+Chiaramente la struttura, che si basa sul precedente step di analisi dei requisiti, risulta cambiata anche alla luce delle assunzioni effettuate e quindi si possono notare l'introduzione di alcune entit\'a che servono per la gestione del sistema embedded e per impostare i flussi di dati provenienti dai sensori.
 
 \begin{figure}[h]
 \centering
@@ -75,20 +82,28 @@ L'entit\'a \textit{Convertor} si occupa di convertire i dati che riceve dalla so
 L'entit\'a \textit{Packager} unisce tutti i flussi in entrata, dai \textit{Converter} in un unico flusso, il suo compito è preparare i dati ad essere inviati al Server.\\
 L'entit\'a \textit{Sender} si occupa di inviare i dati che riceve dal Packager sulla rete, come pensato nella struttura iniziale.
 
-\paragraph{Interazione} La parte di interazione viene drasticamente modificata proprio perch\'e l'assunzione del paradigma reactive risulta principalmente improntato su questo, in particolare \'e possibile condensare in meno codice, e pi\'u dichiarativo. Vengono in ogni caso mostrati le varie operazioni effettuate sullo stream per mantenere il contatto con quanto mostrato attraverso i marable diagrams. Particolare attenzione va posta poi sulla parte che converte da \textit{procedure calls} a \textit{reactive streams}. \\
+\begin{center}
+  \textbf{Interazione}
+\end{center}
+
+La parte di interazione viene drasticamente modificata proprio perch\'e l'assunzione del paradigma reactive risulta principalmente improntato su questo, in particolare \'e possibile condensare in meno codice, e pi\'u dichiarativo. Vengono in ogni caso mostrati le varie operazioni effettuate sullo stream per mantenere il contatto con quanto mostrato attraverso i marable diagrams. Particolare attenzione va posta poi sulla parte che converte da \textit{procedure calls} a \textit{reactive streams}. \\
 Il sistema non ha una interazione continua; come invece suggerisce il paradigma, esso "reagisce" al verificarsi di un evento di particolare interesse.\\
 In questo caso, il sistema reagisce autonomamente alla ricezione di un valore inviato dal sensore. L'entit\'a \textit{Sensor} si occupa di incanalare queste letture periodiche in un flusso potenzialmente infinito di valori.\\
 L'entit\'a \textit{Convertor} \'e a sua volta interessata all'arrivo di un nuovo valore sul flusso creato dal \textit{Sensor}; il Convertor applicher\'a ad ogni nuovo dato una funzione atta a convertire in valore in un dato di maggiore utilità per il sistema.\\
 L'entit\'a \textit{Packager} sarà invece di ascolto sui flussi generati da ogni \textit{Convertor}, appena un nuovo valore convertito è inviato sul flusso; a questo punto il suo compito \'e "impacchettare" il dato, secondo un protocollo di trasmissione per poterlo inviare al Server.\\
 Quest'ultima parte \'e gestita dal \textit{Sender} che appena un dato impacchettato \'e pronto lo invier\'a al Server.
 
-\paragraph{Comportamento}
+\begin{center}
+\textbf{Comportamento}
+\end{center}
 
 \subsubsection{Server}
 
-\paragraph{Interazione}
+\begin{center}
+  \textbf{Interazione e Flussi Dati}
+\end{center}
 
-\textbf{Flussi Dati:} Anche per quanto riguarda la parte server \'e necessario definire gli steam che saranno presenti all'interno del sistema. Inquanto questa parte \'e notevolmente pi\'u corposa rispetto a quella dell'embedded system per varie ragioni, prima tra tutte la capacit\'a di calcolo, saranno necessari pi\'u stream, in particolare si \'e pensato di creare uno stream per ogni funzionalit\'a sulla base delle operazioni che quindi sono da compiere.
+Anche per quanto riguarda la parte server \'e necessario definire gli steam che saranno presenti all'interno del sistema. Inquanto questa parte \'e notevolmente pi\'u corposa rispetto a quella dell'embedded system per varie ragioni, prima tra tutte la capacit\'a di calcolo, saranno necessari pi\'u stream, in particolare si \'e pensato di creare uno stream per ogni funzionalit\'a sulla base delle operazioni che quindi sono da compiere.
 
 Il primo flusso che andremo ad analizzare riguarda la ricezione dei dati da parte del sistema embedded. In particolare si vuole cercare di riutilizzare le entit\'a che si sono introdotte nell'analisi dei requisiti proprio perch\'e queste sono maggiormente collegate al dominio. Si pu\o' inoltre notare altre entit\'a chiamate \textit{IRawDataFormatter e IDBDataFormatter}, queste entit\'a sono utili per preparare la corretta formattazione dei dati provenienti dal flusso e dalla successiva elaborazione per essere salvati poi sul database. Si \'e deciso in particolare di inserirlo per andare a separare i compiti il pi\'u possibile e per facilitare la modifica nel caso si voglia adottare uno standard dei dati interno rispetto a quello del client in modo da effettuare una netta indipendenza tra server e client. Soprattutto perch\'e in un'eventuale futuro si pu\'o facilmente immaginare un'eterogeneit\'a dei dati dovuti ai vari client disponibili e dalla loro provenienza (altre aziende, protocolli proprietari \ldots)
 
@@ -125,7 +140,9 @@ Prima di passare alla struttura \'e secondo noi utile andare a definire l'intera
 
 \newpage
 
-\paragraph{Struttura}
+\begin{center}
+\textbf{Struttura}
+\end{center}
 
 Nella struttura dell'analisi del problema abbiamo varie differenze, anche a livello di interfaccia, dovute al cambio di paradigma o ad altre motivazioni, di seguito verranno elencate per rendendere tutto pi\'u chiaro:
 
@@ -148,8 +165,9 @@ Nella struttura dell'analisi del problema abbiamo varie differenze, anche a live
 
 \newpage
 
-
-\paragraph{Comportamento}
+\begin{center}
+\textbf{Comportamento}
+\end{center}
 
 Per quanto riguarda il comportamento delle varie parti del sistema verranno illustrate quelle principali e descritti gli stati principali incui questi componenti verranno a trovarsi. In particolare verranno omessi tutti quei componenti che effettivamente si occupano solamente della trasformazione degli stream in quanto non posseggono effettivamente uno stato, ma consistono in degli algoritmi che, dato un flusso in ingresso, gli applicano delle apposite trasformazioni e restituiscono un flusso in uscita.
 
