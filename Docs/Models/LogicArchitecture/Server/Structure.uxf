@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="13.3">
-  <zoom_level>3</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>438</x>
-      <y>54</y>
-      <w>51</w>
-      <h>9</h>
+      <x>1040</x>
+      <y>144</y>
+      <w>136</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>type=actclass
 SensorsDataReceiver</panel_attributes>
@@ -16,10 +16,10 @@ SensorsDataReceiver</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>453</x>
-      <y>75</y>
-      <w>66</w>
-      <h>24</h>
+      <x>1080</x>
+      <y>200</y>
+      <w>176</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>IDataReceiver
 --
@@ -29,10 +29,10 @@ getObservable() : Observable</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>528</x>
-      <y>177</y>
-      <w>90</w>
-      <h>15</h>
+      <x>1280</x>
+      <y>472</y>
+      <w>240</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>Configurator
 --
@@ -42,10 +42,10 @@ StreamBuilders : List&lt;IStreamBuider&gt;</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>537</x>
-      <y>132</y>
-      <w>48</w>
-      <h>30</h>
+      <x>1304</x>
+      <y>352</y>
+      <w>128</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>IConfigurator
 --
@@ -56,10 +56,10 @@ setUpStreams():void</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>654</x>
-      <y>258</y>
-      <w>93</w>
-      <h>15</h>
+      <x>1616</x>
+      <y>688</y>
+      <w>248</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>RangeChecker
 --
@@ -69,10 +69,10 @@ currentRanges : Map&lt;sensorType,range&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>687</x>
-      <y>240</y>
-      <w>9</w>
-      <h>24</h>
+      <x>1704</x>
+      <y>640</y>
+      <w>24</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
@@ -80,10 +80,10 @@ currentRanges : Map&lt;sensorType,range&gt;</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>651</x>
-      <y>213</y>
-      <w>72</w>
-      <h>30</h>
+      <x>1608</x>
+      <y>568</y>
+      <w>192</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>IRangeChecker
 --
@@ -94,10 +94,10 @@ updateRange(range,sensorType)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>459</x>
-      <y>60</y>
-      <w>30</w>
-      <h>27</h>
+      <x>1096</x>
+      <y>160</y>
+      <w>80</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>80.0;70.0;10.0;70.0;10.0;10.0</additional_attributes>
@@ -105,10 +105,10 @@ updateRange(range,sensorType)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>561</x>
-      <y>159</y>
-      <w>9</w>
-      <h>24</h>
+      <x>1368</x>
+      <y>424</y>
+      <w>24</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
@@ -116,10 +116,10 @@ updateRange(range,sensorType)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>543</x>
-      <y>216</y>
-      <w>75</w>
-      <h>27</h>
+      <x>1320</x>
+      <y>576</y>
+      <w>200</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>type=actclass
 EventManager
@@ -133,10 +133,10 @@ getInstance:Singleton
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>531</x>
-      <y>246</y>
-      <w>102</w>
-      <h>30</h>
+      <x>1288</x>
+      <y>656</y>
+      <w>272</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>IEventManager
 --
@@ -147,10 +147,10 @@ newRange(range, sensorType)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>579</x>
-      <y>240</y>
-      <w>9</w>
-      <h>15</h>
+      <x>1416</x>
+      <y>640</y>
+      <w>24</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;30.0;10.0;10.0</additional_attributes>
@@ -158,10 +158,10 @@ newRange(range, sensorType)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>615</x>
-      <y>231</y>
-      <w>39</w>
-      <h>9</h>
+      <x>1512</x>
+      <y>616</y>
+      <w>104</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
@@ -169,10 +169,10 @@ newRange(range, sensorType)</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>339</x>
-      <y>135</y>
-      <w>60</w>
-      <h>24</h>
+      <x>776</x>
+      <y>360</y>
+      <w>160</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>IStreamBuider
 --
@@ -182,10 +182,10 @@ buildStream():Observable</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>366</x>
-      <y>156</y>
-      <w>42</w>
-      <h>27</h>
+      <x>848</x>
+      <y>416</y>
+      <w>112</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;40.0;120.0;40.0;120.0;70.0</additional_attributes>
@@ -193,10 +193,10 @@ buildStream():Observable</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>372</x>
-      <y>177</y>
-      <w>60</w>
-      <h>36</h>
+      <x>864</x>
+      <y>472</y>
+      <w>160</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>NewDataStreamBuider
 --
@@ -210,10 +210,10 @@ ps:IPersistenceStore</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>306</x>
-      <y>177</y>
-      <w>57</w>
-      <h>27</h>
+      <x>688</x>
+      <y>472</y>
+      <w>152</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>NewRangeStreamBuider
 --
@@ -225,10 +225,10 @@ evm:IEventManager</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>333</x>
-      <y>156</y>
-      <w>42</w>
-      <h>27</h>
+      <x>760</x>
+      <y>416</y>
+      <w>112</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>120.0;10.0;120.0;40.0;10.0;40.0;10.0;70.0</additional_attributes>
@@ -236,10 +236,10 @@ evm:IEventManager</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>336</x>
-      <y>222</y>
-      <w>81</w>
-      <h>39</h>
+      <x>768</x>
+      <y>592</y>
+      <w>216</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>DataRequestStreamBuilder
 --
@@ -255,10 +255,10 @@ evm:IEventManager</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>363</x>
-      <y>156</y>
-      <w>12</w>
-      <h>72</h>
+      <x>840</x>
+      <y>416</y>
+      <w>32</w>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>20.0;10.0;20.0;40.0;10.0;40.0;10.0;220.0</additional_attributes>
@@ -266,10 +266,10 @@ evm:IEventManager</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>81</x>
-      <y>183</y>
-      <w>39</w>
-      <h>9</h>
+      <x>88</x>
+      <y>488</y>
+      <w>104</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>DataAnalyzer</panel_attributes>
     <additional_attributes/>
@@ -277,10 +277,10 @@ evm:IEventManager</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>96</x>
-      <y>165</y>
-      <w>9</w>
-      <h>24</h>
+      <x>128</x>
+      <y>440</y>
+      <w>24</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
@@ -288,10 +288,10 @@ evm:IEventManager</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>84</x>
-      <y>141</y>
-      <w>36</w>
-      <h>30</h>
+      <x>96</x>
+      <y>376</y>
+      <w>96</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>IDataAnalyzer
 --
@@ -302,10 +302,10 @@ analyze2()</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>306</x>
-      <y>39</y>
-      <w>102</w>
-      <h>30</h>
+      <x>688</x>
+      <y>104</y>
+      <w>272</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>IDataFormatter
 --
@@ -316,10 +316,10 @@ getFormattedStream(Observable):Observable</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>336</x>
-      <y>81</y>
-      <w>48</w>
-      <h>24</h>
+      <x>768</x>
+      <y>216</y>
+      <w>128</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>IRawDataFormatter
 </panel_attributes>
@@ -328,10 +328,10 @@ getFormattedStream(Observable):Observable</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>387</x>
-      <y>81</y>
-      <w>42</w>
-      <h>18</h>
+      <x>904</x>
+      <y>216</y>
+      <w>112</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>IDBDataFormatter</panel_attributes>
     <additional_attributes/>
@@ -339,10 +339,10 @@ getFormattedStream(Observable):Observable</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>354</x>
-      <y>63</y>
-      <w>12</w>
-      <h>27</h>
+      <x>816</x>
+      <y>168</y>
+      <w>32</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;40.0;20.0;40.0;20.0;70.0</additional_attributes>
@@ -350,10 +350,10 @@ getFormattedStream(Observable):Observable</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>354</x>
-      <y>63</y>
-      <w>60</w>
-      <h>27</h>
+      <x>816</x>
+      <y>168</y>
+      <w>160</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;40.0;130.0;40.0;180.0;70.0</additional_attributes>
@@ -361,10 +361,10 @@ getFormattedStream(Observable):Observable</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>483</x>
-      <y>360</y>
-      <w>39</w>
-      <h>24</h>
+      <x>1160</x>
+      <y>960</y>
+      <w>104</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>IPersistentStore
 </panel_attributes>
@@ -373,10 +373,10 @@ getFormattedStream(Observable):Observable</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>468</x>
-      <y>399</y>
-      <w>72</w>
-      <h>33</h>
+      <x>1120</x>
+      <y>1064</y>
+      <w>192</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>PersistentStore
 --
@@ -390,10 +390,10 @@ getInstance():Singleton
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>546</x>
-      <y>435</y>
-      <w>54</w>
-      <h>24</h>
+      <x>1328</x>
+      <y>1160</y>
+      <w>144</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>IPersistenceStoreSaver
 </panel_attributes>
@@ -402,10 +402,10 @@ getInstance():Singleton
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>423</x>
-      <y>435</y>
-      <w>54</w>
-      <h>18</h>
+      <x>1000</x>
+      <y>1160</y>
+      <w>144</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>IPersistenceStoreLoader</panel_attributes>
     <additional_attributes/>
@@ -413,10 +413,10 @@ getInstance():Singleton
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>504</x>
-      <y>363</y>
-      <w>75</w>
-      <h>81</h>
+      <x>1216</x>
+      <y>968</y>
+      <w>200</w>
+      <h>216</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;230.0;10.0;230.0;250.0</additional_attributes>
@@ -424,10 +424,10 @@ getInstance():Singleton
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>447</x>
-      <y>363</y>
-      <w>57</w>
-      <h>81</h>
+      <x>1064</x>
+      <y>968</y>
+      <w>152</w>
+      <h>216</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>170.0;10.0;10.0;10.0;10.0;250.0</additional_attributes>
@@ -435,10 +435,10 @@ getInstance():Singleton
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>498</x>
-      <y>375</y>
-      <w>9</w>
-      <h>30</h>
+      <x>1200</x>
+      <y>1000</y>
+      <w>24</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
@@ -446,10 +446,10 @@ getInstance():Singleton
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>447</x>
-      <y>462</y>
-      <w>81</w>
-      <h>27</h>
+      <x>1064</x>
+      <y>1232</y>
+      <w>216</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>PersistentStoreSaver
 --
@@ -461,10 +461,10 @@ psls:IPersistenceStoreSensorsLoader</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>588</x>
-      <y>393</y>
-      <w>78</w>
-      <h>21</h>
+      <x>1440</x>
+      <y>1048</y>
+      <w>208</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>PersistenceStoreSaver
 --
@@ -475,10 +475,10 @@ psds:IPersistenceStoreDataSaver</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>387</x>
-      <y>429</y>
-      <w>66</w>
-      <h>18</h>
+      <x>904</x>
+      <y>1144</y>
+      <w>176</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>200.0;40.0;10.0;40.0;10.0;10.0</additional_attributes>
@@ -486,10 +486,10 @@ psds:IPersistenceStoreDataSaver</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>534</x>
-      <y>438</y>
-      <w>42</w>
-      <h>69</h>
+      <x>1296</x>
+      <y>1168</y>
+      <w>112</w>
+      <h>184</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>120.0;10.0;10.0;10.0;10.0;210.0</additional_attributes>
@@ -497,10 +497,10 @@ psds:IPersistenceStoreDataSaver</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>459</x>
-      <y>498</y>
-      <w>156</w>
-      <h>30</h>
+      <x>1096</x>
+      <y>1328</y>
+      <w>416</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>IPersistenceStoreDataSaver
 --
@@ -511,10 +511,10 @@ saveWithRangeException(data, sensorName,range,sensorType, delta)</panel_attribut
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>573</x>
-      <y>438</y>
-      <w>36</w>
-      <h>39</h>
+      <x>1400</x>
+      <y>1168</y>
+      <w>96</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;100.0;10.0;100.0;110.0</additional_attributes>
@@ -522,10 +522,10 @@ saveWithRangeException(data, sensorName,range,sensorType, delta)</panel_attribut
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>570</x>
-      <y>468</y>
-      <w>66</w>
-      <h>24</h>
+      <x>1392</x>
+      <y>1248</y>
+      <w>176</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>IPersistenceStoreRangeSaver
 --
@@ -535,10 +535,10 @@ save(range, sensorType)</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>348</x>
-      <y>399</y>
-      <w>84</w>
-      <h>36</h>
+      <x>800</x>
+      <y>1064</y>
+      <w>224</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>IPersistenceStoreDataLoader
 --
@@ -550,10 +550,10 @@ loadCurrentSensorsData()</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>348</x>
-      <y>456</y>
-      <w>84</w>
-      <h>36</h>
+      <x>800</x>
+      <y>1216</y>
+      <w>224</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>IPersistenceStoreRangeLoader
 --
@@ -565,10 +565,10 @@ loadLastRange(sensorType)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>387</x>
-      <y>438</y>
-      <w>66</w>
-      <h>27</h>
+      <x>904</x>
+      <y>1168</y>
+      <w>176</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>200.0;10.0;10.0;10.0;10.0;70.0</additional_attributes>
@@ -576,10 +576,10 @@ loadLastRange(sensorType)</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>285</x>
-      <y>435</y>
-      <w>72</w>
-      <h>24</h>
+      <x>632</x>
+      <y>1160</y>
+      <w>192</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>IPersistenceStoreSensorsLoader
 --
@@ -589,10 +589,10 @@ loadSensors()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>321</x>
-      <y>438</y>
-      <w>132</w>
-      <h>9</h>
+      <x>728</x>
+      <y>1168</y>
+      <w>352</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>420.0;10.0;10.0;10.0</additional_attributes>
@@ -600,10 +600,10 @@ loadSensors()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>573</x>
-      <y>411</y>
-      <w>36</w>
-      <h>33</h>
+      <x>1400</x>
+      <y>1096</y>
+      <w>96</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;90.0;100.0;50.0;100.0;10.0</additional_attributes>
@@ -611,10 +611,10 @@ loadSensors()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>537</x>
-      <y>408</y>
-      <w>171</w>
-      <h>102</h>
+      <x>1304</x>
+      <y>1088</y>
+      <w>456</w>
+      <h>272</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>430.0;10.0;550.0;10.0;550.0;320.0;10.0;320.0</additional_attributes>
@@ -622,10 +622,10 @@ loadSensors()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>411</y>
-      <w>57</w>
-      <h>66</h>
+      <x>1472</x>
+      <y>1096</y>
+      <w>152</w>
+      <h>176</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>170.0;10.0;170.0;100.0;10.0;100.0;10.0;200.0</additional_attributes>
@@ -633,10 +633,10 @@ loadSensors()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>438</y>
-      <w>51</w>
-      <h>30</h>
+      <x>1072</x>
+      <y>1168</y>
+      <w>136</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;150.0;10.0;150.0;80.0</additional_attributes>
@@ -644,10 +644,10 @@ loadSensors()</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>273</x>
-      <y>339</y>
-      <w>453</w>
-      <h>219</h>
+      <x>600</x>
+      <y>904</y>
+      <w>1208</w>
+      <h>584</h>
     </coordinates>
     <panel_attributes>model.PersistenceStore
 --
@@ -657,10 +657,10 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>222</x>
-      <y>126</y>
-      <w>234</w>
-      <h>177</h>
+      <x>464</x>
+      <y>336</y>
+      <w>624</w>
+      <h>472</h>
     </coordinates>
     <panel_attributes>model.Builder
 --
@@ -670,10 +670,10 @@ bg=red</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>513</x>
-      <y>126</y>
-      <w>258</w>
-      <h>171</h>
+      <x>1240</x>
+      <y>336</y>
+      <w>688</w>
+      <h>456</h>
     </coordinates>
     <panel_attributes>controller.managers
 --
@@ -683,10 +683,10 @@ bg=yellow</panel_attributes>
   <element>
     <id>Text</id>
     <coordinates>
-      <x>228</x>
+      <x>480</x>
       <y>0</y>
-      <w>105</w>
-      <h>18</h>
+      <w>280</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>In the packages there's only the classes, all the interfaces are in a separate packages called "interfaces"</panel_attributes>
     <additional_attributes/>
@@ -694,10 +694,10 @@ bg=yellow</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>429</x>
-      <y>192</y>
-      <w>78</w>
-      <h>177</h>
+      <x>1016</x>
+      <y>512</y>
+      <w>208</w>
+      <h>472</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;240.0;10.0;240.0;570.0</additional_attributes>
@@ -705,10 +705,10 @@ bg=yellow</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>429</x>
-      <y>192</y>
-      <w>156</w>
-      <h>66</h>
+      <x>1016</x>
+      <y>512</y>
+      <w>416</w>
+      <h>176</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;240.0;10.0;240.0;200.0;500.0;200.0</additional_attributes>
@@ -716,10 +716,10 @@ bg=yellow</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>429</x>
-      <y>93</y>
-      <w>63</w>
-      <h>108</h>
+      <x>1016</x>
+      <y>248</y>
+      <w>168</w>
+      <h>288</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;340.0;190.0;340.0;190.0;10.0</additional_attributes>
@@ -727,10 +727,10 @@ bg=yellow</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>405</x>
-      <y>93</y>
-      <w>87</w>
-      <h>108</h>
+      <x>952</x>
+      <y>248</y>
+      <w>232</w>
+      <h>288</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>90.0;340.0;270.0;340.0;270.0;90.0;10.0;90.0;10.0;10.0</additional_attributes>
@@ -738,10 +738,10 @@ bg=yellow</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>357</x>
-      <y>93</y>
-      <w>135</w>
-      <h>108</h>
+      <x>824</x>
+      <y>248</y>
+      <w>360</w>
+      <h>288</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>250.0;340.0;430.0;340.0;430.0;90.0;10.0;90.0;10.0;10.0</additional_attributes>
@@ -749,10 +749,10 @@ bg=yellow</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>492</x>
-      <y>54</y>
-      <w>57</w>
-      <h>9</h>
+      <x>1184</x>
+      <y>144</y>
+      <w>152</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>type=actclass
 NewRangeDataReceiver</panel_attributes>
@@ -761,10 +761,10 @@ NewRangeDataReceiver</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
-      <y>60</y>
-      <w>39</w>
-      <h>27</h>
+      <x>1168</x>
+      <y>160</y>
+      <w>104</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;70.0;110.0;70.0;110.0;10.0</additional_attributes>
@@ -772,10 +772,10 @@ NewRangeDataReceiver</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>531</x>
-      <y>75</y>
-      <w>57</w>
-      <h>9</h>
+      <x>1288</x>
+      <y>200</y>
+      <w>152</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>type=actclass
 RequestDataReceiver</panel_attributes>
@@ -784,21 +784,21 @@ RequestDataReceiver</panel_attributes>
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>480</x>
-      <y>72</y>
-      <w>56</w>
-      <h>14</h>
+      <x>1152</x>
+      <y>192</y>
+      <w>152</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>9;9;51;9</additional_attributes>
+    <additional_attributes>24;24;136;24</additional_attributes>
   </element>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>435</x>
-      <y>27</y>
-      <w>162</w>
-      <h>78</h>
+      <x>1032</x>
+      <y>72</y>
+      <w>432</w>
+      <h>208</h>
     </coordinates>
     <panel_attributes>view.DataInput
 --
@@ -808,10 +808,10 @@ bg=green</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>324</x>
-      <y>93</y>
-      <w>168</w>
-      <h>90</h>
+      <x>736</x>
+      <y>248</y>
+      <w>448</w>
+      <h>240</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;280.0;10.0;90.0;540.0;90.0;540.0;10.0</additional_attributes>
@@ -819,10 +819,10 @@ bg=green</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>321</x>
-      <y>201</y>
-      <w>186</w>
-      <h>168</h>
+      <x>728</x>
+      <y>536</y>
+      <w>496</w>
+      <h>448</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;450.0;600.0;450.0;600.0;540.0</additional_attributes>
@@ -830,10 +830,10 @@ bg=green</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>321</x>
-      <y>201</y>
-      <w>264</w>
-      <h>141</h>
+      <x>728</x>
+      <y>536</y>
+      <w>704</w>
+      <h>376</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;450.0;600.0;450.0;600.0;170.0;860.0;170.0</additional_attributes>
@@ -841,10 +841,10 @@ bg=green</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>282</x>
-      <y>81</y>
-      <w>60</w>
-      <h>18</h>
+      <x>624</x>
+      <y>216</y>
+      <w>160</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>IResponseDataFormatter</panel_attributes>
     <additional_attributes/>
@@ -852,10 +852,10 @@ bg=green</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>309</x>
-      <y>63</y>
-      <w>54</w>
-      <h>27</h>
+      <x>696</x>
+      <y>168</y>
+      <w>144</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>160.0;10.0;160.0;40.0;10.0;40.0;10.0;70.0</additional_attributes>
@@ -863,10 +863,10 @@ bg=green</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>225</x>
-      <y>81</y>
-      <w>54</w>
-      <h>18</h>
+      <x>472</x>
+      <y>216</y>
+      <w>144</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>IRequestDataFormatter</panel_attributes>
     <additional_attributes/>
@@ -874,10 +874,10 @@ bg=green</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>249</x>
-      <y>63</y>
-      <w>114</w>
-      <h>27</h>
+      <x>536</x>
+      <y>168</y>
+      <w>304</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>360.0;10.0;360.0;40.0;10.0;40.0;10.0;70.0</additional_attributes>
@@ -885,10 +885,10 @@ bg=green</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>222</x>
-      <y>27</y>
-      <w>207</w>
-      <h>78</h>
+      <x>464</x>
+      <y>72</y>
+      <w>552</w>
+      <h>208</h>
     </coordinates>
     <panel_attributes>view.DataFormatter
 --
@@ -898,10 +898,10 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>267</x>
-      <y>93</y>
-      <w>75</w>
-      <h>144</h>
+      <x>584</x>
+      <y>248</y>
+      <w>200</w>
+      <h>384</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>230.0;460.0;10.0;460.0;10.0;90.0;150.0;90.0;150.0;10.0</additional_attributes>
@@ -909,10 +909,10 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>249</x>
-      <y>93</y>
-      <w>93</w>
-      <h>144</h>
+      <x>536</x>
+      <y>248</y>
+      <w>248</w>
+      <h>384</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>290.0;460.0;70.0;460.0;70.0;90.0;10.0;90.0;10.0;10.0</additional_attributes>
@@ -920,10 +920,10 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>102</x>
-      <y>144</y>
-      <w>285</w>
-      <h>135</h>
+      <x>144</x>
+      <y>384</y>
+      <w>760</w>
+      <h>360</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>930.0;390.0;930.0;430.0;380.0;430.0;380.0;10.0;10.0;10.0</additional_attributes>
@@ -931,10 +931,10 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>414</x>
-      <y>228</y>
-      <w>93</w>
-      <h>141</h>
+      <x>976</x>
+      <y>608</y>
+      <w>248</w>
+      <h>376</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;290.0;10.0;290.0;450.0</additional_attributes>
@@ -942,10 +942,10 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>9</x>
-      <y>123</y>
-      <w>198</w>
-      <h>180</h>
+      <x>32</x>
+      <y>344</y>
+      <w>224</w>
+      <h>200</h>
     </coordinates>
     <panel_attributes>controller.DataAnalyzers
 --
@@ -953,25 +953,12 @@ bg=white</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLPackage</id>
-    <coordinates>
-      <x>6</x>
-      <y>333</y>
-      <w>237</w>
-      <h>225</h>
-    </coordinates>
-    <panel_attributes>view.Presentator
---
-bg=gray</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>87</x>
-      <y>351</y>
-      <w>54</w>
-      <h>24</h>
+      <x>104</x>
+      <y>936</y>
+      <w>144</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>IPresentator
 --
@@ -981,10 +968,10 @@ presentData(data):View </panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>99</x>
-      <y>387</y>
-      <w>30</w>
-      <h>9</h>
+      <x>136</x>
+      <y>1032</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>Presentator</panel_attributes>
     <additional_attributes/>
@@ -992,10 +979,10 @@ presentData(data):View </panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>114</x>
-      <y>372</y>
-      <w>9</w>
-      <h>21</h>
+      <x>176</x>
+      <y>992</y>
+      <w>24</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -1003,10 +990,10 @@ presentData(data):View </panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>111</x>
-      <y>228</y>
-      <w>231</w>
-      <h>132</h>
+      <x>168</x>
+      <y>608</y>
+      <w>616</w>
+      <h>352</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>750.0;10.0;530.0;10.0;530.0;310.0;10.0;310.0;10.0;420.0</additional_attributes>
@@ -1014,12 +1001,62 @@ presentData(data):View </panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>369</x>
-      <y>138</y>
-      <w>165</w>
-      <h>51</h>
+      <x>856</x>
+      <y>368</y>
+      <w>440</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>530.0;150.0;390.0;150.0;390.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>0</x>
+      <y>872</y>
+      <w>352</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>view.Presentator
+--
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1488</x>
+      <y>128</y>
+      <w>184</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>EventManagerFactory
+--
+getInstance() : IEventManager</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1680</x>
+      <y>112</y>
+      <w>80</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>SimpleClass</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1552</x>
+      <y>32</y>
+      <w>112</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>model.Factories
+--
+bg=#4c45FF</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
