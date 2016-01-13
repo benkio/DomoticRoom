@@ -7,8 +7,16 @@ import views.html.*;
 
 public class Application extends Controller {
 
-    public Result index() {
-        return ok(index.render("Your new application is ready."));
+    public Result analysis(){
+	return ok(index.render("TODO ANALYSIS"));
+    }
+
+    public Result newRange(){
+	return ok(index.render("TODO NEW RANGE"));
+    }
+
+    public Result status(){
+	return ok(index.render("TODO STATUS"));
     }
 
 }

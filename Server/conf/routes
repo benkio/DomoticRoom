@@ -3,7 +3,9 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET	/domoticRoom/status			    controllers.Application.status()
+GET	/domoticRoom/analysis		    controllers.Application.analysis()
+GET	/domoticRoom/newrange		    controllers.Application.newRange()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
