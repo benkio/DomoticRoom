@@ -3,7 +3,8 @@
 # ~~~~
 
 # Home page
-GET	/domoticRoom/status			    controllers.Application.status()
+GET     /				    controllers.Application.redirect()
+GET	/domoticRoom/status		    controllers.Application.status()
 GET	/domoticRoom/analysis		    controllers.Application.analysis()
 GET	/domoticRoom/newrange		    controllers.Application.newRange()
 GET	/domoticRoom/ranges		    controllers.Application.ranges()
