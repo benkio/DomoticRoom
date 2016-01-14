@@ -16,7 +16,7 @@ public class Application extends Controller {
     }
 
     public Result status(){
-	return ok(index.render("TODO STATUS"));
+	return ok(status.render("TODO STATUS"));
     }
 
 }
