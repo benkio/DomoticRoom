@@ -6,9 +6,9 @@
 GET     /				    controllers.Application.redirect()
 GET	/domoticRoom/status		    controllers.Application.status()
 GET	/domoticRoom/analysis		    controllers.Analysis.analysis()
-GET	/domoticRoom/newrange		    controllers.Application.newRange()
-GET	/domoticRoom/ranges		    controllers.Application.ranges()
-POST	/domoticRoom/submitNewRange	    controllers.Application.submitNewRange()
+GET	/domoticRoom/newrange		    controllers.RangeEntry.newRange()
+GET	/domoticRoom/ranges		    controllers.RangeEntry.ranges()
+POST	/domoticRoom/submitNewRange	    controllers.RangeEntry.submitNewRange()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
