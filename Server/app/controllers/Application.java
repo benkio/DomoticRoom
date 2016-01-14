@@ -14,10 +14,6 @@ public class Application extends Controller {
     public Result redirect(){
 	return ok(redirect.render());
     }
-    public Result analysis(){
-	// TODO: what?
-	return ok(index.render("TODO ANALYSIS"));
-    }
 
     public Result newRange(){
 	//Make the form look pretty
