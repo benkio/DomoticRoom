@@ -1,0 +1,17 @@
+@import views.html.helper
+@import models.Range
+
+@(newRangeForm: Form[Range])
+
+@main("Domotic Room Control Panel") {
+
+  @helper.form(action = routes.Application.submitNewRange) {
+
+    @helper.inputText(newRangeForm("Type"))
+
+    @helper.inputPassword(newRangeForm("minBound"))
+
+    @helper.inputPassword(newRangeForm("maxBound"))
+
+  }
+}
