@@ -61,16 +61,16 @@ if(request.path.equals(currentPath)) "sidebar-brand"
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="@activeLink("/domoticRoom/status")">
-                   <a href='@routes.Application.status()'>Domotic Room Status</a>
+                   <a href='@controllers.entryPoint.routes.StatusEntryPoint.status()'>Domotic Room Status</a>
                 </li>
                 <li class="@activeLink("/domoticRoom/analysis")" >
-                    <a  href="@routes.Analysis.analysis()">Data Analysis</a>
+                    <a  href="@controllers.entryPoint.routes.AnalysisEntryPoint.analysis()">Data Analysis</a>
                 </li>
 		<li class="@activeLink("/domoticRoom/range")">
-                    <a href="@routes.RangeEntry.ranges()">Range List</a>
+                    <a href="@controllers.entryPoint.routes.RangeEntryPoint.ranges()">Range List</a>
                 </li>
                 <li class="@activeLink("/domoticRoom/newrange")">
-                    <a href="@routes.RangeEntry.newRange()">Insert New Range</a>
+                    <a href="@controllers.entryPoint.routes.RangeEntryPoint.newRange()">Insert New Range</a>
                 </li>
             </ul>
         </div>

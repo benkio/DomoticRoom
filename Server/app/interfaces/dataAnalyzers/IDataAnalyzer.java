@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.dataAnalyzers;
 
 public interface IDataAnalyzer {
 	String analize1();

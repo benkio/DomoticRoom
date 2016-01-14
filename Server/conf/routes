@@ -3,12 +3,12 @@
 # ~~~~
 
 # Home page
-GET     /				    controllers.Application.redirect()
-GET	/domoticRoom/status		    controllers.Application.status()
-GET	/domoticRoom/analysis		    controllers.Analysis.analysis()
-GET	/domoticRoom/newrange		    controllers.RangeEntry.newRange()
-GET	/domoticRoom/ranges		    controllers.RangeEntry.ranges()
-POST	/domoticRoom/submitNewRange	    controllers.RangeEntry.submitNewRange()
+GET 	/							controllers.entryPoint.OtherEntryPoint.redirect()
+GET		/domoticRoom/status			controllers.entryPoint.StatusEntryPoint.status()
+GET		/domoticRoom/analysis		controllers.entryPoint.AnalysisEntryPoint.analysis()
+GET		/domoticRoom/newrange		controllers.entryPoint.RangeEntryPoint.newRange()
+GET		/domoticRoom/ranges		    controllers.entryPoint.RangeEntryPoint.ranges()
+POST	/domoticRoom/submitNewRange	controllers.entryPoint.RangeEntryPoint.submitNewRange()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

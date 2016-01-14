@@ -7,7 +7,7 @@
 
 @main("Domotic Room Control Panel") {
 
-  @helper.form(action = routes.RangeEntry.submitNewRange,'role -> "form") {
+  @helper.form(action = controllers.entryPoint.routes.RangeEntryPoint.submitNewRange,'role -> "form") {
 
     <div class="form-group">
     @select(newRangeForm("Range Type"), options("Temp"->"Temperature","Hum"->"Humidity","Gas"->"Gas"))
