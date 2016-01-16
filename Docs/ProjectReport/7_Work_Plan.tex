@@ -6,7 +6,7 @@ Il piano di lavoro che abbiamo intenzione di attuare si divide in varie fasi:
 
 \begin{enumerate}
   \item{Controllo del Funzionamento Hardware:} la prima cosa che \'e necessario fare \'e quella di controllare che tutta la sensoristica sia effettivamente compatibile e che la parte sistemistica sia assemblabile e funzionante.
-  \item{Ricerca e Analisi Problematiche} Viste le problematiche sollevate precedentemente nell'abstraction gap \'e necessario soffermarsi prima di partire con il progetto per andare ad individuare i tools che possono coprire queste mancanze e quindi avere un'impatto significativo sulla realizzazione del progetto stesso. Queste possono cambiare drasticamente anche la realizzazione del progetto stesso che per\'o deve rimanere fedele all'analisi del problema.
+  \item{Ricerca e Analisi Problematiche:} Viste le problematiche sollevate precedentemente nell'abstraction gap \'e necessario soffermarsi prima di partire con il progetto per andare ad individuare i tools che possono coprire queste mancanze e quindi avere un'impatto significativo sulla realizzazione del progetto stesso. Queste possono cambiare drasticamente anche la realizzazione del progetto stesso che per\'o deve rimanere fedele all'analisi del problema.
   \item{Modello del Progetto:} costruzione del modello del progetto alla luce delle considerazioni precedenti
   \item{Impostazione dell'Environment:} setup di tutti i tools precedenti e controllo del loro corretto funzionamento
   \item{Suddivisione dei Compiti:} quando tutto \'e formalizzato adeguatamente \'e possibile suddividere i vari compiti e quindi parallelizzare il lavoro
@@ -29,6 +29,7 @@ In questa sottosezione vengono illustrati i tools utilizzati durante questo prog
  \item {Bootstrap:} Si tratta di una libreria grafica per gestire il frontend e renderlo pi\'u piacevole.\ldots
  \item {MongoDB:} Al fine di coprire alcuni temi del corso si \'e deciso di adottare un database NoSQL, in particolare perch\'e questo, attraverso una rappresentazione a documenti e del tutto simile al formato JSON, fortemente utilizzato in ambito web, risulta molto adatto al problema. Inoltre ci consente di memorizzare i dati in maniera dinamica in modo che, se in un futuro l'applicazione dovesse ingrandirsi o se devono essere fatte delle aggiunte/modifiche, queste possano essere fatte in agilmente. Infine,l'ultimo vantaggio consiste nel memorizzare i dati esattamente come possono essere utili al sistema, evitando il prezzo delle join relazionali. \cite{MongoDB}
  \item {reactiveMongo:} Per l'accesso al database si \'e deciso di utilizzare una libreria che meglio incarna l'idea di stream effettuando appunto accessi completamente asincroni e quindi rendendo il tutto non bloccante, in piena idea reattiva.\cite{ReactiveMongo}
+ \item {Flot.js:} Libreria javascript per la rappresentazione dei dati sul web. \cite{FlotJS}
  \item {New Relic:} \ldots
  \item {Quickcheck:} \ldots
  \item {rxJava:} \ldots \cite{RxJava}
