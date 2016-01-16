@@ -1,4 +1,7 @@
-name := """play-scala"""
+import play.routes.compiler.InjectedRoutesGenerator
+import play.sbt.PlayScala
+
+name := """Domotic Room Server"""
 
 version := "1.0-SNAPSHOT"
 
