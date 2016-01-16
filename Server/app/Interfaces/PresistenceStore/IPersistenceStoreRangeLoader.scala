@@ -9,5 +9,5 @@ import org.joda.time.{DateTime, Interval}
 trait IPersistenceStoreRangeLoader {
   def loadRange(sensorType: SensorType, startDate: DateTime, timeInterval: Interval)
   def loadLastRanges
-  def leadLastRange(sensorType: SensorType)
+  def loadLastRange(sensorType: SensorType)
 }
