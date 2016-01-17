@@ -1,7 +1,7 @@
 package interfaces.presistenceStore
 
 /**
-  * Created by parallels on 1/16/16.
+  * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
   */
 trait IPersistenceStoreLoader
   extends IPersistenceStoreDataLoader

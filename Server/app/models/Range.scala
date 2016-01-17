@@ -14,6 +14,7 @@ case class TemperatureRangeType() extends RangeType
 case class GasRangeType()         extends RangeType
 case class MovementRangeType()    extends RangeType
 case class LightRangeType()       extends RangeType
+case class HumidityRangeType()    extends RangeType
 
 object RangeTypeUtil{
   def Int2RangeType(rt:Int): RangeType = rt match {
@@ -21,5 +22,6 @@ object RangeTypeUtil{
     case 2 => new LightRangeType
     case 3 => new MovementRangeType
     case 4 => new TemperatureRangeType
+    case 5 => new HumidityRangeType
   }
 }
