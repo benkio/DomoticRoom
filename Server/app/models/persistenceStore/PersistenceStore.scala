@@ -1,6 +1,8 @@
 package models.persistenceStore
 
-import Interfaces.PresistenceStore.{IPersistenceStoreLoader, IPersistenceStoreSaver, IPersistenceStore}
+import interfaces.presistenceStore._
+import models.persistenceStore.loaders._
+import models.persistenceStore.savers._
 import models.{SensorType, Range}
 import org.joda.time.{Interval, DateTime}
 import play.api.libs.json.JsValue
@@ -8,7 +10,15 @@ import play.api.libs.json.JsValue
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
   */
-class PersistenceStore(pss: IPersistenceStoreSaver, psl : IPersistenceStoreLoader ) extends IPersistenceStore {
+object PersistenceStore extends IPersistenceStore {
+  val pss: IPersistenceStoreSaver = new PersistenceStoreSaver(
+    new PersistenceStoreRangeSaver(),
+    new PersistenceStoreDataSaver()
+  )
+  val psl : IPersistenceStoreLoader = new PersistenceStoreLoader(
+    new PersistenceStoreDataLoader(),
+    new PersistenceStoreRangeLoader(),
+    new PersistenceStoreSensorsLoader())
 
   //////////////////////////////////////////////
   ////////////////Load Operations///////////////
