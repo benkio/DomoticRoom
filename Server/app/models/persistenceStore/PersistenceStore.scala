@@ -6,19 +6,21 @@ import models.persistenceStore.savers._
 import models.{SensorType, Range}
 import org.joda.time.{Interval, DateTime}
 import play.api.libs.json.JsValue
+import scala.concurrent.ExecutionContext.Implicits.global
+import reactivemongo.api._
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
   */
 object PersistenceStore extends IPersistenceStore {
   val pss: IPersistenceStoreSaver = new PersistenceStoreSaver(
-    new PersistenceStoreRangeSaver(),
-    new PersistenceStoreDataSaver()
+    new PersistenceStoreRangeSaver(connection:DB),
+    new PersistenceStoreDataSaver(connection:DB)
   )
   val psl : IPersistenceStoreLoader = new PersistenceStoreLoader(
-    new PersistenceStoreDataLoader(),
-    new PersistenceStoreRangeLoader(),
-    new PersistenceStoreSensorsLoader())
+    new PersistenceStoreDataLoader(connection:DB),
+    new PersistenceStoreRangeLoader(connection:DB),
+    new PersistenceStoreSensorsLoader(connection:DB))
 
   //////////////////////////////////////////////
   ////////////////Load Operations///////////////
