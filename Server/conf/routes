@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET 	/							controllers.entryPoint.OtherEntryPoint.redirect()
+GET 	/							controllers.entryPoint.OtherEntryPoint.root()
 GET		/domoticRoom/status			controllers.entryPoint.StatusEntryPoint.status()
 GET		/domoticRoom/analysis		controllers.entryPoint.AnalysisEntryPoint.analysis()
 GET		/domoticRoom/newrange		controllers.entryPoint.RangeEntryPoint.newRange()

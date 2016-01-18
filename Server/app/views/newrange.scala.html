@@ -3,14 +3,14 @@
 @import views.html.helper.options
 @import models.Range
 
-@(newRangeForm: Form[Range])
+@(newRangeForm: Form[Range])(implicit messages: Messages)
 
 @main("Domotic Room Control Panel") {
 
   @helper.form(action = controllers.entryPoint.routes.RangeEntryPoint.submitNewRange,'role -> "form") {
 
     <div class="form-group">
-    @select(newRangeForm("Range Type"), options("Temp"->"Temperature","Hum"->"Humidity","Gas"->"Gas"))
+    @select(field = newRangeForm("rangeType"),options = options("Temp"->"Temperature","Hum"->"Humidity","Gas"->"Gas"))
     </div>
     <div class="form-group">
     @helper.inputText(newRangeForm("minBound"),'class -> "form-control",'type -> "number")
