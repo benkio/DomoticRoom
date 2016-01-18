@@ -24,7 +24,9 @@ import play.modules.reactivemongo.{
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
   */
-object PersistenceStore @Inject()(val reactiveMongoApi: ReactiveMongoApi) extends IPersistenceStore with ReactiveMongoComponents {
+object PersistenceStore extends IPersistenceStore with ReactiveMongoComponents {
+
+  val reactiveMongoApi: ReactiveMongoApi = 
   val pss: IPersistenceStoreSaver = new PersistenceStoreSaver(
     new PersistenceStoreRangeSaver(reactiveMongoApi),
     new PersistenceStoreDataSaver()
