@@ -7,34 +7,24 @@ import models.{SensorType, Range}
 import org.joda.time.{Interval, DateTime}
 import play.api.libs.json.JsValue
 
-import javax.inject.Inject
+import play.api.Play.current
 
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.libs.json.Json
-import play.api.mvc.{ Action, BodyParsers, Call, Controller, Result }
-
-import reactivemongo.bson.{ BSONObjectID, BSONDocument }
-import reactivemongo.core.actors.Exceptions.PrimaryUnavailableException
-import reactivemongo.api.commands.WriteResult
-
-import play.modules.reactivemongo.{
-  MongoController, ReactiveMongoApi, ReactiveMongoComponents
-}
+import play.modules.reactivemongo.ReactiveMongoApi
+import play.modules.reactivemongo.json.collection.JSONCollection
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
   */
-object PersistenceStore extends IPersistenceStore with ReactiveMongoComponents {
+object PersistenceStore extends IPersistenceStore{
 
-  val reactiveMongoApi: ReactiveMongoApi = 
   val pss: IPersistenceStoreSaver = new PersistenceStoreSaver(
-    new PersistenceStoreRangeSaver(reactiveMongoApi),
-    new PersistenceStoreDataSaver()
+    new PersistenceStoreRangeSaver(ReactiveMongoInjector.reactiveMongoApi),
+    new PersistenceStoreDataSaver(ReactiveMongoInjector.reactiveMongoApi)
   )
   val psl : IPersistenceStoreLoader = new PersistenceStoreLoader(
-    new PersistenceStoreDataLoader(),
-    new PersistenceStoreRangeLoader(),
-    new PersistenceStoreSensorsLoader())
+    new PersistenceStoreDataLoader(ReactiveMongoInjector.reactiveMongoApi),
+    new PersistenceStoreRangeLoader(ReactiveMongoInjector.reactiveMongoApi),
+    new PersistenceStoreSensorsLoader(ReactiveMongoInjector.reactiveMongoApi))
 
   //////////////////////////////////////////////
   ////////////////Load Operations///////////////
@@ -73,4 +63,12 @@ object PersistenceStore extends IPersistenceStore with ReactiveMongoComponents {
 
   override def save(range: Range, sensorType: SensorType): Unit =
     pss.save(range,sensorType)
+}
+
+
+object ReactiveMongoInjector {
+  lazy val reactiveMongoApi = current.injector.instanceOf[ReactiveMongoApi]
+
+  def collection(name: String): JSONCollection =
+    reactiveMongoApi.db.collection[JSONCollection](name)
 }
