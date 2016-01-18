@@ -25,3 +25,18 @@ object RangeTypeUtil{
     case 5 => new HumidityRangeType
   }
 }
+
+object RangeBooleanDBJson {
+  val Id = "_id"
+  val value = "value"
+  val rangeType = "type"
+  val dateCreated = "dateCreated"
+}
+
+object RangeDBJson {
+  val Id = "_id"
+  val minBound = "minBound"
+  val maxBound = "maxBound"
+  val rangeType = "type"
+  val dateCreated = "dateCreated"
+}
