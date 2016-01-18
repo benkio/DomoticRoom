@@ -1,19 +1,23 @@
-name := """DomoticRoom Server"""
+import play.routes.compiler.InjectedRoutesGenerator
+import play.sbt.PlayScala
+
+name := """Domotic Room Server"""
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayJava)
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
-  javaJdbc,
+  jdbc,
   cache,
-  javaWs
-  //"io.reactivex" % "rxjava" % "1.1.0"
-  //"com.netflix.rxjava" % "rxjava-scala" % "0.20.7"
-  //"com.typesafe.play" %% "play-streams_2.11" % "2.5.0-M1"
+  ws,
+  specs2 % Test,
+  "org.reactivemongo" %% "reactivemongo" % "0.11.9" //ReactiveMongo library
 )
+
+resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.

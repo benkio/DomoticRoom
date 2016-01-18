@@ -1,10 +1,5 @@
 @(title: String)(content: Html)
 
-@activeLink(currentPath:String) = @{
-if(request.path.equals(currentPath)) "sidebar-brand"
-}
-
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -23,6 +18,7 @@ if(request.path.equals(currentPath)) "sidebar-brand"
     <!-- Custom CSS -->
     <link href="@routes.Assets.versioned("stylesheets/simple-sidebar.css")" rel="stylesheet">
     <link href="@routes.Assets.versioned("stylesheets/flot.css")" rel="stylesheet">
+    <link href="@routes.Assets.versioned("stylesheets/main.css")" rel="stylesheet">
 
     <!-- jQuery -->
     <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
@@ -43,56 +39,56 @@ if(request.path.equals(currentPath)) "sidebar-brand"
     <script src="@routes.Assets.versioned("javascripts/charts.js")"></script>
 
 
-    
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
 </head>
 
 <body>
 
-    <div id="wrapper">
+<div id="wrapper">
 
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="@activeLink("/domoticRoom/status")">
-                   <a href='@controllers.entryPoint.routes.StatusEntryPoint.status()'>Domotic Room Status</a>
-                </li>
-                <li class="@activeLink("/domoticRoom/analysis")" >
-                    <a  href="@controllers.entryPoint.routes.AnalysisEntryPoint.analysis()">Data Analysis</a>
-                </li>
-		<li class="@activeLink("/domoticRoom/range")">
-                    <a href="@controllers.entryPoint.routes.RangeEntryPoint.ranges()">Range List</a>
-                </li>
-                <li class="@activeLink("/domoticRoom/newrange")">
-                    <a href="@controllers.entryPoint.routes.RangeEntryPoint.newRange()">Insert New Range</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+            <a href='@controllers.entryPoint.routes.StatusEntryPoint.status()'>Domotic Room Status</a>
+            </li>
+            <li >
+            <a  href="@controllers.entryPoint.routes.AnalysisEntryPoint.analysis()">Data Analysis</a>
+            </li>
+            <li>
+            <a href="@controllers.entryPoint.routes.RangeEntryPoint.ranges()">Range List</a>
+            </li>
+            <li>
+            <a href="@controllers.entryPoint.routes.RangeEntryPoint.newRange()">Insert New Range</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        @content
-                    </div>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    @content
                 </div>
             </div>
         </div>
-        <!-- /#page-content-wrapper -->
-
     </div>
-    <!-- /#wrapper -->
+    <!-- /#page-content-wrapper -->
 
-    <!-- Menu Toggle Script -->
-    <script>
+</div>
+<!-- /#wrapper -->
+
+<!-- Menu Toggle Script -->
+<script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
