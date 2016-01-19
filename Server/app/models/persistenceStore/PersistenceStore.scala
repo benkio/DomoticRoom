@@ -3,7 +3,7 @@ package models.persistenceStore
 import interfaces.presistenceStore._
 import models.persistenceStore.loaders._
 import models.persistenceStore.savers._
-import models.{SensorType, Range}
+import models.{RangeType, SensorType, Range}
 import org.joda.time.{ReadableDuration, Interval, DateTime}
 import play.api.libs.json.JsValue
 
@@ -45,8 +45,8 @@ object PersistenceStore extends IPersistenceStore{
   override def loadLastRange(sensorType: SensorType): Unit =
     psl.loadLastRange(sensorType)
 
-  override def loadRange(sensorType: SensorType, startDate: DateTime, timeInterval: Interval): Unit =
-    psl.loadRange(sensorType, startDate, timeInterval)
+  override def loadRange(rangeType: RangeType, startDate: DateTime, duration: ReadableDuration): Unit =
+    psl.loadRange(rangeType, startDate, duration)
 
   override def loadLastRanges: Unit =
     psl.loadLastRanges

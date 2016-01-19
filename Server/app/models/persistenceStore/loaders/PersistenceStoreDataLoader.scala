@@ -50,13 +50,21 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
  */
   override def loadCurrentSensorsData(): Unit = {
 
+    //TODO: find how to import the Aggregation Framework
+
     import dataCollection.BatchCommands.AggregationFramework.{
     AggregationResult, Ascending, First, Group, Last, Project, Sort, SumField
     }
-    
+
     val command = Group(BSONString("$type"))("realmaxid" -> Max("$_id"))
    // dataCollection.aggregate(command)
   }
 
-  override def loadCurrentSensorData(sensorName: String): Unit = ??? //TODO
+  override def loadCurrentSensorData(sensorName: String): Unit = {
+    val query = BSONDocument(
+      "sensorName" -> BSONString(sensorName)
+    )
+
+    return dataCollection.find(query).cursor[BSONDocument].collect[List]();
+  }
 }

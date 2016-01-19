@@ -1,7 +1,7 @@
 package models.persistenceStore.loaders
 
 import interfaces.presistenceStore.{IPersistenceStoreRangeLoader, IPersistenceStoreDataLoader, IPersistenceStoreLoader, IPersistenceStoreSensorsLoader}
-import models.SensorType
+import models.{RangeType, SensorType}
 import org.joda.time.{ReadableDuration, Interval, DateTime}
 import reactivemongo.bson.BSONDocument
 
@@ -15,8 +15,8 @@ class PersistenceStoreLoader(psdl:IPersistenceStoreDataLoader, psrl:IPersistence
   ///////////////////////////////////////
   ////////////Range Load Operations//////
   ///////////////////////////////////////
-  override def loadRange(sensorType: SensorType, startDate: DateTime, timeInterval: Interval): Unit =
-    psrl.loadRange(sensorType, startDate, timeInterval)
+  override def loadRange(rangeType: RangeType, startDate: DateTime, duration:ReadableDuration): Unit =
+    psrl.loadRange(rangeType, startDate, duration)
 
   override def loadLastRange(sensorType: SensorType): Unit =
     psrl.loadLastRange(sensorType)
