@@ -8,7 +8,6 @@ import play.modules.reactivemongo.json._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 import play.modules.reactivemongo.ReactiveMongoApi
-import reactivemongo.core.commands.{Max, Group}
 
 import reactivemongo.bson.{ BSONDocument, BSONString}
 
@@ -53,7 +52,7 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
     //TODO: find how to import the Aggregation Framework
 
     import dataCollection.BatchCommands.AggregationFramework.{
-    AggregationResult, Ascending, First, Group, Last, Project, Sort, SumField
+    AggregationResult, Ascending, First, Group, Last, Project, Sort, SumField,Max
     }
 
     val command = Group(BSONString("$type"))("realmaxid" -> Max("$_id"))
