@@ -9,11 +9,12 @@ import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 import play.modules.reactivemongo.ReactiveMongoApi
 
-import reactivemongo.bson.{ BSONDocument, BSONString}
+import reactivemongo.bson.{BSONDocument, BSONString}
 
-import reactivemongo.api.collections.bson.BSONCollection
+import reactivemongo.api.collections.bson.{ BSONCollection}
 
-import scala.concurrent.Future
+import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -47,23 +48,29 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
  *  db.Data.aggregate({$group: {_id: "$type", realmaxid: {$max: "$_id"}}})
  *  map result with other values
  */
-  override def loadCurrentSensorsData(): Unit = {
+  override def loadCurrentSensorsData() : Future[List[BSONDocument]] = {
 
-    //TODO: find how to import the Aggregation Framework
+    //TODO: finish the query
 
-    import dataCollection.BatchCommands.AggregationFramework.{
-    AggregationResult, Ascending, First, Group, Last, Project, Sort, SumField,Max
-    }
+    import dataCollection.BatchCommands.AggregationFramework.{Group, Max }
 
     val command = Group(BSONString("$type"))("realmaxid" -> Max("$_id"))
-   // dataCollection.aggregate(command)
+
+    val findidQuery = dataCollection.aggregate(command) flatMap {r =>
+      Future.sequence(r.documents map { x =>
+        val t = x.get("realmaxid").get
+        dataCollection.find(BSONDocument("_id" -> t)).cursor[BSONDocument].collect[List]()
+        }
+      )
+    } flatMap(x => Future{x.flatten})
+    findidQuery
   }
 
-  override def loadCurrentSensorData(sensorName: String): Unit = {
+  override def loadCurrentSensorData(sensorName: String) = {
     val query = BSONDocument(
       "sensorName" -> BSONString(sensorName)
     )
 
-    return dataCollection.find(query).cursor[BSONDocument].collect[List]();
+    dataCollection.find(query).cursor[BSONDocument].collect[List]();
   }
 }

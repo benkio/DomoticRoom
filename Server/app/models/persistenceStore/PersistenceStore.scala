@@ -36,10 +36,10 @@ object PersistenceStore extends IPersistenceStore{
   override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration): Future[List[BSONDocument]] =
     psl.loadData(sensorName, startDate, duration)
 
-  override def loadCurrentSensorsData(): Unit =
+  override def loadCurrentSensorsData():  Future[List[BSONDocument]] =
     psl.loadCurrentSensorsData()
 
-  override def loadCurrentSensorData(sensorName: String): Unit =
+  override def loadCurrentSensorData(sensorName: String): Future[List[BSONDocument]] =
     psl.loadCurrentSensorData(sensorName)
 
   override def loadLastRange(sensorType: SensorType): Unit =

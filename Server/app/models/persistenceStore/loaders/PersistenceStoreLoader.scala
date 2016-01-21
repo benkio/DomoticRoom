@@ -28,13 +28,13 @@ class PersistenceStoreLoader(psdl:IPersistenceStoreDataLoader, psrl:IPersistence
   ////////////Data Load Operations///////
   ///////////////////////////////////////
 
-  override def loadCurrentSensorsData(): Unit =
+  override def loadCurrentSensorsData():  Future[List[BSONDocument]] =
     psdl.loadCurrentSensorsData()
 
   override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration): Future[List[BSONDocument]] =
     psdl.loadData(sensorName,startDate,duration)
 
-  override def loadCurrentSensorData(sensorName: String): Unit =
+  override def loadCurrentSensorData(sensorName: String):  Future[List[BSONDocument]] =
     psdl.loadCurrentSensorData(sensorName)
 
   ///////////////////////////////////////
