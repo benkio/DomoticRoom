@@ -3,6 +3,8 @@ package models.persistenceStore.loaders
 import interfaces.presistenceStore.IPersistenceStoreDataLoader
 import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter}
 import org.joda.time.{ReadableDuration, DateTime}
+import play.api.libs.concurrent.Promise
+import play.api.libs.iteratee.{Enumeratee, Enumerator}
 import play.modules.reactivemongo.json._
 
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
@@ -28,7 +30,7 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
 
   val dataCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection]("Data")
 
-  override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration): Future[List[BSONDocument]] = {
+  override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration) = {
     val finalDate = startDate.plus(duration).toString(patternFormat)
     val startDateString = startDate.toString(patternFormat)
 
@@ -40,10 +42,10 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
       )
     )
 
-    return dataCollection.find(query).cursor[BSONDocument]().collect[List]()
+    dataCollection.find(query).cursor[BSONDocument]().enumerate()
   }
 
-  override def loadCurrentSensorsData() : Future[List[BSONDocument]] = {
+  override def loadCurrentSensorsData() : Enumerator[BSONDocument] = {
 
     import dataCollection.BatchCommands.AggregationFramework.{Group, Max }
 
@@ -56,7 +58,10 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
         }
       )
     } flatMap(x => Future{x.flatten})
-    findidQuery
+
+    (Enumerator(findidQuery) &>
+      Enumeratee.mapM(identity)) &>
+      Enumeratee.mapFlatten(x => Enumerator.enumerate(x))
   }
 
   override def loadCurrentSensorData(sensorName: String) = {
