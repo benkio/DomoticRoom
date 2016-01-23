@@ -33,38 +33,38 @@ object PersistenceStore extends IPersistenceStore{
   ////////////////Load Operations///////////////
   //////////////////////////////////////////////
 
-  override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration): Future[List[BSONDocument]] =
+  override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration) =
     psl.loadData(sensorName, startDate, duration)
 
-  override def loadCurrentSensorsData():  Future[List[BSONDocument]] =
+  override def loadCurrentSensorsData() =
     psl.loadCurrentSensorsData()
 
-  override def loadCurrentSensorData(sensorName: String): Future[List[BSONDocument]] =
+  override def loadCurrentSensorData(sensorName: String) =
     psl.loadCurrentSensorData(sensorName)
 
-  override def loadLastRange(sensorType: SensorType): Unit =
-    psl.loadLastRange(sensorType)
+  override def loadLastRange(rangeType: RangeType) =
+    psl.loadLastRange(rangeType)
 
-  override def loadRange(rangeType: RangeType, startDate: DateTime, duration: ReadableDuration): Unit =
+  override def loadRange(rangeType: RangeType, startDate: DateTime, duration: ReadableDuration) =
     psl.loadRange(rangeType, startDate, duration)
 
-  override def loadLastRanges: Unit =
+  override def loadLastRanges =
     psl.loadLastRanges
 
-  override def loadSensors: Unit =
+  override def loadSensors =
     psl.loadSensors
 
   //////////////////////////////////////////////
   ////////////////Save Operations///////////////
   //////////////////////////////////////////////
 
-  override def saveWithRangeException(data: JsValue, sensorName: String, range: Range, sensorType: SensorType, delta: Double): Unit =
+  override def saveWithRangeException(data: JsValue, sensorName: String, range: Range, sensorType: SensorType, delta: Double) =
     pss.saveWithRangeException(data, sensorName, range, sensorType, delta)
 
-  override def save(data: JsValue, sensorName: String, sensorType: SensorType): Unit =
+  override def save(data: JsValue, sensorName: String, sensorType: SensorType) =
     pss.save(data,sensorName,sensorType)
 
-  override def save(range: Range, sensorType: SensorType): Unit =
+  override def save(range: Range, sensorType: SensorType) =
     pss.save(range,sensorType)
 }
 

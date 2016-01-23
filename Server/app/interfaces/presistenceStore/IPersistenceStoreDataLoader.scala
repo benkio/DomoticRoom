@@ -10,6 +10,6 @@ import scala.concurrent.Future
   */
 trait IPersistenceStoreDataLoader {
   def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration) : Future[List[BSONDocument]]
-  def loadCurrentSensorData(sensorName : String) : Future[List[BSONDocument]]
+  def loadCurrentSensorData(sensorName : String) : Future[Option[BSONDocument]]
   def loadCurrentSensorsData() : Future[List[BSONDocument]]
 }

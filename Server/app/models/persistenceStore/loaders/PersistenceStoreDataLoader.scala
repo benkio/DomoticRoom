@@ -40,17 +40,10 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
       )
     )
 
-    return dataCollection.find(query).cursor[BSONDocument].collect[List]();
+    return dataCollection.find(query).cursor[BSONDocument]().collect[List]()
   }
 
-  /*
- *  db.runCommand({group:{ns: 'Data',key: { type: 1},$reduce: function (obj,prev) { prev._id = isNaN(prev._id) ? obj._id : Math.max(prev._id, obj._id);  },initial:{}}})
- *  db.Data.aggregate({$group: {_id: "$type", realmaxid: {$max: "$_id"}}})
- *  map result with other values
- */
   override def loadCurrentSensorsData() : Future[List[BSONDocument]] = {
-
-    //TODO: finish the query
 
     import dataCollection.BatchCommands.AggregationFramework.{Group, Max }
 
@@ -59,7 +52,7 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
     val findidQuery = dataCollection.aggregate(command) flatMap {r =>
       Future.sequence(r.documents map { x =>
         val t = x.get("realmaxid").get
-        dataCollection.find(BSONDocument("_id" -> t)).cursor[BSONDocument].collect[List]()
+        dataCollection.find(BSONDocument("_id" -> t)).cursor[BSONDocument]() collect[List]()
         }
       )
     } flatMap(x => Future{x.flatten})
@@ -71,6 +64,6 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
       "sensorName" -> BSONString(sensorName)
     )
 
-    dataCollection.find(query).cursor[BSONDocument].collect[List]();
+    dataCollection.find(query).sort(BSONDocument("dateCreated" -> -1)).one[BSONDocument]
   }
 }

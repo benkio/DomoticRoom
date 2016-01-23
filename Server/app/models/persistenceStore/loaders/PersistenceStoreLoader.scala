@@ -15,32 +15,32 @@ class PersistenceStoreLoader(psdl:IPersistenceStoreDataLoader, psrl:IPersistence
   ///////////////////////////////////////
   ////////////Range Load Operations//////
   ///////////////////////////////////////
-  override def loadRange(rangeType: RangeType, startDate: DateTime, duration:ReadableDuration): Unit =
+  override def loadRange(rangeType: RangeType, startDate: DateTime, duration:ReadableDuration) =
     psrl.loadRange(rangeType, startDate, duration)
 
-  override def loadLastRange(sensorType: SensorType): Unit =
-    psrl.loadLastRange(sensorType)
+  override def loadLastRange(rangeType: RangeType)=
+    psrl.loadLastRange(rangeType)
 
-  override def loadLastRanges: Unit =
+  override def loadLastRanges =
     psrl.loadLastRanges
 
   ///////////////////////////////////////
   ////////////Data Load Operations///////
   ///////////////////////////////////////
 
-  override def loadCurrentSensorsData():  Future[List[BSONDocument]] =
+  override def loadCurrentSensorsData() =
     psdl.loadCurrentSensorsData()
 
-  override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration): Future[List[BSONDocument]] =
+  override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration)=
     psdl.loadData(sensorName,startDate,duration)
 
-  override def loadCurrentSensorData(sensorName: String):  Future[List[BSONDocument]] =
+  override def loadCurrentSensorData(sensorName: String) =
     psdl.loadCurrentSensorData(sensorName)
 
   ///////////////////////////////////////
   ////////////Sensorss Load Operations///
   ///////////////////////////////////////
 
-  override def loadSensors: Unit =
+  override def loadSensors =
     pssl.loadSensors
 }
