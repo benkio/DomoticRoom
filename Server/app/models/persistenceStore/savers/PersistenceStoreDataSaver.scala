@@ -28,24 +28,15 @@ class PersistenceStoreDataSaver @Inject() (val reactiveMongoApi: ReactiveMongoAp
 
   val dataCollection = reactiveMongoApi.db.collection[BSONCollection]("Data")
 
-  override def save(dataFormatted : BSONDocument) = {
-    store(dataFormatted)
+  override def saveData(dataFormatted : BSONDocument) = {
+    StoreUtils.store(dataCollection,dataFormatted)
   }
 
 
-  override def saveWithRangeException(dataFormatted : BSONDocument) = {
-    store(dataFormatted)
+  override def saveDataWithRangeException(dataFormatted : BSONDocument) = {
+    StoreUtils.store(dataCollection,dataFormatted)
   }
 
-  private def store(dataFormatted : BSONDocument): Unit ={
-    val future = dataCollection.insert(dataFormatted)
 
-    future.onComplete {
-      case Failure(e) => println ("Error Insertion of the Data" + e.getMessage)
-      case Success(lastError) => {
-        println("successfully inserted document with lastError = " + lastError)
-      }
-    }
-  }
 
 }

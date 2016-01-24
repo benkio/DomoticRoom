@@ -58,14 +58,14 @@ object PersistenceStore extends IPersistenceStore{
   ////////////////Save Operations///////////////
   //////////////////////////////////////////////
 
-  override def saveWithRangeException(data:BSONDocument) =
-    pss.saveWithRangeException(data)
+  override def saveDataWithRangeException(data:BSONDocument) =
+    pss.saveDataWithRangeException(data)
 
-  override def save(data: BSONDocument) =
-    pss.save(data)
+  override def saveRange(data: BSONDocument) =
+    pss.saveRange(data)
 
-  override def save(range: Range, sensorType: SensorType) =
-    pss.save(range,sensorType)
+  override def saveData(data:BSONDocument) =
+    pss.saveRange(data)
 }
 
 
