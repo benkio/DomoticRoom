@@ -9,6 +9,7 @@ import javax.inject.Inject
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json.Json
 import play.api.mvc.{ Action, BodyParsers, Call, Controller, Result }
+import reactivemongo.api.collections.bson.BSONCollection
 
 import reactivemongo.bson.{ BSONObjectID, BSONDocument }
 import reactivemongo.core.actors.Exceptions.PrimaryUnavailableException
@@ -18,11 +19,33 @@ import play.modules.reactivemongo.{
   MongoController, ReactiveMongoApi, ReactiveMongoComponents
 }
 
+import scala.util.{Success, Failure}
+
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
   */
 class PersistenceStoreDataSaver @Inject() (val reactiveMongoApi: ReactiveMongoApi) extends IPersistenceStoreDataSaver with ReactiveMongoComponents {
-  override def save(data: JsValue, sensorName: String, sensorType: SensorType): Unit = ??? //TODO
 
-  override def saveWithRangeException(data: JsValue, sensorName: String, range: Range, sensorType: SensorType, delta: Double): Unit = ??? //TODO
+  val dataCollection = reactiveMongoApi.db.collection[BSONCollection]("Data")
+
+  override def save(dataFormatted : BSONDocument) = {
+    store(dataFormatted)
+  }
+
+
+  override def saveWithRangeException(dataFormatted : BSONDocument) = {
+    store(dataFormatted)
+  }
+
+  private def store(dataFormatted : BSONDocument): Unit ={
+    val future = dataCollection.insert(dataFormatted)
+
+    future.onComplete {
+      case Failure(e) => println ("Error Insertion of the Data" + e.getMessage)
+      case Success(lastError) => {
+        println("successfully inserted document with lastError = " + lastError)
+      }
+    }
+  }
+
 }
