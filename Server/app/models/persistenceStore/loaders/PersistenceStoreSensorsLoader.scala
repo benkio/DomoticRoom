@@ -27,6 +27,6 @@ class PersistenceStoreSensorsLoader  @Inject() (val reactiveMongoApi: ReactiveMo
   val sensorsCollection = reactiveMongoApi.db.collection[BSONCollection]("Sensors")
 
   override def loadSensors = {
-    sensorsCollection.find(BSONDocument()).sort(BSONDocument("_id" -> -1)).cursor[BSONDocument]().collect[List](25)
+    sensorsCollection.find(BSONDocument()).sort(BSONDocument("_id" -> -1)).cursor[BSONDocument]().enumerate(25)
   }
 }
