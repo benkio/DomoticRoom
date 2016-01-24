@@ -24,4 +24,28 @@ object RangeTypeUtil{
     case 4 => new TemperatureRangeType
     case 5 => new HumidityRangeType
   }
+  def RangeType2Int(rangeType:RangeType) = {
+    rangeType match {
+      case GasRangeType()             => 1
+      case LightRangeType()           => 2
+      case MovementRangeType()        => 3
+      case TemperatureRangeType()     => 4
+      case HumidityRangeType()        => 5
+    }
+  }
+}
+
+object RangeBooleanDBJson {
+  val Id = "_id"
+  val value = "value"
+  val rangeType = "type"
+  val dateCreated = "dateCreated"
+}
+
+object RangeDBJson {
+  val Id = "_id"
+  val minBound = "minBound"
+  val maxBound = "maxBound"
+  val rangeType = "type"
+  val dateCreated = "dateCreated"
 }

@@ -3,6 +3,10 @@ package models.persistenceStore.savers
 import interfaces.presistenceStore.{IPersistenceStoreSaver, IPersistenceStoreRangeSaver, IPersistenceStoreDataSaver}
 import models.{Range, SensorType}
 import play.api.libs.json.JsValue
+import reactivemongo.api.collections.bson.BSONCollection
+import reactivemongo.bson.BSONDocument
+
+import scala.util.{Success, Failure}
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -12,16 +16,17 @@ class PersistenceStoreSaver(psrs:IPersistenceStoreRangeSaver, psds:IPersistenceS
   //////////////////////////////////////////////
   ////////////////Save Range Operations/////////
   //////////////////////////////////////////////
-  override def save(range: Range, sensorType: SensorType): Unit =
-    psrs.save(range,sensorType)
+  override def saveRange(dataFormatted: BSONDocument) =
+    psrs.saveRange(dataFormatted)
 
   //////////////////////////////////////////////
   ////////////////Save Data Operations//////////
   //////////////////////////////////////////////
 
-  override def saveWithRangeException(data: JsValue, sensorName: String, range: Range, sensorType: SensorType, delta: Double): Unit =
-    psds.saveWithRangeException(data,sensorName,range,sensorType,delta)
+  override def saveDataWithRangeException(data: BSONDocument) =
+    psds.saveDataWithRangeException(data)
 
-  override def save(data: JsValue, sensorName: String, sensorType: SensorType): Unit =
-    psds.save(data,sensorName,sensorType)
+  override def saveData(data: BSONDocument) =
+    psds.saveData(data)
+
 }

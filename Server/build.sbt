@@ -7,6 +7,8 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
+ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
+
 scalaVersion := "2.11.6"
 
 resolvers += 
@@ -17,7 +19,7 @@ libraryDependencies ++= Seq(
   cache,
   ws,
   specs2 % Test,
-  "org.reactivemongo" %% "reactivemongo" % "0.11.9" //ReactiveMongo library
+  "org.reactivemongo" %% "play2-reactivemongo" % "0.11.9"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"

@@ -39,6 +39,18 @@ Per indicare il tipo di range si riporta il listato scala che indica tale tipolo
 \end{figure}
 
 \begin{center}
+  \textbf{Collertion Sensors}
+\end{center}
+
+Per quanto riguarda la collezione dei sensori si utilizza un'apposita collection. Questa non sar\'a modificata spesso, e serve principalmente per eventuali evoluzioni del progetto, in modo che sia gi\'a presente. Anch'essi sono dotati di di tipo come i range e, per questa implementazione, i tipi coincidono. A livello di progetto per\'o si \'e deciso di mantenerli separati nel caso in un futuro questi divergano. Inseriamo di seguito un'immagine che rappresenta come \'e strutturato un documento di un sensore.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/DataStructures/Sensors.png}
+\caption{Rappresentazione a DB dei Sensori}
+\end{figure}
+
+\begin{center}
 \textbf{Collection Data}
 \end{center}
 
@@ -65,6 +77,11 @@ Come si pu\'o osservare \'e stato comunque inserito un valore per la violazione 
 \end{figure}
 
 In questo caso appunto il valore della violazione non e' piu' nullo ma contiene un semplice campo \textit{delta} che indicher\'a la differenza rispetto al range. In particolare questo sar\'a positivo se il valore registrato supera il range attuale, negativo se invece \'e troppo basso o booleano se il tipo di sensoristica e quindi anche di range \'e booleano.
+
+\subsection{Introduzione All'Architettura di Progetto}
+
+Nelle prossime sezioni si vuole inserire le modifiche che sono state fatte alla architettura logica appena introdotta, ma cercando di evitare di ripetere aspetti che non sono effettivamnete cambiati. Di conseguenza si \'e deciso di riportare solamente quegli aspetti che sono stati modificati in base alle scelte tecnologiche effettivamente fatte.\\
+In ogni caso si \'e deciso di cercare il pi\'u possibile di sfruttare quanto gi\'a \'e stato concordato dagli analisti cercando di effettuare meno modifiche possibili all'architettura.
 
 \subsection{Struttura}
 \subsection{Interazione}
