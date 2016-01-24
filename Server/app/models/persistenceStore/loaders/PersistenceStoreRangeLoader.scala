@@ -8,6 +8,8 @@ import org.joda.time.{ReadableDuration,DateTime}
 import javax.inject.Inject
 
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import play.api.libs.iteratee.{Enumeratee, Enumerator}
+
 
 import reactivemongo.api.collections.bson.BSONCollection
 import reactivemongo.bson.{BSONInteger, BSONString, BSONDocument}
@@ -30,7 +32,7 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
 
   val rangesCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection]("Ranges")
 
-  override def loadRange(rangeType: RangeType, startDate: DateTime, duration:ReadableDuration): Future[List[BSONDocument]] = {
+  override def loadRange(rangeType: RangeType, startDate: DateTime, duration:ReadableDuration) = {
     val finalDate = startDate.plus(duration).toString(patternFormat)
     val startDateString = startDate.toString(patternFormat)
 
@@ -42,19 +44,20 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
       )
     )
 
-    rangesCollection.find(query).cursor[BSONDocument]().collect[List]()
+    rangesCollection.find(query).cursor[BSONDocument]().enumerate()
 
   }
 
-  override def loadLastRange(rangeType: RangeType):Future[Option[BSONDocument]] = {
+  override def loadLastRange(rangeType: RangeType) = {
     val query = BSONDocument(
       "type" -> BSONInteger (RangeTypeUtil.RangeType2Int(rangeType))
     )
 
-    rangesCollection.find(query).sort(BSONDocument("dateCreated" -> -1)).one[BSONDocument]
+    val futureResult = rangesCollection.find(query).sort(BSONDocument("dateCreated" -> -1)).one[BSONDocument]
+    Enumerator(futureResult) &> Enumeratee.mapM(identity)
   }
 
-override def loadLastRanges : Future[List[BSONDocument]] = {
+  override def loadLastRanges = {
 
     import rangesCollection.BatchCommands.AggregationFramework.{Group, Max }
 
@@ -67,6 +70,8 @@ override def loadLastRanges : Future[List[BSONDocument]] = {
         }
       )
     } flatMap(x => Future{x.flatten})
-    findidQuery
+    (Enumerator(findidQuery) &>
+      Enumeratee.mapM(identity)) &>
+      Enumeratee.mapFlatten(x => Enumerator.enumerate(x))
   }
 }

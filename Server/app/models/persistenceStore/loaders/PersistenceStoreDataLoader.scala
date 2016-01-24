@@ -69,6 +69,8 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
       "sensorName" -> BSONString(sensorName)
     )
 
-    dataCollection.find(query).sort(BSONDocument("dateCreated" -> -1)).one[BSONDocument]
+    val futureResult = dataCollection.find(query).sort(BSONDocument("dateCreated" -> -1)).one[BSONDocument]
+
+    Enumerator(futureResult) &> Enumeratee.mapM(identity)
   }
 }
