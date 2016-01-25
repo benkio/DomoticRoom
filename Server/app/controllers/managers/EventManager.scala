@@ -12,5 +12,5 @@ object EventManager extends IEventManager{
   val rangeChecker:IRangeChecker = new RangeChecker
   override def newData(enumeratee: Enumeratee[JsValue,JsValue]): Enumeratee[JsValue,JsValue] = ??? //TODO
 
-  override def newRange(range: Range, sensorType: SensorType): Iteratee[JsValue,JsValue] = ??? //TODO
+  override def newRange(range: Range, sensorType: SensorType.Value): Iteratee[JsValue,JsValue] = ??? //TODO
 }

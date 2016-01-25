@@ -1,7 +1,7 @@
 package models.persistenceStore.loaders
 
 import interfaces.presistenceStore.IPersistenceStoreRangeLoader
-import models.{RangeTypeUtil, RangeType}
+import models.RangeType
 import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter}
 import org.joda.time.{ReadableDuration,DateTime}
 
@@ -32,12 +32,12 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
 
   val rangesCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection]("Ranges")
 
-  override def loadRange(rangeType: RangeType, startDate: DateTime, duration:ReadableDuration) = {
+  override def loadRange(rangeType: RangeType.Value, startDate: DateTime, duration:ReadableDuration) = {
     val finalDate = startDate.plus(duration).toString(patternFormat)
     val startDateString = startDate.toString(patternFormat)
 
     val query = BSONDocument(
-      "type" -> BSONString(RangeTypeUtil.RangeType2Int(rangeType).toString),
+      "type" -> BSONInteger(rangeType.id),
       "dateCreation" -> BSONDocument(
         "$gte" -> BSONString(startDateString),
         "$lt" -> BSONString(finalDate)
@@ -48,9 +48,9 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
 
   }
 
-  override def loadLastRange(rangeType: RangeType) = {
+  override def loadLastRange(rangeType: RangeType.Value) = {
     val query = BSONDocument(
-      "type" -> BSONInteger (RangeTypeUtil.RangeType2Int(rangeType))
+      "type" -> BSONInteger(rangeType.id)
     )
 
     val futureResult = rangesCollection.find(query).sort(BSONDocument("dateCreated" -> -1)).one[BSONDocument]

@@ -15,10 +15,10 @@ class PersistenceStoreLoader(psdl:IPersistenceStoreDataLoader, psrl:IPersistence
   ///////////////////////////////////////
   ////////////Range Load Operations//////
   ///////////////////////////////////////
-  override def loadRange(rangeType: RangeType, startDate: DateTime, duration:ReadableDuration) =
+  override def loadRange(rangeType: RangeType.Value, startDate: DateTime, duration:ReadableDuration) =
     psrl.loadRange(rangeType, startDate, duration)
 
-  override def loadLastRange(rangeType: RangeType) =
+  override def loadLastRange(rangeType: RangeType.Value) =
     psrl.loadLastRange(rangeType)
 
   override def loadLastRanges =

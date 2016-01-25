@@ -42,10 +42,10 @@ object PersistenceStore extends IPersistenceStore{
   override def loadCurrentSensorData(sensorName: String) =
     psl.loadCurrentSensorData(sensorName)
 
-  override def loadLastRange(rangeType: RangeType) =
+  override def loadLastRange(rangeType: RangeType.Value) =
     psl.loadLastRange(rangeType)
 
-  override def loadRange(rangeType: RangeType, startDate: DateTime, duration: ReadableDuration) =
+  override def loadRange(rangeType: RangeType.Value, startDate: DateTime, duration: ReadableDuration) =
     psl.loadRange(rangeType, startDate, duration)
 
   override def loadLastRanges =

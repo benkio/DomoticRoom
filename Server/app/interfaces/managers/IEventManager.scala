@@ -9,5 +9,5 @@ import play.api.libs.json.JsValue
   */
 trait IEventManager {
   def newData(enumeratee:Enumeratee[JsValue,JsValue]):Enumeratee[JsValue,JsValue]
-  def newRange(range:models.Range, sensorType:SensorType) :Iteratee[JsValue,JsValue]
+  def newRange(range:models.Range, sensorType:SensorType.Value) :Iteratee[JsValue,JsValue]
 }
