@@ -2,7 +2,6 @@ package controllers.managers
 
 import interfaces.managers.{IRangeChecker, IEventManager}
 import models.DataStructures.{SensorType, Range}
-import models.SensorType
 import play.api.libs.iteratee.{Enumeratee, Iteratee}
 import play.api.libs.json.JsValue
 

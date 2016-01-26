@@ -8,5 +8,5 @@ import play.api.libs.json.JsValue
   */
 trait IDataFormatter {
   def format(data:JsValue):JsValue
-  def getFormattedStream(source:Enumerator[JsValue]):Enumeratee[JsValue,JsValue]
+  def getFormatterStreamStep :Enumeratee[JsValue,JsValue]
 }

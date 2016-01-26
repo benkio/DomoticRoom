@@ -1,8 +1,8 @@
 package controllers.managers
 
 import interfaces.managers.IRangeChecker
+import models.DataStructures
 import models.DataStructures.SensorType
-import models.{DataStructures, SensorType}
 import play.api.libs.json.JsValue
 
 /**

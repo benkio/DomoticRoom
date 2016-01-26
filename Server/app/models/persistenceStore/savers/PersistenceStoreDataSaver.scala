@@ -1,26 +1,12 @@
 package models.persistenceStore.savers
 
-import interfaces.presistenceStore.IPersistenceStoreDataSaver
-import models.DataStructures.DataDBCollection
-import models.SensorType
-import play.api.libs.json.JsValue
-
 import javax.inject.Inject
 
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.libs.json.Json
-import play.api.mvc.{ Action, BodyParsers, Call, Controller, Result }
+import interfaces.presistenceStore.IPersistenceStoreDataSaver
+import models.DataStructures.DataDBCollection
+import play.modules.reactivemongo.{ReactiveMongoApi, ReactiveMongoComponents}
 import reactivemongo.api.collections.bson.BSONCollection
-
-import reactivemongo.bson.{ BSONObjectID, BSONDocument }
-import reactivemongo.core.actors.Exceptions.PrimaryUnavailableException
-import reactivemongo.api.commands.WriteResult
-
-import play.modules.reactivemongo.{
-  MongoController, ReactiveMongoApi, ReactiveMongoComponents
-}
-
-import scala.util.{Success, Failure}
+import reactivemongo.bson.BSONDocument
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.

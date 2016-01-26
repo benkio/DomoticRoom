@@ -10,5 +10,5 @@ import play.api.libs.json.JsValue
 class RequestDataFormatter extends IRequestDataFormatter{
   override def format(data: JsValue): JsValue = ??? //TODO
 
-  override def getFormattedStream(source: Enumerator[JsValue]) = ??? //TODO
+  override def getFormatterStreamStep = ??? //TODO
 }

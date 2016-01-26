@@ -4,17 +4,11 @@ import interfaces.presistenceStore._
 import models.DataStructures.RangeType
 import models.persistenceStore.loaders._
 import models.persistenceStore.savers._
-import models.SensorType
-import org.joda.time.{ReadableDuration, Interval, DateTime}
-import play.api.libs.json.JsValue
-
+import org.joda.time.{DateTime, ReadableDuration}
 import play.api.Play.current
-
 import play.modules.reactivemongo.ReactiveMongoApi
 import play.modules.reactivemongo.json.collection.JSONCollection
 import reactivemongo.bson.BSONDocument
-
-import scala.concurrent.Future
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.

@@ -2,20 +2,9 @@ package models.persistenceStore.savers
 
 import interfaces.presistenceStore.IPersistenceStoreRangeSaver
 import models.DataStructures.RangeDBCollection
-import models.SensorType
-
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.libs.json.Json
-import play.api.mvc.{ Action, BodyParsers, Call, Controller, Result }
+import play.modules.reactivemongo.{ReactiveMongoApi, ReactiveMongoComponents}
 import reactivemongo.api.collections.bson.BSONCollection
-
-import reactivemongo.bson.{ BSONObjectID, BSONDocument }
-import reactivemongo.core.actors.Exceptions.PrimaryUnavailableException
-import reactivemongo.api.commands.WriteResult
-
-import play.modules.reactivemongo.{
-  MongoController, ReactiveMongoApi, ReactiveMongoComponents
-}
+import reactivemongo.bson.BSONDocument
 
 
 /**
