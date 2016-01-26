@@ -113,15 +113,7 @@ Il primo flusso che andremo ad analizzare riguarda la ricezione dei dati da part
 \caption{Server, Flusso Dati Ricezione}
 \end{figure}
 
-Il secondo flusso che si vuole introdurre invece riguarda l'aggiornamento del range da parte dell'utente, in particolare anche in questo caso l'IEventManager viene chiamato in causa il quale si occuper\'a di notificare il cambiamento sia a livello di database che al componente incaricato di controllare il range. Questa parte non subisce particolari cambiamenti rispetto a quella dell'analisi dei requisiti perch\'e rimane molto coerente anche a fronte del cambio di paradigma. Un cambiamento significativo riguarda il fatto che il cambiamento del range non avviene pi\'u direttamente dall'event manager ma dal database, questo per enfatizzare che il cambiamento del range non \'e effettivo se non viene prima registrato in maniera permanente.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{Figures/LogicArchitecture/Server/FlowDiagramNewRange}
-\caption{Server, Flusso Dati Nuovo Range}
-\end{figure}
-
-L'ultimo flusso di dati che verr\'a trattato riguardano le richieste di dati stessi per la visualizzazione da parte dell'utente. Probabilmente per quanto riguarda le seguenti operazioni si poteva anche pensare di gestire il tutto attraverso delle semplici chiamate a procedura, ma, per mantenere una certa coerenza, per sfruttare la dichiarativit\'a del paradigma reactive e per evitare di incorrere nel problema noto come \textit{Callback Hell} si \'e scelto di utilizzare comunque un flusso. Un'ulteriore vantaggio di gestire attraverso l'infrastruttura reactive consiste nella possibilit\'a di aggiornare realtime l'interfaccia ogni qualvolta avviene l'inserimento di un nuovo valore. Concludendo si vuole far notare la presenza di un'entit\'a che entra in campo quando viene richiesta un'analisi sui dati e non semplicemente una sua visualizzazione. La forma a nuvola indica proprio la possibilit\'a che questo oggetto entri a far parte o meno nel flusso.
+Il secondo e ultimo flusso di dati che verr\'a trattato riguardano le richieste di dati stessi per la visualizzazione da parte dell'utente. Probabilmente per quanto riguarda le seguenti operazioni si poteva anche pensare di gestire il tutto attraverso delle semplici chiamate a procedura, ma, per mantenere una certa coerenza, per sfruttare la dichiarativit\'a del paradigma reactive e per evitare di incorrere nel problema noto come \textit{Callback Hell} si \'e scelto di utilizzare comunque un flusso. Un'ulteriore vantaggio di gestire attraverso l'infrastruttura reactive consiste nella possibilit\'a di aggiornare realtime l'interfaccia ogni qualvolta avviene l'inserimento di un nuovo valore. Concludendo si vuole far notare la presenza di un'entit\'a che entra in campo quando viene richiesta un'analisi sui dati e non semplicemente una sua visualizzazione. La forma a nuvola indica proprio la possibilit\'a che questo oggetto entri a far parte o meno nel flusso.
 
 \begin{figure}[h]
 \centering
@@ -129,6 +121,21 @@ L'ultimo flusso di dati che verr\'a trattato riguardano le richieste di dati ste
 \caption{Server, Flusso Dati Richieste Dati}
 \end{figure}
 
+\begin{center}
+  \textbf{Restanti Interazioni}
+\end{center}
+
+Per quanto riguarda  riguarda l'aggiornamento del range da parte dell'utente, in particolare anche in questo caso l'IEventManager viene chiamato in causa il quale si occuper\'a di notificare il cambiamento sia a livello di database che al componente incaricato di controllare il range. Questa parte non subisce particolari cambiamenti rispetto a quella dell'analisi dei requisiti perch\'e rimane molto coerente anche a fronte del cambio di paradigma. Un cambiamento significativo riguarda il fatto che il cambiamento del range non avviene pi\'u direttamente dall'event manager ma dal database, questo per enfatizzare che il cambiamento del range non \'e effettivo se non viene prima registrato in maniera permanente.
+
+Questa interazione non avviene attraverso uno stream ma viene gestito come una chiamata classica http inquanto non richiede che ci sia un dialogo continuo tra le varie parti, client e server. Si riporta in ogni caso sotto forma di flusso di chiamate, quelle che vengono effettuate dall'applicativo.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Figures/LogicArchitecture/Server/FlowDiagramNewRange}
+\caption{Server, Flusso Dati Nuovo Range}
+\end{figure}
+
+\newpage
 
 Prima di passare alla struttura \'e secondo noi utile andare a definire l'interazione del configurator in quanto \'e l'unica entit\'a attiva che non si basa effettivamente sui flussi e che contiene l'entry point di tutto il server.
 
