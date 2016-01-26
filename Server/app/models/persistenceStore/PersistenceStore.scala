@@ -1,9 +1,10 @@
 package models.persistenceStore
 
 import interfaces.presistenceStore._
+import models.DataStructures.RangeType
 import models.persistenceStore.loaders._
 import models.persistenceStore.savers._
-import models.{RangeType, SensorType, Range}
+import models.SensorType
 import org.joda.time.{ReadableDuration, Interval, DateTime}
 import play.api.libs.json.JsValue
 

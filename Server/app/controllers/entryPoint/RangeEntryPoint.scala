@@ -1,5 +1,7 @@
 package controllers.entryPoint
 
+import models.DataStructures
+import models.DataStructures.Range
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
@@ -17,7 +19,7 @@ class RangeEntryPoint extends Controller {
       "minBound" -> of[Double],
       "maxBound" -> of[Double],
       "rangeType" -> number
-    ) (models.Range.apply)(models.Range.unapply)
+    ) (Range.apply)(DataStructures.Range.unapply)
   )
 
 

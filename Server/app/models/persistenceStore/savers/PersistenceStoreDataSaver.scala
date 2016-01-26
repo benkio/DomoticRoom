@@ -1,7 +1,8 @@
 package models.persistenceStore.savers
 
 import interfaces.presistenceStore.IPersistenceStoreDataSaver
-import models.{SensorType, Range}
+import models.DataStructures.DataDBCollection
+import models.SensorType
 import play.api.libs.json.JsValue
 
 import javax.inject.Inject
@@ -26,7 +27,7 @@ import scala.util.{Success, Failure}
   */
 class PersistenceStoreDataSaver @Inject() (val reactiveMongoApi: ReactiveMongoApi) extends IPersistenceStoreDataSaver with ReactiveMongoComponents {
 
-  val dataCollection = reactiveMongoApi.db.collection[BSONCollection]("Data")
+  val dataCollection = reactiveMongoApi.db.collection[BSONCollection](DataDBCollection.name)
 
   override def saveData(dataFormatted : BSONDocument) = {
     StoreUtils.store(dataCollection,dataFormatted)
@@ -36,7 +37,4 @@ class PersistenceStoreDataSaver @Inject() (val reactiveMongoApi: ReactiveMongoAp
   override def saveDataWithRangeException(dataFormatted : BSONDocument) = {
     StoreUtils.store(dataCollection,dataFormatted)
   }
-
-
-
 }

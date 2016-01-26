@@ -1,7 +1,8 @@
 package models.persistenceStore.loaders
 
 import interfaces.presistenceStore.{IPersistenceStoreRangeLoader, IPersistenceStoreDataLoader, IPersistenceStoreLoader, IPersistenceStoreSensorsLoader}
-import models.{RangeType, SensorType}
+import models.DataStructures.RangeType
+import models.SensorType
 import org.joda.time.{ReadableDuration, Interval, DateTime}
 import reactivemongo.bson.BSONDocument
 

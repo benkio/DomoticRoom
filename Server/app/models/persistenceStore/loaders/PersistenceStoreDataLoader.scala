@@ -1,6 +1,7 @@
 package models.persistenceStore.loaders
 
 import interfaces.presistenceStore.IPersistenceStoreDataLoader
+import models.DataStructures.{DataDBJson, DataDBCollection}
 import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter}
 import org.joda.time.{ReadableDuration, DateTime}
 import play.api.libs.concurrent.Promise
@@ -28,15 +29,15 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
     .appendTimeZoneOffset("Z", true, 2, 4)
     .toFormatter();
 
-  val dataCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection]("Data")
+  val dataCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection](DataDBCollection.name)
 
   override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration) = {
     val finalDate = startDate.plus(duration).toString(patternFormat)
     val startDateString = startDate.toString(patternFormat)
 
     val query = BSONDocument(
-      "sensorName" -> BSONString(sensorName),
-      "dateCreation" -> BSONDocument(
+      DataDBJson.sensorName -> BSONString(sensorName),
+      DataDBJson.dateCreation -> BSONDocument(
         "$gte" -> BSONString(startDateString),
         "$lt" -> BSONString(finalDate)
       )
@@ -49,12 +50,13 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
 
     import dataCollection.BatchCommands.AggregationFramework.{Group, Max }
 
-    val command = Group(BSONString("$type"))("realmaxid" -> Max("$_id"))
+    val command =
+      Group(BSONString("$" + DataDBJson.dataType))("realmaxid" -> Max("$" + DataDBJson.id))
 
     val findidQuery = dataCollection.aggregate(command) flatMap {r =>
       Future.sequence(r.documents map { x =>
         val t = x.get("realmaxid").get
-        dataCollection.find(BSONDocument("_id" -> t)).cursor[BSONDocument]() collect[List]()
+        dataCollection.find(BSONDocument(DataDBJson.id -> t)).cursor[BSONDocument]() collect[List]()
         }
       )
     } flatMap(x => Future{x.flatten})
@@ -66,10 +68,10 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
 
   override def loadCurrentSensorData(sensorName: String) = {
     val query = BSONDocument(
-      "sensorName" -> BSONString(sensorName)
+      DataDBJson.sensorName -> BSONString(sensorName)
     )
 
-    val futureResult = dataCollection.find(query).sort(BSONDocument("dateCreated" -> -1)).one[BSONDocument]
+    val futureResult = dataCollection.find(query).sort(BSONDocument(DataDBJson.dateCreation -> -1)).one[BSONDocument]
 
     Enumerator(futureResult) &> Enumeratee.mapM(identity)
   }

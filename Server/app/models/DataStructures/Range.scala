@@ -1,4 +1,4 @@
-package models
+package models.DataStructures
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -24,4 +24,8 @@ object RangeDBJson {
   val maxBound = "maxBound"
   val rangeType = "type"
   val dateCreated = "dateCreated"
+}
+
+object RangeDBCollection {
+  val name = "Ranges"
 }

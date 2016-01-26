@@ -1,7 +1,7 @@
 package models.persistenceStore.savers
 
 import interfaces.presistenceStore.{IPersistenceStoreSaver, IPersistenceStoreRangeSaver, IPersistenceStoreDataSaver}
-import models.{Range, SensorType}
+import models.SensorType
 import play.api.libs.json.JsValue
 import reactivemongo.api.collections.bson.BSONCollection
 import reactivemongo.bson.BSONDocument

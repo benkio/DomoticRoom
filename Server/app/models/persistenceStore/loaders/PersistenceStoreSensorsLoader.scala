@@ -1,6 +1,7 @@
 package models.persistenceStore.loaders
 
 import interfaces.presistenceStore.IPersistenceStoreSensorsLoader
+import models.DataStructures.{SensorDBJson, SensorDBCollection}
 import reactivemongo.api._
 
 import javax.inject.Inject
@@ -24,9 +25,9 @@ class PersistenceStoreSensorsLoader  @Inject() (val reactiveMongoApi: ReactiveMo
   extends IPersistenceStoreSensorsLoader
     with ReactiveMongoComponents{
 
-  val sensorsCollection = reactiveMongoApi.db.collection[BSONCollection]("Sensors")
+  val sensorsCollection = reactiveMongoApi.db.collection[BSONCollection](SensorDBCollection.Name)
 
   override def loadSensors = {
-    sensorsCollection.find(BSONDocument()).sort(BSONDocument("_id" -> -1)).cursor[BSONDocument]().enumerate(25)
+    sensorsCollection.find(BSONDocument()).sort(BSONDocument(SensorDBJson.id -> -1)).cursor[BSONDocument]().enumerate(25)
   }
 }
