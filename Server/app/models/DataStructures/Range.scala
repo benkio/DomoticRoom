@@ -24,8 +24,5 @@ object RangeDBJson {
   val maxBound = "maxBound"
   val rangeType = "type"
   val dateCreated = "dateCreated"
-}
-
-object RangeDBCollection {
-  val name = "Ranges"
+  val RangeDBCollectionName = "Ranges"
 }

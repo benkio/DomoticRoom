@@ -1,7 +1,7 @@
 package models.persistenceStore.loaders
 
 import interfaces.presistenceStore.IPersistenceStoreDataLoader
-import models.DataStructures.{DataDBJson, DataDBCollection}
+import models.DataStructures.DataDBJson
 import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter}
 import org.joda.time.{ReadableDuration, DateTime}
 import play.api.libs.concurrent.Promise
@@ -29,7 +29,7 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
     .appendTimeZoneOffset("Z", true, 2, 4)
     .toFormatter();
 
-  val dataCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection](DataDBCollection.name)
+  val dataCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection](DataDBJson.DataDBCollectionName)
 
   override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration) = {
     val finalDate = startDate.plus(duration).toString(patternFormat)

@@ -15,8 +15,5 @@ object SensorDBJson {
   val id = "_id"
   val sensorName = "sensorName"
   val sensorType = "type"
-}
-
-object SensorDBCollection {
-  val Name = "Sensors"
+  val SensorDBCollectionName = "Sensors"
 }

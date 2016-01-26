@@ -1,7 +1,7 @@
 package models.persistenceStore.loaders
 
 import interfaces.presistenceStore.IPersistenceStoreRangeLoader
-import models.DataStructures.{RangeDBJson, RangeDBCollection, RangeType}
+import models.DataStructures.{RangeDBJson, RangeType}
 import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter}
 import org.joda.time.{ReadableDuration,DateTime}
 
@@ -30,7 +30,7 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
     .toFormatter
 
 
-  val rangesCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection](RangeDBCollection.name)
+  val rangesCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection](RangeDBJson.RangeDBCollectionName)
 
   override def loadRange(rangeType: RangeType.Value, startDate: DateTime, duration:ReadableDuration) = {
     val finalDate = startDate.plus(duration).toString(patternFormat)

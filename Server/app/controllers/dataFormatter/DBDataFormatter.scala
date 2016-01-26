@@ -1,18 +1,25 @@
 package controllers.dataFormatter
 
 import interfaces.dataFormatter.IDBDataFormatter
-import play.api.libs.iteratee.{Enumeratee, Iteratee, Enumerator}
+import models.DataStructures.DataDBJson
+import models.DataStructures.DataDBJson.DataDBJsonModel
+import play.api.libs.iteratee.Enumeratee
 import play.api.libs.json.JsValue
+import scala.concurrent.ExecutionContext.Implicits.global
+import reactivemongo.bson.BSONDocument
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/17/16.
   */
 class DBDataFormatter extends IDBDataFormatter {
-  override def format(data: JsValue): JsValue = ??? //TODO
 
-  override def getFormatterStreamStep = ??? //TODO
-  /* {
-    val formatterEnumeratee : Enumeratee[JsValue,JsValue] =
-     // Enumeratee.filter(input => input.validate
-      }*/
+  override def getFormatterStreamStep = {
+    val convertToBson : Enumeratee[JsValue,BSONDocument]=
+      Enumeratee.map[JsValue](in => DataDBJson.toBsonDocument(in.validate[DataDBJsonModel].get))
+
+    val ValidateJson : Enumeratee[JsValue,JsValue] =
+        Enumeratee.filter(input => DataDBJson.validateJsonData(input))
+
+    ValidateJson ><> convertToBson
+  }
 }
