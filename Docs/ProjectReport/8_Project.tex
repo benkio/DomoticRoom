@@ -1,7 +1,7 @@
 \section{Project}
 \labelsec{Project}
 %===========================================================================
-\subsection{Database}
+\subsection{Database e Altre Rappresentazioni di Dati}
 Per la gestione del database si \'e scelto di utilizzare un database NoSql, nell'accezione MongoDB\cite{MongoDB}. In questa sede non si discuteranno i vantaggi, gli svantaggi o le particolarit\'a di questa tecnologia in quanto \'e stato fatto gi\'a ampiamente durante il corso. Di seguito si riportano gli schemi dei documenti che sono stati salvati, le collezioni e il significato di alcuni dei valori inseriti.
 
 \begin{center}
@@ -78,14 +78,55 @@ Come si pu\'o osservare \'e stato comunque inserito un valore per la violazione 
 
 In questo caso appunto il valore della violazione non e' piu' nullo ma contiene un semplice campo \textit{delta} che indicher\'a la differenza rispetto al range. In particolare questo sar\'a positivo se il valore registrato supera il range attuale, negativo se invece \'e troppo basso o booleano se il tipo di sensoristica e quindi anche di range \'e booleano.
 
+\begin{center}
+  \textbf{Rappresentazione Dati Attraverso la Rete}
+\end{center}
+
+Oltre alla rappresentazione dei dati per quanto riguarda i dati salvati all'interno del Database \'e stato necessario concordare una rappresentazione di dati che verranno inviati attraverso la rete. Non necessariamente le due rappresentazioni devono coincidere in quanto, i dispositivi dai quali si ricavano i dati posso avere diversi formati e modalit\'a di ottenere tali valori, quindi di conseguenza questa rappresentazione \'e sbilanciata rispetto a chi invia i dati, cio\'e il sistema embedded.
+
+Anche per la rappresentazione dei dati si \'e scelta la rappresentazione JSON in quanto questa \'e una delle pi\'u utilizzate nella comunicazione eterogenea via rete, si pone quindi come formato interoperabile tra varie tecnologie, come accade nel nostro caso.
+
+Di seguito si riporta un esempio di dati in formato JSON:
+
+\begin{lstlisting}
+  {
+    "sensorName": "nomeSensore",
+    "sensorType": 1,
+    "value": true,
+    "date": "2012-04-23T18:25:43.511Z"
+  }
+\end{lstlisting}
+
+Si veda il tipo di sensore dai valori indicati precedentemente e si sottolinea che il tipo del campo \textit{value} pu\'o essere sia booleano che numerico.
+
 \subsection{Introduzione All'Architettura di Progetto}
 
 Nelle prossime sezioni si vuole inserire le modifiche che sono state fatte alla architettura logica appena introdotta, ma cercando di evitare di ripetere aspetti che non sono effettivamnete cambiati. Di conseguenza si \'e deciso di riportare solamente quegli aspetti che sono stati modificati in base alle scelte tecnologiche effettivamente fatte.\\
 In ogni caso si \'e deciso di cercare il pi\'u possibile di sfruttare quanto gi\'a \'e stato concordato dagli analisti cercando di effettuare meno modifiche possibili all'architettura.
 
+\begin{center}
+  \textbf{Server}
+\end{center}
+
 \subsection{Struttura}
+
+Vista l'introduzione della tecnologia in questa fase si \'e deciso di apportare alcune modifiche architetturali. Si riporta una lista di modifiche apportate all'architettura:
+
+\begin{itemize}
+  \item \textit{DataStructures:} Si \'e ritenuto necessario introdurre un'ulteriore package che non era stato previsto precedentemente contenente le rappresentazioni interne in forma di classi dei dati che circolano nel sistema, cos\'i come delle classi di utilit\'a che servono per la conversione, da e verso, questi dati.
+  \item \textit{IDataFormatter:} Visto che le elaborazioni di trasformazione dei dati non richiedono tanta computazione si \'e deciso di eliminare il metodo che, dato un valore lo validava inglobandolo direttamente dentro il primo metodo che restituisce lo stream. Inoltre nella costruzione dello stream ci si \'e accorti che il valore dell'input non viene passato per parametro al metodo, ma viene gestito dall'infrastruttura, quindi si \'e deciso di eliminarlo. Spesso gli oggetti che validano e formattano i dati passano da una rappresentazione ad un'altra: tra valori JSON, BSON e classi interne per i dati.
+\end{itemize}
+
 \subsection{Interazione}
 
 In questa parte si riporta la tecnologia che si \'e utilizzata per effettuare l'interazione che si \'e analizzata e indicata in fase di analisi, lo stream. In particolare si \'e notato che, il framework play\cite{PlayFramework} gi\'a gestisce attraverso delle sue strutture la possibilit\'a di operare attraverso stream di dati. Questa possibilit\'a \'e stata introdotta dal framework per gestire meglio dati parziali o casi che richiederebbero molto tempo, come ad esempio un'upload di file cospiquo. Nonostante tutto per\'o questo rientra nelle nostre necessit\'a e quindi ci avvarremo di questa astrazione per risolvere il nostro problema. Si riporta in bibliografia quindi la documentazione del framework che spiega il funzionamento di \textit{Enumerators,Iteratees e Enumeratees.} \cite{PlayStreaming}
 
+\subsection{Comportamento}
+
+\begin{center}
+  \textbf{Sistema Embedded}
+\end{center}
+
+\subsection{Struttura}
+\subsection{Interazione}
 \subsection{Comportamento}
