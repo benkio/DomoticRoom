@@ -3,7 +3,7 @@ package models.persistenceStore.savers
 import javax.inject.Inject
 
 import interfaces.presistenceStore.IPersistenceStoreDataSaver
-import models.DataStructures.DataDBJson
+import models.DataStructures.DataReceivedJson$
 import play.modules.reactivemongo.{ReactiveMongoApi, ReactiveMongoComponents}
 import reactivemongo.api.collections.bson.BSONCollection
 import reactivemongo.bson.BSONDocument
@@ -13,7 +13,7 @@ import reactivemongo.bson.BSONDocument
   */
 class PersistenceStoreDataSaver @Inject() (val reactiveMongoApi: ReactiveMongoApi) extends IPersistenceStoreDataSaver with ReactiveMongoComponents {
 
-  val dataCollection = reactiveMongoApi.db.collection[BSONCollection](DataDBJson.DataDBCollectionName)
+  val dataCollection = reactiveMongoApi.db.collection[BSONCollection](DataReceivedJson.DataDBCollectionName)
 
   override def saveData(dataFormatted : BSONDocument) = {
     StoreUtils.store(dataCollection,dataFormatted)
