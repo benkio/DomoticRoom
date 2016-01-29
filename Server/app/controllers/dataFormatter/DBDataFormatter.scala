@@ -1,6 +1,7 @@
 package controllers.dataFormatter
 
 import interfaces.dataFormatter.IDBDataFormatter
+import models.DataStructures.RangeModel.{RangeBoolean, RangeDBJsonModel}
 import models.DataStructures.DataDBJson
 import models.DataStructures.DataDBJson.DataDBJsonModel
 import play.api.libs.iteratee.Enumeratee
@@ -22,4 +23,11 @@ class DBDataFormatter extends IDBDataFormatter {
 
     ValidateJson ><> convertToBson
   }
+
+  override def convertToBson(range : Range): BSONDocument = {
+    RangeDBJsonModel
+    ??? // TODO
+  }
+
+  override def convertToBson(range: RangeBoolean): BSONDocument = ??? //TODO
 }

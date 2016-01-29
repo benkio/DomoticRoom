@@ -1,6 +1,6 @@
 package interfaces.managers
 
-import models.DataStructures.{SensorType, Range}
+import models.DataStructures.SensorType
 import play.api.libs.iteratee.{Iteratee, Enumeratee}
 import play.api.libs.json.JsValue
 

@@ -1,7 +1,7 @@
 package models.persistenceStore
 
 import interfaces.presistenceStore._
-import models.DataStructures.RangeType
+import models.DataStructures.RangeModel.RangeType
 import models.persistenceStore.loaders._
 import models.persistenceStore.savers._
 import org.joda.time.{DateTime, ReadableDuration}

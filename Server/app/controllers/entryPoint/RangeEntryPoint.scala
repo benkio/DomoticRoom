@@ -1,7 +1,7 @@
 package controllers.entryPoint
 
 import models.DataStructures
-import models.DataStructures.Range
+import models.DataStructures.RangeModel._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
@@ -23,7 +23,7 @@ class RangeEntryPoint extends Controller {
       "minBound" -> of[Double],
       "maxBound" -> of[Double],
       "rangeType" -> number
-    ) (Range.apply)(DataStructures.Range.unapply)
+    ) (Range.apply)(Range.unapply)
   )
 
   // List ranges entry
@@ -37,12 +37,12 @@ class RangeEntryPoint extends Controller {
     Ok(newrange.render(userForm,messages))
   }
 
-  def submitNewRange = Action { request =>
-    userForm.bindFromRequest().fold(
+  def submitNewRange = Action { implicit request =>
+    userForm.bindFromRequest.fold(
       formWithErrors => { BadRequest(newrange.render(formWithErrors,messages))},
       userData => {
 
-        val
+        // TODO
 
         Redirect(routes.RangeEntryPoint.ranges())
       }

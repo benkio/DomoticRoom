@@ -21,10 +21,10 @@ object DataDBJson {
   val value = "value"
   val DataDBCollectionName = "Data"
 
-  case class RangeViolationDBJson(delta : Double)
+  case class DataRangeViolationDBJson(delta : Double)
   case class DataDBJsonModel(id : String,
                              dateCreation: DateTime,
-                             rangeViolation : Option[RangeViolationDBJson],
+                             rangeViolation : Option[DataRangeViolationDBJson],
                              sensorName : String,
                              dataType : Double,
                              value : Double)
@@ -35,22 +35,22 @@ object DataDBJson {
     def write(jdtime: DateTime) = BSONDateTime(jdtime.getMillis)
   }
 
-  implicit val RangeViolationDBBsonHandler =  Macros.handler[RangeViolationDBJson]
+  implicit val RangeViolationDBBsonHandler =  Macros.handler[DataRangeViolationDBJson]
   implicit val DataDBBsonHandler = Macros.handler[DataDBJsonModel]
 
-  implicit val rangeViolationDBJsonReader : Reads[RangeViolationDBJson] =
-    (JsPath \ rangeViolationDelta).read[Double].map(RangeViolationDBJson)
+  implicit val rangeViolationDBJsonReader : Reads[DataRangeViolationDBJson] =
+    (JsPath \ rangeViolationDelta).read[Double].map(DataRangeViolationDBJson)
 
   implicit val dataDBJsonModelViolationReader: Reads[DataDBJsonModel] = (
     (JsPath \ id).read[String] and
       (JsPath \ dateCreation).read[DateTime] and
-      (JsPath \ rangeViolation).readNullable[RangeViolationDBJson] and
+      (JsPath \ rangeViolation).readNullable[DataRangeViolationDBJson] and
       (JsPath \ sensorName).read[String] and
       (JsPath \ dataType).read[Double] and
       (JsPath \ value).read[Double])(DataDBJsonModel.apply _)
 
-  implicit val rangeViolationDBJsonWrites = new Writes[Option[RangeViolationDBJson]] {
-    def writes(data: Option[RangeViolationDBJson]) = data match {
+  implicit val rangeViolationDBJsonWrites = new Writes[Option[DataRangeViolationDBJson]] {
+    def writes(data: Option[DataRangeViolationDBJson]) = data match {
       case Some(d) => Json.obj(
         rangeViolationDelta -> d.delta
       )
@@ -62,7 +62,7 @@ object DataDBJson {
     def writes(data: DataDBJsonModel) = Json.obj(
       id -> BSONObjectID.generate.toString(),
       dateCreation -> data.dateCreation,
-      rangeViolation -> Json.toJson[Option[RangeViolationDBJson]](data.rangeViolation),
+      rangeViolation -> Json.toJson[Option[DataRangeViolationDBJson]](data.rangeViolation),
       sensorName -> data.sensorName,
       dataType -> data.dataType,
       value -> data.value

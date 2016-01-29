@@ -1,6 +1,6 @@
 package interfaces.presistenceStore
 
-import models.DataStructures.RangeType
+import models.DataStructures.RangeModel.RangeType
 import org.joda.time.{ReadableDuration, DateTime}
 import play.api.libs.iteratee.Enumerator
 import reactivemongo.bson.BSONDocument
