@@ -115,6 +115,7 @@ Vista l'introduzione della tecnologia in questa fase si \'e deciso di apportare 
 \begin{itemize}
   \item \textit{DataStructures:} Si \'e ritenuto necessario introdurre un'ulteriore package che non era stato previsto precedentemente contenente le rappresentazioni interne in forma di classi dei dati che circolano nel sistema, cos\'i come delle classi di utilit\'a che servono per la conversione, da e verso, questi dati.
   \item \textit{IDataFormatter:} Visto che le elaborazioni di trasformazione dei dati non richiedono tanta computazione si \'e deciso di eliminare il metodo che, dato un valore lo validava inglobandolo direttamente dentro il primo metodo che restituisce lo stream. Inoltre nella costruzione dello stream ci si \'e accorti che il valore dell'input non viene passato per parametro al metodo, ma viene gestito dall'infrastruttura, quindi si \'e deciso di eliminarlo. Spesso gli oggetti che validano e formattano i dati passano da una rappresentazione ad un'altra: tra valori JSON, BSON e classi interne per i dati.
+  \item \textit{IDBDataFormatter:} Viene aggiunto un'ulteriore metodo che gestisce la creazione di dati da un formato inerente alle strutture dati presenti in un altro utilizzabile per lo storage dei dati nel DB. Questo metodo \'e estraneo a quelli per la costruzione di stream e serve per la gestione delle richieste di inserimento di un nuovo range.
 \end{itemize}
 
 \subsection{Interazione}
