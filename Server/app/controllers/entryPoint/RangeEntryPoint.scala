@@ -14,6 +14,10 @@ class RangeEntryPoint extends Controller {
   implicit val messages: Messages = play.api.i18n.Messages.Implicits.applicationMessages(
     Lang("en"), play.api.Play.current)
 
+  /////////////////////////////////
+  // FORMS
+  /////////////////////////////////
+
   val userForm = Form(
     mapping(
       "minBound" -> of[Double],
@@ -22,11 +26,41 @@ class RangeEntryPoint extends Controller {
     ) (Range.apply)(DataStructures.Range.unapply)
   )
 
+  // List ranges entry
+  def ranges = Action { Ok(views.html.index("test")) }
+
+  //////////////////////////////////////////
+  // Form range entries
+  /////////////////////////////////////////
 
   def newRange =  Action {
-
     Ok(newrange.render(userForm,messages))
   }
-  def ranges = Action { Ok(views.html.index("test")) }
-  def submitNewRange = Action { Ok }
+
+  def submitNewRange = Action { request =>
+    userForm.bindFromRequest().fold(
+      formWithErrors => { BadRequest(newrange.render(formWithErrors,messages))},
+      userData => {
+
+        val
+
+        Redirect(routes.RangeEntryPoint.ranges())
+      }
+    )
+  }
+
+  //////////////////////////////////////////
+  // Form range boolean entries
+  /////////////////////////////////////////
+
+  def submitNewRangeBoolean = Action { request =>
+    // TODO: handling another form for the range boolean
+    Ok
+  }
+
+  def newRangeBoolean =  Action {
+
+    // TODO: add another form for the range boolean
+    Ok//(newrange.render(userForm,messages))
+  }
 }
