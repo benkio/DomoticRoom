@@ -1,5 +1,8 @@
 package models.DataStructures
 
+import models.DataStructures.RangeModel.RangeType.RangeType
+import models.DataStructures.SensorModel.SensorType
+import models.DataStructures.SensorModel.SensorType.SensorType
 import org.joda.time.DateTime
 import reactivemongo.bson.{BSONObjectID, Macros, BSONDateTime, BSONHandler}
 
@@ -8,22 +11,12 @@ import reactivemongo.bson.{BSONObjectID, Macros, BSONDateTime, BSONHandler}
   */
 object RangeModel {
 
+  // MODELS
+
   case class Range(minBound: Double, maxBound: Double, rt: Int)
-
   case class RangeBoolean(value: Boolean, rt: Int)
-
   case class RangeBooleanDBJson(id: BSONObjectID, value: Boolean, rangeType: Int, dateCreated: DateTime)
-
   case class RangeDBJson(id: BSONObjectID, minBound: Double, maxBound: Double, rangeType: Int, dateCreated: DateTime)
-
-  implicit object BSONDateTimeHandler extends BSONHandler[BSONDateTime, DateTime] {
-    def read(time: BSONDateTime) = new DateTime(time.value)
-
-    def write(jdtime: DateTime) = BSONDateTime(jdtime.getMillis)
-  }
-
-  implicit val RangeBooleanDBBsonHandler =  Macros.handler[RangeBooleanDBJson]
-  implicit val RangeDBBsonHandler = Macros.handler[RangeDBJson]
 
   object RangeType extends Enumeration {
     type RangeType = Value
@@ -46,4 +39,26 @@ object RangeModel {
     val RangeDBCollectionName = "Ranges"
   }
 
+  // CONVERSIONS
+
+  // BSON DOCUMENT
+
+  implicit object BSONDateTimeHandler extends BSONHandler[BSONDateTime, DateTime] {
+    def read(time: BSONDateTime) = new DateTime(time.value)
+
+    def write(jdtime: DateTime) = BSONDateTime(jdtime.getMillis)
+  }
+
+  implicit val RangeBooleanDBBsonHandler =  Macros.handler[RangeBooleanDBJson]
+  implicit val RangeDBBsonHandler = Macros.handler[RangeDBJson]
+
+  // SENSOR TYPE
+
+  def rangeTypeToSensorType(rangeType : RangeType): SensorType = rangeType match {
+    case RangeType.Gas => SensorType.Gas
+    case RangeType.Humidity => SensorType.Humidity
+    case RangeType.Light => SensorType.Light
+    case RangeType.Movement => SensorType.Movement
+    case RangeType.Temperature => SensorType.Temperature
+  }
 }

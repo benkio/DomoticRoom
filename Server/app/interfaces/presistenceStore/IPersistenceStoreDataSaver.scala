@@ -1,8 +1,5 @@
 package interfaces.presistenceStore
 
-import models.DataStructures.SensorType
-import play.api.libs.json.JsValue
-import play.libs.F.Tuple
 import reactivemongo.bson.BSONDocument
 
 /**

@@ -3,11 +3,11 @@ package models.persistenceStore.loaders
 import javax.inject.Inject
 
 import interfaces.presistenceStore.IPersistenceStoreSensorsLoader
-import models.DataStructures.SensorDBJson
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import models.DataStructures.SensorModel.SensorDBJson
 import play.modules.reactivemongo.{ReactiveMongoApi, ReactiveMongoComponents}
 import reactivemongo.api.collections.bson.BSONCollection
 import reactivemongo.bson.BSONDocument
+import scala.concurrent.ExecutionContext.Implicits.global
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
   */

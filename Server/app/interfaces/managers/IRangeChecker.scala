@@ -1,6 +1,6 @@
 package interfaces.managers
 
-import models.DataStructures.SensorType
+import models.DataStructures.SensorModel.SensorType
 import play.api.libs.json.JsValue
 import models.DataStructures.RangeModel._
 
@@ -9,5 +9,5 @@ import models.DataStructures.RangeModel._
   */
 trait IRangeChecker {
   def checkRange(data:JsValue,sensorType:SensorType.Value)
-  def updateRange(range:Range, sensorType: SensorType.Value)
+  def updateRange(range:Range)
 }

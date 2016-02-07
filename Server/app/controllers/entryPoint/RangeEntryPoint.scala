@@ -1,8 +1,10 @@
 package controllers.entryPoint
 
 import controllers.dataFormatter.DBDataFormatter
+import controllers.managers.EventManager
 import models.DataStructures
 import models.DataStructures.RangeModel._
+import models.persistenceStore.PersistenceStore
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
@@ -44,6 +46,8 @@ class RangeEntryPoint extends Controller {
       userData => {
 
         val rangeDBDocument = new DBDataFormatter().convertToBson(userData)
+        PersistenceStore.saveRange(rangeDBDocument)
+        EventManager.newRange(userData)
 
         Redirect(routes.RangeEntryPoint.ranges())
       }

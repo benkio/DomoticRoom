@@ -2,7 +2,7 @@ package controllers.managers
 
 import interfaces.managers.IRangeChecker
 import models.DataStructures
-import models.DataStructures.SensorType
+import models.DataStructures.SensorModel.SensorType
 import play.api.libs.json.JsValue
 
 /**
@@ -12,5 +12,8 @@ class RangeChecker extends IRangeChecker{
   val currentRanges : Map[SensorType.Value,DataStructures.RangeModel.Range] = ???
   override def checkRange(data: JsValue, sensorType: SensorType.Value): Unit = ??? //TODO
 
-  override def updateRange(range: DataStructures.RangeModel.Range, sensorType: SensorType.Value): Unit = ??? //TODO
+  override def updateRange(range: DataStructures.RangeModel.Range): Unit = {
+    // TODO
+    //currentRanges = currentRanges + (models.DataStructures.RangeModel.rangeTypeToSensorType() -> range)
+  }
 }

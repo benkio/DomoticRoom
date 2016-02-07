@@ -1,7 +1,6 @@
 package controllers.managers
 
 import interfaces.managers.{IRangeChecker, IEventManager}
-import models.DataStructures.SensorType
 import play.api.libs.iteratee.{Enumeratee, Iteratee}
 import play.api.libs.json.JsValue
 
@@ -12,5 +11,7 @@ object EventManager extends IEventManager{
   val rangeChecker:IRangeChecker = new RangeChecker
   override def newData(enumeratee: Enumeratee[JsValue,JsValue]): Enumeratee[JsValue,JsValue] = ??? //TODO
 
-  override def newRange(range: Range, sensorType: SensorType.Value): Iteratee[JsValue,JsValue] = ??? //TODO
+  override def newRange(range: models.DataStructures.RangeModel.Range) = {
+    rangeChecker.updateRange(range)
+  }
 }

@@ -1,6 +1,5 @@
 package interfaces.managers
 
-import models.DataStructures.SensorType
 import play.api.libs.iteratee.{Iteratee, Enumeratee}
 import play.api.libs.json.JsValue
 
@@ -9,5 +8,5 @@ import play.api.libs.json.JsValue
   */
 trait IEventManager {
   def newData(enumeratee:Enumeratee[JsValue,JsValue]):Enumeratee[JsValue,JsValue]
-  def newRange(range:Range, sensorType:SensorType.Value) :Iteratee[JsValue,JsValue]
+  def newRange(range: models.DataStructures.RangeModel.Range)
 }

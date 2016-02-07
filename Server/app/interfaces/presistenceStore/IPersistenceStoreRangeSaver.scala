@@ -1,6 +1,5 @@
 package interfaces.presistenceStore
 
-import models.DataStructures.SensorType
 import reactivemongo.bson.BSONDocument
 
 /**
