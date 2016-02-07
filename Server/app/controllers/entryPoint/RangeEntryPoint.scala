@@ -21,12 +21,19 @@ class RangeEntryPoint extends Controller {
   // FORMS
   /////////////////////////////////
 
-  val userForm = Form(
+  val rangeForm = Form(
     mapping(
       "minBound" -> of[Double],
       "maxBound" -> of[Double],
       "rangeType" -> number
     ) (Range.apply)(Range.unapply)
+  )
+
+  val rangeBooleanForm = Form(
+    mapping(
+      "value" -> of[Boolean],
+      "rangeType" -> number
+    ) (RangeBoolean.apply)(RangeBoolean.unapply)
   )
 
   // List ranges entry
@@ -37,12 +44,12 @@ class RangeEntryPoint extends Controller {
   /////////////////////////////////////////
 
   def newRange =  Action {
-    Ok(newrange.render(userForm,messages))
+    Ok(newrange.render(rangeForm,rangeBooleanForm,messages))
   }
 
   def submitNewRange = Action { implicit request =>
-    userForm.bindFromRequest.fold(
-      formWithErrors => { BadRequest(newrange.render(formWithErrors,messages))},
+    rangeForm.bindFromRequest.fold(
+      formWithErrors => { BadRequest(newrange.render(formWithErrors,rangeBooleanForm,messages))},
       userData => {
 
         val rangeDBDocument = new DBDataFormatter().convertToBson(userData)
@@ -58,9 +65,18 @@ class RangeEntryPoint extends Controller {
   // Form range boolean entries
   /////////////////////////////////////////
 
-  def submitNewRangeBoolean = Action { request =>
-    // TODO: handling another form for the range boolean
-    Ok
+  def submitNewRangeBoolean = Action { implicit request =>
+    rangeBooleanForm.bindFromRequest.fold(
+      formWithErrors => { BadRequest(newrange.render(rangeForm,formWithErrors,messages))},
+      userData => {
+
+        val rangeDBDocument = new DBDataFormatter().convertToBson(userData)
+        PersistenceStore.saveRange(rangeDBDocument)
+        EventManager.newRange(userData)
+
+        Redirect(routes.RangeEntryPoint.ranges())
+      }
+    )
   }
 
   def newRangeBoolean =  Action {

@@ -13,8 +13,10 @@ object RangeModel {
 
   // MODELS
 
-  case class Range(minBound: Double, maxBound: Double, rt: Int)
-  case class RangeBoolean(value: Boolean, rt: Int)
+  trait IRange
+
+  case class Range(minBound: Double, maxBound: Double, rt: Int) extends IRange
+  case class RangeBoolean(value: Boolean, rt: Int) extends IRange
   case class RangeBooleanDBJson(id: BSONObjectID, value: Boolean, rangeType: Int, dateCreated: DateTime)
   case class RangeDBJson(id: BSONObjectID, minBound: Double, maxBound: Double, rangeType: Int, dateCreated: DateTime)
 
@@ -60,5 +62,15 @@ object RangeModel {
     case RangeType.Light => SensorType.Light
     case RangeType.Movement => SensorType.Movement
     case RangeType.Temperature => SensorType.Temperature
+  }
+
+  // INTEGER
+
+  def intToRangeType(id : Int): RangeType = id match {
+    case 1 => RangeType.Gas
+    case 2 => RangeType.Humidity
+    case 3 => RangeType.Light
+    case 4 => RangeType.Movement
+    case 5 => RangeType.Temperature
   }
 }
