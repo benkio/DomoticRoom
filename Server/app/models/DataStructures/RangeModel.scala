@@ -1,7 +1,7 @@
 package models.DataStructures
 
 import org.joda.time.DateTime
-import reactivemongo.bson.{Macros, BSONDateTime, BSONHandler}
+import reactivemongo.bson.{BSONObjectID, Macros, BSONDateTime, BSONHandler}
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -12,9 +12,9 @@ object RangeModel {
 
   case class RangeBoolean(value: Boolean, rt: Int)
 
-  case class RangeBooleanDBJson(id: String, value: Boolean, rangeType: Int, dateCreated: DateTime)
+  case class RangeBooleanDBJson(id: BSONObjectID, value: Boolean, rangeType: Int, dateCreated: DateTime)
 
-  case class RangeDBJson(id: String, minBound: Int, maxBound: Int, rangeType: Int, dateCreated: DateTime)
+  case class RangeDBJson(id: BSONObjectID, minBound: Double, maxBound: Double, rangeType: Int, dateCreated: DateTime)
 
   implicit object BSONDateTimeHandler extends BSONHandler[BSONDateTime, DateTime] {
     def read(time: BSONDateTime) = new DateTime(time.value)

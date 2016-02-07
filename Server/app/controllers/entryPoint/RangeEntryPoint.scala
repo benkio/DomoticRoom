@@ -1,5 +1,6 @@
 package controllers.entryPoint
 
+import controllers.dataFormatter.DBDataFormatter
 import models.DataStructures
 import models.DataStructures.RangeModel._
 import play.api.data.Form
@@ -42,7 +43,7 @@ class RangeEntryPoint extends Controller {
       formWithErrors => { BadRequest(newrange.render(formWithErrors,messages))},
       userData => {
 
-        // TODO
+        val rangeDBDocument = new DBDataFormatter().convertToBson(userData)
 
         Redirect(routes.RangeEntryPoint.ranges())
       }
