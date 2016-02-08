@@ -17,8 +17,8 @@ object RangeModel {
 
   case class Range(minBound: Double, maxBound: Double, rt: Int) extends IRange
   case class RangeBoolean(value: Boolean, rt: Int) extends IRange
-  case class RangeBooleanDBJson(id: BSONObjectID, value: Boolean, rangeType: Int, dateCreated: DateTime)
-  case class RangeDBJson(id: BSONObjectID, minBound: Double, maxBound: Double, rangeType: Int, dateCreated: DateTime)
+  case class RangeBooleanDBJson(_id: BSONObjectID, value: Boolean, rangeType: Int, dateCreated: DateTime)
+  case class RangeDBJson(_id: BSONObjectID, minBound: Double, maxBound: Double, rangeType: Int, dateCreated: DateTime)
 
   object RangeType extends Enumeration {
     type RangeType = Value
@@ -28,7 +28,7 @@ object RangeModel {
   object RangeBooleanDBJsonModel {
     val Id = "_id"
     val value = "value"
-    val rangeType = "type"
+    val rangeType = "rangeType"
     val dateCreated = "dateCreated"
   }
 
@@ -36,7 +36,7 @@ object RangeModel {
     val Id = "_id"
     val minBound = "minBound"
     val maxBound = "maxBound"
-    val rangeType = "type"
+    val rangeType = "rangeType"
     val dateCreated = "dateCreated"
     val RangeDBCollectionName = "Ranges"
   }

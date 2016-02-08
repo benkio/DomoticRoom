@@ -78,10 +78,4 @@ class RangeEntryPoint extends Controller {
       }
     )
   }
-
-  def newRangeBoolean =  Action {
-
-    // TODO: add another form for the range boolean
-    Ok//(newrange.render(userForm,messages))
-  }
 }

@@ -7,7 +7,6 @@ GET 	/							        controllers.entryPoint.OtherEntryPoint.root()
 GET		/domoticRoom/status			        controllers.entryPoint.StatusEntryPoint.status()
 GET		/domoticRoom/analysis		        controllers.entryPoint.AnalysisEntryPoint.analysis()
 GET		/domoticRoom/newrange		        controllers.entryPoint.RangeEntryPoint.newRange()
-GET		/domoticRoom/newrangeboolean		controllers.entryPoint.RangeEntryPoint.newRangeBoolean()
 GET		/domoticRoom/ranges		            controllers.entryPoint.RangeEntryPoint.ranges()
 
 POST	/domoticRoom/submitNewRange	        controllers.entryPoint.RangeEntryPoint.submitNewRange()
