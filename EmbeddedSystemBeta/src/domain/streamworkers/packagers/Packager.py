@@ -1,7 +1,7 @@
 '''
 Created on 24/gen/2016
 
-@author: nicola
+@author: Enrico Benini, Nicola Casadei, Marco Benedetti
 '''
 import json
 from domain.streamworkers.AStreamWorker import AStreamWorker

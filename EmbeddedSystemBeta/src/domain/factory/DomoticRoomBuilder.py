@@ -1,7 +1,7 @@
 '''
 Created on 29/gen/2016
 
-@author: nicola
+@author: Enrico Benini, Nicola Casadei, Marco Benedetti
 '''
 import socket
 from RPi import GPIO

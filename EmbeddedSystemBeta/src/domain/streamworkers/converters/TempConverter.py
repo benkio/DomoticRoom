@@ -1,7 +1,7 @@
 '''
 Created on 28/gen/2016
 
-@author: nicola
+@author: Enrico Benini, Nicola Casadei, Marco Benedetti
 '''
 from domain.streamworkers.AStreamWorker import AStreamWorker
 from domain.streamworkers.messages.StreamMessage import StreamMessage
@@ -25,10 +25,8 @@ class TempConverter(AStreamWorker):
             tempValue=StreamMessage(x.getName(),x.getTypeSensor(),dataReceived[2],x.getRelevationTime())
             humidityValue=StreamMessage(x.getName(),x.getTypeSensor(),dataReceived[0], x.getRelevationTime())
             self.outputStream.on_next(tempValue)
-            #print(str(tempValue.getValore()))
             self.outputStream.on_next(humidityValue)
-            #print(str(humidityValue.getValore()))
-        
+                    
     def on_error(self, error):
         self.outputStream.on_error(error)
         
