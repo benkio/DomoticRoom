@@ -1,19 +1,14 @@
 package models.persistenceStore
 
 import interfaces.presistenceStore._
+import models.DataStructures.RangeModel.RangeType
 import models.persistenceStore.loaders._
 import models.persistenceStore.savers._
-import models.{RangeType, SensorType, Range}
-import org.joda.time.{ReadableDuration, Interval, DateTime}
-import play.api.libs.json.JsValue
-
+import org.joda.time.{DateTime, ReadableDuration}
 import play.api.Play.current
-
 import play.modules.reactivemongo.ReactiveMongoApi
 import play.modules.reactivemongo.json.collection.JSONCollection
 import reactivemongo.bson.BSONDocument
-
-import scala.concurrent.Future
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -42,10 +37,10 @@ object PersistenceStore extends IPersistenceStore{
   override def loadCurrentSensorData(sensorName: String) =
     psl.loadCurrentSensorData(sensorName)
 
-  override def loadLastRange(rangeType: RangeType) =
+  override def loadLastRange(rangeType: RangeType.Value) =
     psl.loadLastRange(rangeType)
 
-  override def loadRange(rangeType: RangeType, startDate: DateTime, duration: ReadableDuration) =
+  override def loadRange(rangeType: RangeType.Value, startDate: DateTime, duration: ReadableDuration) =
     psl.loadRange(rangeType, startDate, duration)
 
   override def loadLastRanges =

@@ -1,23 +1,44 @@
 @import views.html.helper
 @import views.html.helper.select
+@import helper._
 @import views.html.helper.options
-@import models.Range
+@import models.DataStructures.RangeModel._
 
-@(newRangeForm: Form[Range])(implicit messages: Messages)
+@(newRangeForm: Form[Range], newRangeBooleanForm : Form[RangeBoolean])(implicit messages: Messages)
 
 @main("Domotic Room Control Panel") {
 
-  @helper.form(action = controllers.entryPoint.routes.RangeEntryPoint.submitNewRange,'role -> "form") {
+  <button id="switchForm" name="switchForm" onclick="(function() {
+    $('#newRangeForm').toggle();
+    $('#newRangeBooleanForm').toggle();
+  })();"> Switch to the other Ranges</button>
 
+  <div id="newRangeForm">
+    @form(action = controllers.entryPoint.routes.RangeEntryPoint.submitNewRange,'role -> "form") {
+
+      @input(newRangeForm("rangeType")) { (id, name, value, args) =>
+        <p>Temperature Sensor</p>
+        <input type="hidden" name="@name" id="@id" value="3" @toHtmlArgs(args)>
+      }
+
+      <div class="form-group">
+       @inputText(newRangeForm("minBound"),'class -> "form-control",'type -> "number")
+      </div>
+      <div class="form-group">
+       @inputText(newRangeForm("maxBound"),'class -> "form-control",'type -> "number")
+      </div>
+      <button type="submit" name="action" class="btn btn-default">Add New Range</button>
+    }
+  </div>
+
+  <div id="newRangeBooleanForm" style="display: none">
+    @form(action = controllers.entryPoint.routes.RangeEntryPoint.submitNewRangeBoolean, 'role -> "form") {
+
+    @select(field = newRangeBooleanForm("rangeType"),options = options("1"->"Gas","2"->"Humidity","3"->"Light","4"->"Movement"))
     <div class="form-group">
-    @select(field = newRangeForm("rangeType"),options = options("Temp"->"Temperature","Hum"->"Humidity","Gas"->"Gas"))
-    </div>
-    <div class="form-group">
-    @helper.inputText(newRangeForm("minBound"),'class -> "form-control",'type -> "number")
-    </div>
-    <div class="form-group">
-    @helper.inputText(newRangeForm("maxBound"),'class -> "form-control",'type -> "number")
+      @checkbox(field = newRangeBooleanForm("value"))
     </div>
     <button type="submit" name="action" class="btn btn-default">Add New Range</button>
-  }
+    }
+  </div>
 }

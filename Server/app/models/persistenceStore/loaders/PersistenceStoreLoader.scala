@@ -1,11 +1,8 @@
 package models.persistenceStore.loaders
 
-import interfaces.presistenceStore.{IPersistenceStoreRangeLoader, IPersistenceStoreDataLoader, IPersistenceStoreLoader, IPersistenceStoreSensorsLoader}
-import models.{RangeType, SensorType}
-import org.joda.time.{ReadableDuration, Interval, DateTime}
-import reactivemongo.bson.BSONDocument
-
-import scala.concurrent.Future
+import interfaces.presistenceStore.{IPersistenceStoreDataLoader, IPersistenceStoreLoader, IPersistenceStoreRangeLoader, IPersistenceStoreSensorsLoader}
+import models.DataStructures.RangeModel.RangeType
+import org.joda.time.{DateTime, ReadableDuration}
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -15,10 +12,10 @@ class PersistenceStoreLoader(psdl:IPersistenceStoreDataLoader, psrl:IPersistence
   ///////////////////////////////////////
   ////////////Range Load Operations//////
   ///////////////////////////////////////
-  override def loadRange(rangeType: RangeType, startDate: DateTime, duration:ReadableDuration) =
+  override def loadRange(rangeType: RangeType.Value, startDate: DateTime, duration:ReadableDuration) =
     psrl.loadRange(rangeType, startDate, duration)
 
-  override def loadLastRange(rangeType: RangeType) =
+  override def loadLastRange(rangeType: RangeType.Value) =
     psrl.loadLastRange(rangeType)
 
   override def loadLastRanges =

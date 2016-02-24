@@ -312,3 +312,7 @@ buildinfo.cpp
 DriverInclude.wxs
 
 compile_commands.json
+
+# MongoDB
+/Server/Database/diagnostic.data
+/Server/Database/journal

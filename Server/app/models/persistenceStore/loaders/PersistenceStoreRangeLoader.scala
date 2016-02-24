@@ -1,7 +1,7 @@
 package models.persistenceStore.loaders
 
 import interfaces.presistenceStore.IPersistenceStoreRangeLoader
-import models.{RangeTypeUtil, RangeType}
+import models.DataStructures.RangeModel.{RangeType, RangeDBJsonModel}
 import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter}
 import org.joda.time.{ReadableDuration,DateTime}
 
@@ -30,15 +30,15 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
     .toFormatter
 
 
-  val rangesCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection]("Ranges")
+  val rangesCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection](RangeDBJsonModel.RangeDBCollectionName)
 
-  override def loadRange(rangeType: RangeType, startDate: DateTime, duration:ReadableDuration) = {
+  override def loadRange(rangeType: RangeType.Value, startDate: DateTime, duration:ReadableDuration) = {
     val finalDate = startDate.plus(duration).toString(patternFormat)
     val startDateString = startDate.toString(patternFormat)
 
     val query = BSONDocument(
-      "type" -> BSONString(RangeTypeUtil.RangeType2Int(rangeType).toString),
-      "dateCreation" -> BSONDocument(
+      RangeDBJsonModel.rangeType -> BSONInteger(rangeType.id),
+      RangeDBJsonModel.dateCreated -> BSONDocument(
         "$gte" -> BSONString(startDateString),
         "$lt" -> BSONString(finalDate)
       )
@@ -48,12 +48,12 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
 
   }
 
-  override def loadLastRange(rangeType: RangeType) = {
+  override def loadLastRange(rangeType: RangeType.Value) = {
     val query = BSONDocument(
-      "type" -> BSONInteger (RangeTypeUtil.RangeType2Int(rangeType))
+      RangeDBJsonModel.rangeType -> BSONInteger(rangeType.id)
     )
 
-    val futureResult = rangesCollection.find(query).sort(BSONDocument("dateCreated" -> -1)).one[BSONDocument]
+    val futureResult = rangesCollection.find(query).sort(BSONDocument(RangeDBJsonModel.dateCreated -> -1)).one[BSONDocument]
     Enumerator(futureResult) &> Enumeratee.mapM(identity)
   }
 
@@ -61,12 +61,12 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
 
     import rangesCollection.BatchCommands.AggregationFramework.{Group, Max }
 
-    val command = Group(BSONString("$type"))("realmaxid" -> Max("$_id"))
+    val command = Group(BSONString("$"+RangeDBJsonModel.rangeType))("realmaxid" -> Max("$"+RangeDBJsonModel.Id))
 
     val findidQuery = rangesCollection.aggregate(command) flatMap {r =>
       Future.sequence(r.documents map { x =>
           val t = x.get("realmaxid").get
-          rangesCollection.find(BSONDocument("_id" -> t)).cursor[BSONDocument]() collect[List]()
+          rangesCollection.find(BSONDocument(RangeDBJsonModel.Id -> t)).cursor[BSONDocument]() collect[List]()
         }
       )
     } flatMap(x => Future{x.flatten})

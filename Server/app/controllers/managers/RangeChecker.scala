@@ -1,15 +1,28 @@
 package controllers.managers
 
+
+import models.DataStructures.RangeModel.RangeBoolean
+
+import scala.collection.mutable
+import scala.collection.mutable.HashMap
 import interfaces.managers.IRangeChecker
-import models.{SensorType, Range}
+import models.DataStructures
+import models.DataStructures.RangeModel
+import models.DataStructures.SensorModel.SensorType
 import play.api.libs.json.JsValue
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/17/16.
   */
 class RangeChecker extends IRangeChecker{
-  val currentRanges : Map[SensorType,Range] = ???
-  override def checkRange(data: JsValue, sensorType: SensorType): Unit = ??? //TODO
+  var currentRanges = new HashMap[SensorType.Value, DataStructures.RangeModel.IRange]()
+  override def checkRange(data: JsValue, sensorType: SensorType.Value): Unit = ??? //TODO
 
-  override def updateRange(range: Range, sensorType: SensorType): Unit = ??? //TODO
+  override def updateRange(range: DataStructures.RangeModel.Range): Unit = {
+    currentRanges += (models.DataStructures.RangeModel.rangeTypeToSensorType(RangeModel.intToRangeType(range.rt)) -> range)
+  }
+
+  override def updateRange(rangeBoolean: RangeBoolean): Unit = {
+    currentRanges += (models.DataStructures.RangeModel.rangeTypeToSensorType(RangeModel.intToRangeType(rangeBoolean.rt)) -> rangeBoolean)
+  }
 }

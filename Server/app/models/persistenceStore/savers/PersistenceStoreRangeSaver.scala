@@ -1,20 +1,10 @@
 package models.persistenceStore.savers
 
 import interfaces.presistenceStore.IPersistenceStoreRangeSaver
-import models.{SensorType, Range}
-
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.libs.json.Json
-import play.api.mvc.{ Action, BodyParsers, Call, Controller, Result }
+import models.DataStructures.RangeModel.RangeDBJsonModel
+import play.modules.reactivemongo.{ReactiveMongoApi, ReactiveMongoComponents}
 import reactivemongo.api.collections.bson.BSONCollection
-
-import reactivemongo.bson.{ BSONObjectID, BSONDocument }
-import reactivemongo.core.actors.Exceptions.PrimaryUnavailableException
-import reactivemongo.api.commands.WriteResult
-
-import play.modules.reactivemongo.{
-  MongoController, ReactiveMongoApi, ReactiveMongoComponents
-}
+import reactivemongo.bson.BSONDocument
 
 
 /**
@@ -22,7 +12,7 @@ import play.modules.reactivemongo.{
   */
 class PersistenceStoreRangeSaver (val reactiveMongoApi: ReactiveMongoApi) extends IPersistenceStoreRangeSaver with ReactiveMongoComponents {
 
-  val rangeCollection = reactiveMongoApi.db.collection[BSONCollection]("Ranges")
+  val rangeCollection = reactiveMongoApi.db.collection[BSONCollection](RangeDBJsonModel.RangeDBCollectionName)
 
   override def saveRange(dataFormatted : BSONDocument) = {
     StoreUtils.store(rangeCollection,dataFormatted)
