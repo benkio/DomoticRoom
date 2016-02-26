@@ -28,7 +28,6 @@ class DBDataFormatter extends IDBDataFormatter {
   }
 
   override def convertToBson(range : Range): BSONDocument = {
-    RangeDBJsonModel
     val rangeDB = RangeDBJson(BSONObjectID.generate,range.minBound,range.maxBound,range.rt, DateTime.now)
     RangeDBBsonHandler.write(rangeDB)
   }

@@ -1,6 +1,8 @@
 package models.persistenceStore.loaders
 
+import controllers.dataFormatter.DBDataFormatter
 import interfaces.presistenceStore.IPersistenceStoreRangeLoader
+import models.DataStructures.RangeModel
 import models.DataStructures.RangeModel.{RangeType, RangeDBJsonModel}
 import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter}
 import org.joda.time.{ReadableDuration,DateTime}
@@ -58,10 +60,9 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
   }
 
   override def loadLastRanges = {
-
     import rangesCollection.BatchCommands.AggregationFramework.{Group, Max }
 
-    val command = Group(BSONString("$"+RangeDBJsonModel.rangeType))("realmaxid" -> Max("$"+RangeDBJsonModel.Id))
+    val command = Group(BSONString("$"+RangeDBJsonModel.rangeType))("realmaxid" -> Max(RangeDBJsonModel.Id))
 
     val findidQuery = rangesCollection.aggregate(command) flatMap {r =>
       Future.sequence(r.documents map { x =>

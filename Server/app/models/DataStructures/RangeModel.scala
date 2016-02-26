@@ -4,7 +4,7 @@ import models.DataStructures.RangeModel.RangeType.RangeType
 import models.DataStructures.SensorModel.SensorType
 import models.DataStructures.SensorModel.SensorType.SensorType
 import org.joda.time.DateTime
-import reactivemongo.bson.{BSONObjectID, Macros, BSONDateTime, BSONHandler}
+import reactivemongo.bson._
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -14,11 +14,12 @@ object RangeModel {
   // MODELS
 
   trait IRange
+  trait IDBRange
 
   case class Range(minBound: Double, maxBound: Double, rt: Int) extends IRange
   case class RangeBoolean(value: Boolean, rt: Int) extends IRange
-  case class RangeBooleanDBJson(_id: BSONObjectID, value: Boolean, rangeType: Int, dateCreated: DateTime)
-  case class RangeDBJson(_id: BSONObjectID, minBound: Double, maxBound: Double, rangeType: Int, dateCreated: DateTime)
+  case class RangeBooleanDBJson(_id: BSONObjectID, value: Boolean, rangeType: Int, dateCreated: DateTime) extends IDBRange
+  case class RangeDBJson(_id: BSONObjectID, minBound: Double, maxBound: Double, rangeType: Int, dateCreated: DateTime) extends IDBRange
 
   object RangeType extends Enumeration {
     type RangeType = Value

@@ -1,0 +1,37 @@
+@import models.DataStructures.RangeModel._
+
+@(ranges : List[RangeDBJson], rangesBoolean : List[RangeBooleanDBJson])
+
+@main("Domotic Room Control Panel") {
+
+    <table style="width:100%">
+        <thead>
+            <td>Id</td>
+            <td>Value</td>
+            <td>Min</td>
+            <td>Max</td>
+            <td>Type</td>
+            <td>Date Creation</td>
+        </thead>
+        @for(range <- ranges) {
+        <tr>
+            <td>@range._id</td>
+            <td></td>
+            <td>@range.minBound</td>
+            <td>@range.maxBound</td>
+            <td>@range.rangeType</td>
+            <td>@range.dateCreated</td>
+        </tr>
+        } 
+        @for(rangeBoolean <- rangesBoolean) {
+        <tr>
+            <td>@rangeBoolean._id</td>
+            <td>@rangeBoolean.value</td>
+            <td></td>
+            <td></td>
+            <td>@rangeBoolean.rangeType</td>
+            <td>@rangeBoolean.dateCreated</td>
+        </tr>
+        }
+    </table>
+}
