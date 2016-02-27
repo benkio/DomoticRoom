@@ -14,15 +14,21 @@ import play.api.libs.json.JsValue
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/17/16.
   */
-class RangeChecker extends IRangeChecker{
-  var currentRanges = new HashMap[SensorType.Value, DataStructures.RangeModel.IRange]()
-  override def checkRange(data: JsValue, sensorType: SensorType.Value): Unit = ??? //TODO
+object RangeCheckerFactory {
 
-  override def updateRange(range: DataStructures.RangeModel.Range): Unit = {
-    currentRanges += (models.DataStructures.RangeModel.rangeTypeToSensorType(RangeModel.intToRangeType(range.rt)) -> range)
+  private class RangeChecker extends IRangeChecker {
+    var currentRanges = new HashMap[SensorType.Value, DataStructures.RangeModel.IRange]()
+
+    override def checkRange(data: JsValue, sensorType: SensorType.Value): Unit = ??? //TODO
+
+    override def updateRange(range: DataStructures.RangeModel.Range): Unit = {
+      currentRanges += (models.DataStructures.RangeModel.rangeTypeToSensorType(RangeModel.intToRangeType(range.rt)) -> range)
+    }
+
+    override def updateRange(rangeBoolean: RangeBoolean): Unit = {
+      currentRanges += (models.DataStructures.RangeModel.rangeTypeToSensorType(RangeModel.intToRangeType(rangeBoolean.rt)) -> rangeBoolean)
+    }
   }
 
-  override def updateRange(rangeBoolean: RangeBoolean): Unit = {
-    currentRanges += (models.DataStructures.RangeModel.rangeTypeToSensorType(RangeModel.intToRangeType(rangeBoolean.rt)) -> rangeBoolean)
-  }
+  def apply : IRangeChecker = new RangeChecker
 }

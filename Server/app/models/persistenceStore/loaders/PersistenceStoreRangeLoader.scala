@@ -62,12 +62,12 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
   override def loadLastRanges = {
     import rangesCollection.BatchCommands.AggregationFramework.{Group, Max }
 
-    val command = Group(BSONString("$"+RangeDBJsonModel.rangeType))("realmaxid" -> Max(RangeDBJsonModel.Id))
+    val command = Group(BSONString("$"+RangeDBJsonModel.rangeType))("realmaxdate" -> Max(RangeDBJsonModel.dateCreated))
 
     val findidQuery = rangesCollection.aggregate(command) flatMap {r =>
       Future.sequence(r.documents map { x =>
-          val t = x.get("realmaxid").get
-          rangesCollection.find(BSONDocument(RangeDBJsonModel.Id -> t)).cursor[BSONDocument]() collect[List]()
+          val t = x.get("realmaxdate").get
+          rangesCollection.find(BSONDocument(RangeDBJsonModel.dateCreated -> t)).cursor[BSONDocument]() collect[List]()
         }
       )
     } flatMap(x => Future{x.flatten})

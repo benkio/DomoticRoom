@@ -4,7 +4,7 @@
 
 @main("Domotic Room Control Panel") {
 
-    <table style="width:100%">
+    <table class="table" >
         <thead>
             <td>Id</td>
             <td>Value</td>
@@ -13,6 +13,7 @@
             <td>Type</td>
             <td>Date Creation</td>
         </thead>
+        <tbody>
         @for(range <- ranges) {
         <tr>
             <td>@range._id</td>
@@ -33,5 +34,6 @@
             <td>@rangeBoolean.dateCreated</td>
         </tr>
         }
+        </tbody>
     </table>
 }

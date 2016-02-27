@@ -1,5 +1,6 @@
 package controllers.entryPoint
 
+import controllers.StreamBuilder._
 import controllers.dataFormatter.DBDataFormatter
 import controllers.managers.EventManager
 import models.DataStructures.RangeModel._
@@ -7,16 +8,14 @@ import models.persistenceStore.PersistenceStore
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
-import play.api.i18n.{Messages, Lang}
-import play.api.libs.iteratee.{Enumeratee, Iteratee}
+import play.api.i18n.{Lang, Messages}
 import play.api.mvc._
 import views.html._
 
 import scala.concurrent._
-import scala.concurrent.duration
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
-import scala.util.{Failure, Success}
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class RangeEntryPoint extends Controller {
 
@@ -44,25 +43,8 @@ class RangeEntryPoint extends Controller {
 
   // List ranges entry
   def ranges = Action {
-    /*
-    val res =
-      PersistenceStore.loadLastRanges.map(x => {
-        val y : IDBRange = RangeBooleanDBBsonHandler.readTry(x) match {
-          case Success(v) => v
-          case Failure(e) => RangeDBBsonHandler.read(x)
-        }
-        y
-      }).apply(Iteratee.fold[IDBRange, List[IDBRange]](List.empty) { (s, e) => s.::(e) })flatMap(i => i.run)*/
-    val booleanRanges =
-      (PersistenceStore.loadLastRanges &>
-        Enumeratee.filter(x => RangeBooleanDBBsonHandler.readTry(x).isSuccess) &>
-        Enumeratee.map(y => RangeBooleanDBBsonHandler.read(y)))
-      .apply(Iteratee.fold[RangeBooleanDBJson, List[RangeBooleanDBJson]](List.empty) { (s, e) => s.::(e) }) flatMap(i => i.run)
-    val ranges =
-      (PersistenceStore.loadLastRanges &>
-      Enumeratee.filter(x => RangeDBBsonHandler.readTry(x).isSuccess) &>
-        Enumeratee.map(y => RangeDBBsonHandler.read(y)))
-        .apply(Iteratee.fold[RangeDBJson, List[RangeDBJson]](List.empty) { (s, e) => s.::(e) }) flatMap(i => i.run)
+    val booleanRanges = StreamUtils.runIterateeFuture(FetchRangesStreamBuilder.buildBooleanRangeStream())
+    val ranges = StreamUtils.runIterateeFuture(FetchRangesStreamBuilder.buildRangeStream())
 
     Ok(range.render(Await.result(ranges,Duration.Inf),Await.result(booleanRanges,Duration.Inf)))
   }
@@ -80,7 +62,7 @@ class RangeEntryPoint extends Controller {
       formWithErrors => { BadRequest(newrange.render(formWithErrors,rangeBooleanForm,messages))},
       userData => {
 
-        val rangeDBDocument = new DBDataFormatter().convertToBson(userData)
+        val rangeDBDocument = DBDataFormatter.convertToBson(userData)
         PersistenceStore.saveRange(rangeDBDocument)
         EventManager.newRange(userData)
 
@@ -98,7 +80,7 @@ class RangeEntryPoint extends Controller {
       formWithErrors => { BadRequest(newrange.render(rangeForm,formWithErrors,messages))},
       userData => {
 
-        val rangeDBDocument = new DBDataFormatter().convertToBson(userData)
+        val rangeDBDocument = DBDataFormatter.convertToBson(userData)
         PersistenceStore.saveRange(rangeDBDocument)
         EventManager.newRange(userData)
 
