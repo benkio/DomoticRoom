@@ -22,3 +22,4 @@ Enrico Benini
 ----------------
 * Implementazione - Test del Server.
 * Slide Server.
+* Relazione - Review parte Database con le collections.
