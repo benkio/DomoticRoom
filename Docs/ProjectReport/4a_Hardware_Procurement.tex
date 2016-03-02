@@ -23,7 +23,7 @@ Abbiamo scelto la seconda opzione data la maggior familiarita' con il dispositiv
 
 
 
-Il Rasberry Pi 2 (rappresentato nell'immagine~\ref{fig:Pi2}) è un SoC (sistema integrato) cio\'e possiede un chip che integra al suo interno processore, chipset, RAM ed eventuale circuteria input/output. \'E dotato delle seguenti uscite:
+Il Rasberry Pi 2 (figura~\ref{fig:Pi2}) è un SoC (sistema integrato) cio\'e possiede un chip che integra al suo interno processore, chipset, RAM ed eventuale circuteria input/output. \'E dotato delle seguenti uscite:
 \begin{itemize}
 \item USB 2.0 (4)
 \item Ethernet
@@ -74,7 +74,7 @@ Ogni sensore possiede 3 o 4 pin:
 \label{fig:dht11}
 \end{figure}
 
- Il sensore DHT11 è in grado rilevare la temperatura e l'umidità dell'ambiente circostante. Possiede 3 Pin per interfacciarsi.
+ Il sensore DHT11 (figura~\ref{fig:dht11}) è in grado rilevare la temperatura e l'umidità dell'ambiente circostante. Possiede 3 Pin per interfacciarsi.
  Le sue caratteristiche tecniche sono:
  
  \begin{itemize}
@@ -90,23 +90,56 @@ Ogni sensore possiede 3 o 4 pin:
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/Sensors&Rasp/light}
 	\caption[light]{Light Sensor}
-	\label{fig:dht11}
+	\label{fig:light}
 \end{figure}
+
+ Il sensore di luminosità (figura~\ref{fig:light} ) è un sensore dotato di un fotoresistore (componente circolare posizionato in fondo al circuito), un trimmer e due led. Il trimmer (equivalente ad un potenziometro) permette di regolare la sensibilità alla luce del sensore. Un led rimane costantemente acceso per indicare che il sensore è correttamente alimentato ed in funzione, l'altro si accende o si spegne nel momento in cui la luce percepita dal fotoresistore risulta sotto o sopra la soglia. Il sensore possiede 4 Pin per interfacciarsi.
+ Le sue caratteristiche tecniche sono:
+ 
+  \begin{itemize}
+  	\item Vcc: 3.3~5.5V
+  	\item Output: HIGH o LOW (boolean sensor: 0-1)
+  \end{itemize}
+  
+\newpage
+  
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/Sensors&Rasp/pir}
-	\caption[pir]{PIR (HC-SR501) Sensor}
-	\label{fig:dht11}
+	\caption[PIR] {HC-SR501 Sensor}
+	\label{fig:pir}
 \end{figure}
+
+
+  Il sensore di prossimità (figura ~\ref{fig:PIR}) permette di individuare gli spostamenti in una determinata area. Il suo funzionamento è dato da un componente chiamato "PIR" (Passive InfraRed) che per mezzo dei raggi infrarossi emanati dagli oggetti in uno spazio è in grado di percepire variazioni di movimento. Vi sono inoltre 2 trimmer arancioni per permettere di regolare il range di movimento e il tempo di delay. La semisfera di plastica trasparente posta sopra al modulo serve per poter massimizzare l'area di visibilità del sensore. Questa infatti, al suo interno, possiede particolari scanalature per che permettono di ridirigere correttamente i raggi al sensore. Vi sono 3 Pin per interfacciarsi.
+Le sue caratteristiche tecniche sono:
+
+ \begin{itemize}
+ 	\item Vcc: 5~20V
+ 	\item Range: 5~7 metri
+ 	\item Ampiezza: ~120°
+ 	\item Tempo di delay : 0.3-600 secondi
+ 	\item Output: HIGH o LOW (boolean sensor: 0-1)
+ \end{itemize}
+
+
+
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/Sensors&Rasp/mq-2}
-	\caption[gas]{Gas sensor (MQ-2)}
-	\label{fig:dht11}
+	\caption[gas]{Gas sensor}
+	\label{fig:mq2}
 \end{figure}
 
+Il sensore di gas (figura ~\ref{fig:mq2}) è dotato di un sensore MQ-2 in grado di rilevare la presenza dei seguenti gas:  LPG, propano, idrogeno. Possiede inoltre due led: uno sempre acceso per segnalare la giusta alimentazione del sensore e l'altro per segnalare la presenza di gas (acceso quando vi è gas). Infine, sotto, vi è un trimmer utile alla regolazione della sensibilità del sensore. Vi sono 4 Pin per interfacciarsi.
+Le sue caratteristiche tecniche sono: 
 
+\begin{itemize}
+	\item Vcc: 2,5~5V
+	 \item Output: HIGH o LOW (boolean sensor: 0-1)
+\end{itemize}
 
+\newpage
 
 \subsection{Hardware Aggiuntivo}
 
