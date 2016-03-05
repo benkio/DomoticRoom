@@ -15,7 +15,7 @@ import reactivemongo.bson.{BSONObjectID, BSONDocument}
   */
 object DBDataFormatter extends IDBDataFormatter {
 
-    override def getFormatterStreamStep = {
+    override def getFormatterStreamStep : Enumeratee[JsValue, BSONDocument] = {
       val convertToBson: Enumeratee[JsValue, BSONDocument] =
         Enumeratee.map[JsValue](in => DataDBJson.toBsonDocument(in.validate[DataDBJsonModel].get))
 
