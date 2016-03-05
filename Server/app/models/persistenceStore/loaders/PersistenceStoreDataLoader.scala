@@ -10,13 +10,10 @@ import play.modules.reactivemongo.json._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 import play.modules.reactivemongo.ReactiveMongoApi
-
 import reactivemongo.bson.{BSONDocument, BSONString}
+import reactivemongo.api.collections.bson.BSONCollection
 
-import reactivemongo.api.collections.bson.{ BSONCollection}
-
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
