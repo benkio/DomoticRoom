@@ -1,7 +1,5 @@
 package controllers.dataFormatter
 
-import java.util.Calendar
-
 import interfaces.dataFormatter.IDBDataFormatter
 import models.DataStructures.DataDBJson
 import models.DataStructures.RangeModel._
