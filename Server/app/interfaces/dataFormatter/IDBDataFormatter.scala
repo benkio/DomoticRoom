@@ -2,7 +2,7 @@ package interfaces.dataFormatter
 
 import models.DataStructures.RangeModel.RangeBoolean
 import play.api.libs.iteratee.Enumeratee
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsObject, JsValue}
 import reactivemongo.bson.BSONDocument
 
 /**
@@ -11,5 +11,5 @@ import reactivemongo.bson.BSONDocument
 trait IDBDataFormatter extends IDataFormatter{
   def convertToBson(range : models.DataStructures.RangeModel.Range) : BSONDocument
   def convertToBson(range : RangeBoolean) : BSONDocument
-  def getFormatterStreamStep : Enumeratee[JsValue, BSONDocument]
+  def getFormatterStreamStep : Enumeratee[JsObject, BSONDocument]
 }

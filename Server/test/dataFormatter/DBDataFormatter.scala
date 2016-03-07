@@ -1,14 +1,17 @@
 package dataFormatter
 
 import controllers.dataFormatter.DBDataFormatter
-import models.DataStructures.DataDBJson.{DataDBJsonModel, DataRangeViolationDBJson}
+import models.DataStructures.DataDBJson.DataRangeViolationDBJson
 import models.DataStructures.{DataDBJson, RangeModel}
-import org.joda.time.DateTime
+import org.joda.time
+import org.joda.time.{Seconds, DateTime}
 import org.specs2.{ScalaCheck, Specification}
-import play.api.data
-import play.api.libs.iteratee.Enumerator
+import play.api.libs.iteratee.{Iteratee, Enumerator}
 import play.api.libs.json.Json
-import reactivemongo.bson.{BSONObjectID, BSONBoolean, BSONDouble}
+import reactivemongo.bson._
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
 /**
   * Created by parallels on 3/5/16.
@@ -19,7 +22,7 @@ class DBDataFormatterTest extends Specification with ScalaCheck {
  this is DBDataFormatter specification
    where convertToBson method must convert the given Range type to BSONDocument                   $e1
    where convertToBson method must convert the given RangeBoolean type to BSONDocument            $e2
-   where getFromattedStreamStep provide ad Enumeratee that convert properly the right JsValue
+   where getFromattedStreamStep provide ad Enumeratee that convert properly the right JsValue     $e3
                                           """
 
   def e1 = prop((minBound : Int, maxBound: Int) => {
@@ -48,5 +51,12 @@ class DBDataFormatterTest extends Specification with ScalaCheck {
       DataDBJson.value -> value
     )
     val stream = Enumerator(jsonData) &> DBDataFormatter.getFormatterStreamStep
+    val futureCheck = Await.result(stream |>> Iteratee.fold[BSONDocument,Boolean](true)((result,doc) => {
+      result &&
+      doc.get(DataDBJson.sensorName).equals(BSONString(sensorName)) &&
+      doc.get(DataDBJson.dataType).equals(BSONDouble(dataType)) &&
+      doc.get(DataDBJson.value).equals(BSONDouble(value))
+    }), 30 seconds)
+    Await.result(futureCheck.run,30 seconds) must beTrue
   })
 }

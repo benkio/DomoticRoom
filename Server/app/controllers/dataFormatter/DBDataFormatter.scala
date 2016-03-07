@@ -6,7 +6,7 @@ import models.DataStructures.DataDBJson._
 import models.DataStructures.DataDBJson
 import org.joda.time.DateTime
 import play.api.libs.iteratee.Enumeratee
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsObject, JsValue}
 import scala.concurrent.ExecutionContext.Implicits.global
 import reactivemongo.bson.{BSONObjectID, BSONDocument}
 
@@ -15,11 +15,11 @@ import reactivemongo.bson.{BSONObjectID, BSONDocument}
   */
 object DBDataFormatter extends IDBDataFormatter {
 
-    override def getFormatterStreamStep : Enumeratee[JsValue, BSONDocument] = {
-      val convertToBson: Enumeratee[JsValue, BSONDocument] =
-        Enumeratee.map[JsValue](in => DataDBJson.toBsonDocument(in.validate[DataDBJsonModel].get))
+    override def getFormatterStreamStep : Enumeratee[JsObject, BSONDocument] = {
+      val convertToBson: Enumeratee[JsObject, BSONDocument] =
+        Enumeratee.map[JsObject](in => DataDBJson.toBsonDocument(in.validate[DataDBJsonModel].get))
 
-      val ValidateJson: Enumeratee[JsValue, JsValue] =
+      val ValidateJson: Enumeratee[JsObject, JsObject] =
         Enumeratee.filter(input => DataDBJson.validateJsonData(input))
 
       ValidateJson ><> convertToBson
