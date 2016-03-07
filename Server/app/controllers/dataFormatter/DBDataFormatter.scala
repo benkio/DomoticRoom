@@ -1,9 +1,9 @@
 package controllers.dataFormatter
 
 import interfaces.dataFormatter.IDBDataFormatter
-import models.DataStructures.DataDBJson
 import models.DataStructures.RangeModel._
 import models.DataStructures.DataDBJson._
+import models.DataStructures.DataDBJson
 import org.joda.time.DateTime
 import play.api.libs.iteratee.Enumeratee
 import play.api.libs.json.JsValue
