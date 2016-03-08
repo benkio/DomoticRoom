@@ -14,7 +14,7 @@ scalaVersion := "2.11.7"
 resolvers ++= Seq(
   "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases",
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
-  "Millhouse Bintray" at "http://dl.bintray.com/themillhousegroup/maven"
+  "Millhouse Bintray"  at "http://dl.bintray.com/themillhousegroup/maven"
 )
 
 libraryDependencies ++= Seq(
@@ -24,7 +24,7 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2-core" % "3.0" % "test",
   "org.specs2" %% "specs2-scalacheck" % "3.0",
   "org.reactivemongo" %% "play2-reactivemongo" % "0.11.10",
-  "com.themillhousegroup" %% "play2-reactivemongo-mocks" % "0.11.9_O.4.27"
+  "com.themillhousegroup" %% "play2-reactivemongo-mocks" % "0.11.9_0.4.26"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
