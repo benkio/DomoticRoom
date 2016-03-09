@@ -12,10 +12,12 @@ ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 scalaVersion := "2.11.7"
 
 resolvers ++= Seq(
-  "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases",
+  //"scalaz-bintray" at "http://dl.bintray.com/scalaz/releases",
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
   "Millhouse Bintray"  at "http://dl.bintray.com/themillhousegroup/maven"
 )
+
+resolvers += Resolver.url("Typesafe Ivy releases", url("https://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
 
 libraryDependencies ++= Seq(
   jdbc,
@@ -31,3 +33,6 @@ libraryDependencies ++= Seq(
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
 scalacOptions in Test ++= Seq("-Yrangepos")
+
+
+fork in run := true
