@@ -2,8 +2,16 @@ package persistenceStore
 
 import com.themillhousegroup.reactivemongo.mocks.MongoMocks
 import models.DataStructures.RangeModel._
+import models.persistenceStore.loaders.PersistenceStoreRangeLoader
+import org.joda.time._
 import org.specs2.mutable.Specification
+import play.api.libs.iteratee.Iteratee
 import play.api.libs.json.{JsObject, Json}
+import reactivemongo.bson.BSON
+
+import scala.concurrent.Await
+import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by benkio on 3/8/16.
@@ -21,4 +29,16 @@ class persistenceStoreRangeLoaderTest extends Specification with MongoMocks {
 
   givenMongoFindAnyReturns(mockedRanges, ranges)
 
+  val persistenceStoreRangeLoader = new PersistenceStoreRangeLoader(this.mockReactiveMongoApi)
+  "PersistenceStoreRangeLoader" should {
+    val startDate = new DateTime(2016,2,1,0,0)
+    val duration = Days.days(30).toStandardDuration
+    "loadRange Temperature" in {
+
+      val result = Await.result(persistenceStoreRangeLoader.loadRange(RangeType.Temperature,startDate,duration).run(Iteratee.fold(true)((state, x) => {
+        val range = BSON.readDocument[RangeDBJson](x)
+        state && range.rangeType == RangeType.Temperature && range.dateCreated.isAfter(startDate) && range.dateCreated.isAfter(startDate.plus(duration)) })),30 seconds)
+      result must beTrue
+    }
+  }
 }

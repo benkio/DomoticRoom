@@ -25,7 +25,7 @@ libraryDependencies ++= Seq(
   ws,
   "org.specs2" %% "specs2-core" % "3.0" % "test",
   "org.specs2" %% "specs2-scalacheck" % "3.0",
-  "org.reactivemongo" %% "play2-reactivemongo" % "0.11.10",
+  "org.reactivemongo" %% "play2-reactivemongo" % "0.11.9",
   "com.themillhousegroup" %% "play2-reactivemongo-mocks" % "0.11.9_0.4.26"
 )
 

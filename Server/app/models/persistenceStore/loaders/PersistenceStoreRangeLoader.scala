@@ -11,6 +11,7 @@ import javax.inject.Inject
 
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.iteratee.{Enumeratee, Enumerator}
+import play.modules.reactivemongo.json.collection.JSONCollection
 
 
 import reactivemongo.api.collections.bson.BSONCollection
