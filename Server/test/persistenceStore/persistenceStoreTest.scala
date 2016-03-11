@@ -37,7 +37,7 @@ class persistenceStoreRangeLoaderTest extends Specification with MongoMocks {
 
       val result = Await.result(persistenceStoreRangeLoader.loadRange(RangeType.Temperature,startDate,duration).run(Iteratee.fold(true)((state, x) => {
         val range = BSON.readDocument[RangeDBJson](x)
-        state && range.rangeType == RangeType.Temperature && range.dateCreated.isAfter(startDate) && range.dateCreated.isAfter(startDate.plus(duration)) })),30 seconds)
+        state && range.rangeType == RangeType.Temperature && range.dateCreated.isAfter(startDate) && range.dateCreated.isAfter(startDate.plus(duration)) })),DurationInt(30).seconds)
       result must beTrue
     }
   }

@@ -56,7 +56,7 @@ class DBDataFormatterTest extends Specification with ScalaCheck {
       doc.get(DataDBJson.sensorName).equals(BSONString(sensorName)) &&
       doc.get(DataDBJson.dataType).equals(BSONDouble(dataType)) &&
       doc.get(DataDBJson.value).equals(BSONDouble(value))
-    }), 30 seconds)
-    Await.result(futureCheck.run,30 seconds) must beTrue
+    }), DurationInt(30).seconds)
+    Await.result(futureCheck.run,DurationInt(30).seconds) must beTrue
   })
 }
