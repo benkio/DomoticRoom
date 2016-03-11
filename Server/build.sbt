@@ -1,4 +1,5 @@
 import play.routes.compiler.InjectedRoutesGenerator
+import play.sbt.PlayImport._
 import play.sbt.PlayScala
 
 name := """Domotic Room Server"""
@@ -16,12 +17,15 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-cache" % "2.4.6",
+  /*"com.typesafe.play" %% "play-cache" % "2.4.6",
   "org.specs2" %% "specs2-core" % "3.6" % "test",
   "org.specs2" %% "specs2-junit" % "3.6" % "test",
-  "org.specs2" %% "specs2-scalacheck" % "3.6" % "test",
-  "org.reactivemongo" %% "play2-reactivemongo" % "0.11.9",
-  "com.themillhousegroup" %% "play2-reactivemongo-mocks" % "0.11.9_0.4.26"
+  "org.specs2" %% "specs2-scalacheck" % "3.6" % "test",*/
+  "org.reactivemongo" %% "play2-reactivemongo" % "0.11.10" exclude("org.specs2", "*"),
+  "com.themillhousegroup" %% "play2-reactivemongo-mocks" % "0.11.9_0.4.26" exclude("org.specs2", "*"),
+  cache,
+  specs2 % Test,
+  "org.specs2" %% "specs2-scalacheck" % "3.6" % Test
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
