@@ -14,11 +14,10 @@ import play.api.test.{FakeRequest, WithApplication}
 class OtherEntryPointTest extends Specification {
 
   "The OtherEntryPoint" should {
-    "rounts must redirect to StatusEntryPoint" in new WithApplication {
+    "route / must redirect to StatusEntryPoint" in new WithApplication {
       val Some(result) = route(FakeRequest(GET, "/"))
-
       redirectLocation(result) must beSome.which(_ == "/domoticRoom/status")
+      status(result) must equalTo(303)
     }
   }
-
 }

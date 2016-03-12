@@ -20,7 +20,6 @@ class AnalysisEntryPointTest extends Specification {
 
         status(result) must equalTo(OK)
         contentType(result) must beSome.which(_ == "text/html")
-        ok
     }
   }
 }
