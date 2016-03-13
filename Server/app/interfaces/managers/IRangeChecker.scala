@@ -1,5 +1,6 @@
 package interfaces.managers
 
+import models.DataStructures.DataDBJson.DataRangeViolationDBJson
 import models.DataStructures.SensorModel.SensorType
 import play.api.libs.json.JsValue
 import models.DataStructures.RangeModel._
@@ -10,6 +11,6 @@ import models.DataStructures.RangeModel._
 trait IRangeChecker {
   def updateRange(rangeBoolean: RangeBoolean)
 
-  def checkRange(data:JsValue,sensorType:SensorType.Value)
+  def checkRange(data:Any,sensorType:SensorType.Value) : Option[DataRangeViolationDBJson]
   def updateRange(range:Range)
 }

@@ -43,8 +43,8 @@ class RangeEntryPoint extends Controller {
 
   // List ranges entry
   def ranges = Action {
-    val booleanRanges = StreamUtils.runIterateeFuture(FetchRangesStreamBuilder.buildBooleanRangeStream())
-    val ranges = StreamUtils.runIterateeFuture(FetchRangesStreamBuilder.buildRangeStream())
+    val booleanRanges = StreamUtils.runIterateeFuture(FetchRangesStreamBuilder.buildBooleanRangeStream)
+    val ranges = StreamUtils.runIterateeFuture(FetchRangesStreamBuilder.buildRangeStream)
 
     Ok(range.render(Await.result(ranges,Duration.Inf),Await.result(booleanRanges,Duration.Inf)))
   }

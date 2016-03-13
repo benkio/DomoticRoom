@@ -49,13 +49,13 @@ object DataReceivedJson {
     def write(jdtime: DateTime) = BSONDateTime(jdtime.getMillis)
   }
 
-  implicit val dataReceivedJsonModelReader: Reads[DataReceivedJsonModel] = (
+  implicit val DataReceivedJsonModelReader: Reads[DataReceivedJsonModel] = (
     (JsPath \ sensorName).read[String] and  
       (JsPath \ dateCreation).read[DateTime] and 
       (JsPath \ value).read[Double] and  
       (JsPath \ dataType).read[Double])(DataReceivedJsonModel.apply _)
 
-  implicit val dataReceivedJsonModelWrites = new Writes[DataReceivedJsonModel] {
+  implicit val DataReceivedJsonModelWrites = new Writes[DataReceivedJsonModel] {
     def writes(data: DataReceivedJsonModel) = Json.obj(
       sensorName -> data.sensorName,
       dateCreation -> data.dateCreation,
@@ -63,4 +63,7 @@ object DataReceivedJson {
       dataType -> data.dataType
     )
   }
+
+  def readJsValueToReceivedDataJsonModel(data: JsValue) = data.validate[DataReceivedJsonModel](DataReceivedJsonModelReader)
+  def validateJsValueToReceivedDataJsonModel(data: JsValue) = readJsValueToReceivedDataJsonModel(data: JsValue).isSuccess
 }
