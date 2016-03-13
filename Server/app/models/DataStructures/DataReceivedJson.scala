@@ -33,37 +33,39 @@ import reactivemongo.bson._
 object DataReceivedJson {
   import org.joda.time.DateTime
 
-  //Fields
+  // Fields
   val dateCreation = "date"
   val sensorName = "sensorName"
   val dataType = "type"
   val value = "value"
 
-  case class DataReceivedJsonModel( sensorName : String,
+  // Model
+  case class DataReceivedJsonModel[T]( sensorName : String,
                                     dateCreation: DateTime,
-                                    value : Double,                         
+                                    value : T,
                                     dataType : Double)
-  
+
+  // Converters
   implicit object BSONDateTimeHandler extends BSONHandler[BSONDateTime, DateTime] {
     def read(time: BSONDateTime) = new DateTime(time.value)
     def write(jdtime: DateTime) = BSONDateTime(jdtime.getMillis)
   }
 
-  implicit val DataReceivedJsonModelReader: Reads[DataReceivedJsonModel] = (
-    (JsPath \ sensorName).read[String] and  
-      (JsPath \ dateCreation).read[DateTime] and 
-      (JsPath \ value).read[Double] and  
-      (JsPath \ dataType).read[Double])(DataReceivedJsonModel.apply _)
-
-  implicit val DataReceivedJsonModelWrites = new Writes[DataReceivedJsonModel] {
-    def writes(data: DataReceivedJsonModel) = Json.obj(
-      sensorName -> data.sensorName,
-      dateCreation -> data.dateCreation,
-      value -> data.value,
-      dataType -> data.dataType
-    )
+  implicit def DataReceivedJsonModelReader[T](implicit fmt: Reads[T]): Reads[DataReceivedJsonModel[T]] = new Reads[DataReceivedJsonModel[T]] {
+    def reads(json: JsValue): JsResult[DataReceivedJsonModel[T]] = JsSuccess(new DataReceivedJsonModel[T] (
+      (json \ sensorName).as[String],
+      (json \ dateCreation).as[DateTime],
+      (json \ value).as[T],
+      (json \ dataType).as[Double]
+    ))
   }
 
-  def readJsValueToReceivedDataJsonModel(data: JsValue) = data.validate[DataReceivedJsonModel](DataReceivedJsonModelReader)
-  def validateJsValueToReceivedDataJsonModel(data: JsValue) = readJsValueToReceivedDataJsonModel(data: JsValue).isSuccess
+  implicit def DataReceivedJsonModelWriter[T](implicit fmt: Writes[T]): Writes[DataReceivedJsonModel[T]] = new Writes[DataReceivedJsonModel[T]] {
+    def writes(ts: DataReceivedJsonModel[T]) = JsObject(Seq(
+      sensorName -> JsString(ts.sensorName),
+      dateCreation -> JsString(ts.dateCreation.toString()),
+      value -> Json.toJson[T](ts.value),
+      dataType -> JsNumber(ts.dataType)
+    ))
+  }
 }

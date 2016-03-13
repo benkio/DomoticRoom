@@ -12,5 +12,6 @@ import scala.concurrent.Future
   * Created by root on 3/13/16.
   */
 trait IDataSaveStreamBuilder extends IStreamBuilder {
-  def buildDataSaveStream() : Future[Iteratee[BSONDocument, Unit]]
+  def buildDataDoubleSaveStream : Future[Iteratee[BSONDocument, Unit]]
+  def buildDataBooleanSaveStream : Future[Iteratee[BSONDocument, Unit]]
 }

@@ -11,5 +11,4 @@ import reactivemongo.bson.BSONDocument
 trait IDBDataFormatter extends IDataFormatter{
   def convertToBson(range : models.DataStructures.RangeModel.Range) : BSONDocument
   def convertToBson(range : RangeBoolean) : BSONDocument
-  def getFormatterStreamStep : Enumeratee[JsObject, BSONDocument]
 }
