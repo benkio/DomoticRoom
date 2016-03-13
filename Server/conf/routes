@@ -11,6 +11,7 @@ GET		/domoticRoom/ranges		            controllers.entryPoint.RangeEntryPoint.ran
 
 POST	/domoticRoom/submitNewRange	        controllers.entryPoint.RangeEntryPoint.submitNewRange()
 POST	/domoticRoom/submitNewRangeBoolean  controllers.entryPoint.RangeEntryPoint.submitNewRangeBoolean()
+POST    /echo                               controllers.entryPoint.OtherEntryPoint.echo()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
