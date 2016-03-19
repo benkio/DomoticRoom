@@ -42,7 +42,7 @@ printfn "Welcome to the Server Api Tester"
 printfn "==============================="
 
 // Some parameters
-let targetApiUrl = "http://localhost:9000/echo"
+let targetApiUrl = "http://localhost:9000/domoticRoom/submitNewData"
 let sleepTimeMillis = 5000
 let recursionTimes = 10
 
