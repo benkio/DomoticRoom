@@ -7,4 +7,12 @@ import views.html._
   */
 class StatusEntryPoint extends Controller{
   def status = Action {Ok(statusView.render)}
+
+  def submitNewData = Action { implicit request =>
+    val content = request.body.asJson
+    content match {
+      case Some(x)  => Ok(x)
+      case None     => BadRequest("the content of the request is not a Json Value")
+    }
+  }
 }
