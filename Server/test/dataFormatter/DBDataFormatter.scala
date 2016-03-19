@@ -25,7 +25,7 @@ class DBDataFormatterTest extends Specification with ScalaCheck {
                                           """
 
   def e1 = prop((minBound : Int, maxBound: Int) => {
-    val range = Ragit stngeModel.Range(minBound,maxBound,5)
+    val range = RangeModel.Range(minBound,maxBound,5)
     val result = DBDataFormatter.convertToBson(range)
     result.get(RangeModel.RangeDBJsonModel.minBound) must beEqualTo(Some(BSONDouble(minBound)))
     result.get(RangeModel.RangeDBJsonModel.minBound) must beEqualTo(Some(BSONDouble(minBound)))
