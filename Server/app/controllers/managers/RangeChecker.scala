@@ -1,16 +1,17 @@
 package controllers.managers
 
 
-import models.DataStructures.DataDBJson.DataRangeViolationDBJson
-import models.DataStructures.RangeModel.RangeBoolean
-
-import scala.collection.mutable
-import scala.collection.mutable.HashMap
 import interfaces.managers.IRangeChecker
-import models.DataStructures
-import models.DataStructures.RangeModel
+import models.DataStructures.DataDBJson.DataRangeViolationDBJson
+import models.DataStructures.RangeModel.{RangeBooleanDBJsonModel, RangeBoolean, RangeDBJsonModel}
 import models.DataStructures.SensorModel.SensorType
-import play.api.libs.json.JsValue
+import models.DataStructures._
+import models.persistenceStore.PersistenceStore
+import play.api.libs.iteratee.{Enumeratee, Iteratee}
+import reactivemongo.bson.BSONDocument
+import scala.concurrent.ExecutionContext.Implicits.global
+
+import scala.collection.mutable.HashMap
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/17/16.
@@ -18,7 +19,22 @@ import play.api.libs.json.JsValue
 object RangeCheckerFactory {
 
   private class RangeChecker extends IRangeChecker {
-    var currentRanges = new HashMap[SensorType.Value, DataStructures.RangeModel.IRange]()
+    var currentRanges = new HashMap[SensorType.Value, RangeModel.IRange]()
+
+    (PersistenceStore.loadLastRanges &> Enumeratee.filter(x => RangeModel.isBoolean(RangeModel.intToRangeType(x.getAs[Int](RangeBooleanDBJsonModel.rangeType).get))))(Iteratee.foreach[BSONDocument](x =>
+      currentRanges +=
+        SensorModel.intToSensorType(x.getAs[Int](RangeBooleanDBJsonModel.rangeType).get) ->
+          RangeBoolean(
+              x.getAs[Boolean](RangeBooleanDBJsonModel.value).get,
+              x.getAs[Int](RangeBooleanDBJsonModel.rangeType).get)))
+
+    (PersistenceStore.loadLastRanges &> Enumeratee.filter(x => !RangeModel.isBoolean(RangeModel.intToRangeType(x.getAs[Int](RangeDBJsonModel.rangeType).get))))(Iteratee.foreach[BSONDocument](x =>
+      currentRanges +=
+        SensorModel.intToSensorType(x.getAs[Int](RangeDBJsonModel.rangeType).get) ->
+          RangeModel.Range(
+            x.getAs[Double](RangeDBJsonModel.minBound).get,
+            x.getAs[Double](RangeDBJsonModel.maxBound).get,
+            x.getAs[Int](RangeDBJsonModel.rangeType).get)))
 
     override def checkRange(data: Any , sensorType: SensorType.Value): Option[models.DataStructures.DataDBJson.DataRangeViolationDBJson] = {
       currentRanges.get(sensorType) match {
@@ -34,7 +50,7 @@ object RangeCheckerFactory {
       }
     }
 
-    override def updateRange(range: DataStructures.RangeModel.Range): Unit = {
+    override def updateRange(range: RangeModel.Range): Unit = {
       currentRanges += (models.DataStructures.RangeModel.rangeTypeToSensorType(RangeModel.intToRangeType(range.rt)) -> range)
     }
 

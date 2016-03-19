@@ -22,14 +22,12 @@ import akka.pattern.ask
 class StatusEntryPoint @Inject() (system: ActorSystem) extends Controller{
   implicit val timeout : akka.util.Timeout = 5.seconds
   val duration = 5.seconds
-  val dataReceiverDoubleActor = system.actorOf(DataReceiver.props, "dataReceiverDoubleActor")
-  val dataReceiverBooleanActor = system.actorOf(DataReceiver.props, "dataReceiverBooleanActor")
+  val dataReceiverActor = system.actorOf(DataReceiver.props, "dataReceiverDoubleActor")
 
-  val streamDouble = (dataReceiverDoubleActor ? "getStream").mapTo[Enumerator[JsValue]]
-  val streamBoolean = (dataReceiverBooleanActor ? "getStream").mapTo[Enumerator[JsValue]]
+  val stream = (dataReceiverActor ? "getStream").mapTo[Enumerator[JsValue]]
 
-  val saveDataStream = SaveDataStreamBuilder.buildDataDoubleSaveStream(Await.result(streamDouble,duration))
-  val saveDataBooleanStream = SaveDataStreamBuilder.buildDataBooleanSaveStream(Await.result(streamBoolean,duration))
+  val saveDataStream = SaveDataStreamBuilder.buildDataDoubleSaveStream(Await.result(stream,duration))
+  val saveDataBooleanStream = SaveDataStreamBuilder.buildDataBooleanSaveStream(Await.result(stream,duration))
 
   def status = Action {Ok(statusView.render)}
 
@@ -38,8 +36,7 @@ class StatusEntryPoint @Inject() (system: ActorSystem) extends Controller{
     content match {
       case Some(x)  => {
           System.out.println("new Data Arrived")
-          dataReceiverDoubleActor   ! x
-          dataReceiverBooleanActor  ! x
+          dataReceiverActor   ! x
           Ok
       }
       case None     => BadRequest("the content of the request is not a Json Value")

@@ -1,16 +1,13 @@
 package controllers.StreamBuilder
 
-import controllers.dataInput.DataReceiver
 import controllers.managers.EventManager
 import interfaces.streamBuilder.IDataSaveStreamBuilder
-import models.DataStructures.DataReceivedJson.DataReceivedJsonModel
-import models.DataStructures.{DataDBJson, DataReceivedJson}
-import models.persistenceStore.PersistenceStore
-import play.api.libs.iteratee.{Enumerator, Enumeratee, Iteratee}
+import models.DataStructures.DataDBJson.DataDBJsonModel
+import models.DataStructures.DataReceivedJson
+import play.api.libs.iteratee.{Enumeratee, Enumerator, Iteratee}
 import play.api.libs.json.JsValue
-import reactivemongo.bson.BSONDocument
+
 import scala.concurrent.ExecutionContext.Implicits.global
-import play.api.libs.json.Reads._
 import scala.concurrent.Future
 
 /**
@@ -18,35 +15,29 @@ import scala.concurrent.Future
   */
 object SaveDataStreamBuilder extends IDataSaveStreamBuilder {
 
-  override def buildDataDoubleSaveStream(stream : Enumerator[JsValue]): Future[Iteratee[BSONDocument, Unit]] = {
+  override def buildDataDoubleSaveStream(stream : Enumerator[JsValue]): Future[Iteratee[DataDBJsonModel[Double], Unit]] = {
     (stream &>
       Enumeratee.filter(x => {
-        System.out.println("[double] step 1 stream " + x)
-        DataReceivedJson.DataReceivedJsonModelReader(DoubleReads).reads(x).isSuccess
+        DataReceivedJson.validateReceivedDataDoubleJson(x).isSuccess
       }) &>
-      Enumeratee.map(y => DataReceivedJson.DataReceivedJsonModelReader(DoubleReads).reads(y).get) &>
-      Enumeratee.filter(x => x.value.isInstanceOf[Double]) &>
-      Enumeratee.map[DataReceivedJsonModel[Double]](y => DataReceivedJsonModel[Double](y.sensorName,y.dateCreation,y.value,y.dataType)) &>
-      EventManager.newData[Double] &>
+      Enumeratee.map(y => DataReceivedJson.validateReceivedDataDoubleJson(y).get) &>
+      EventManager.newDataDouble )(Iteratee.foreach[DataDBJsonModel[Double]](z => println(z)))/* &>
       Enumeratee.map(y => DataDBJson.DoubleDataJsonModeltoBsonDocument(y)))(Iteratee.foreach[BSONDocument](z => {
         System.out.println("Save New Data")
         PersistenceStore.saveData(z)
-      }))
+      }))*/
   }
 
-  override def buildDataBooleanSaveStream(stream : Enumerator[JsValue]): Future[Iteratee[BSONDocument, Unit]] = {
+  override def buildDataBooleanSaveStream(stream : Enumerator[JsValue]): Future[Iteratee[DataDBJsonModel[Boolean], Unit]] = {
     (stream &>
       Enumeratee.filter(x => {
-        System.out.println("[Boolean] step 1 stream " + x)
-        DataReceivedJson.DataReceivedJsonModelReader(BooleanReads).reads(x).isSuccess
+        DataReceivedJson.validateReceivedDataBooleanJson(x).isSuccess
       }) &>
-      Enumeratee.map(y => DataReceivedJson.DataReceivedJsonModelReader(BooleanReads).reads(y).get) &>
-      Enumeratee.filter(x => x.value.isInstanceOf[Boolean]) &>
-      Enumeratee.map[DataReceivedJsonModel[Boolean]](y => DataReceivedJsonModel[Boolean](y.sensorName,y.dateCreation,y.value,y.dataType)) &>
-      EventManager.newData[Boolean] &>
+      Enumeratee.map(y => DataReceivedJson.validateReceivedDataBooleanJson(y).get) &>
+      EventManager.newDataBoolean)(Iteratee.foreach[DataDBJsonModel[Boolean]](z => println(z)))/*  &>
       Enumeratee.map(y => DataDBJson.BooleanDataJsonModeltoBsonDocument(y)))(Iteratee.foreach[BSONDocument](z => {
         System.out.println("Save New Data")
         PersistenceStore.saveData(z)
-      }))
+      }))*/
   }
 }

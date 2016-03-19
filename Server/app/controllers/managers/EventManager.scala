@@ -4,9 +4,10 @@ import javassist.bytecode.stackmap.TypeTag
 
 import interfaces.managers.{IRangeChecker, IEventManager}
 import models.DataStructures.DataDBJson.DataDBJsonModel
-import models.DataStructures.DataReceivedJson.DataReceivedJsonModel
+import models.DataStructures.DataReceivedJson._
 import models.DataStructures.RangeModel.RangeBoolean
 import models.DataStructures.SensorModel
+import org.joda.time.DateTime
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.iteratee.Enumeratee
 import reactivemongo.bson.BSONObjectID
@@ -25,8 +26,13 @@ object EventManager extends IEventManager{
     rangeChecker.updateRange(range)
   }
 
-  override def newData[T]: Enumeratee[DataReceivedJsonModel[T], DataDBJsonModel[T]] = {
-    Enumeratee.map[DataReceivedJsonModel[T]](y =>
-        DataDBJsonModel(BSONObjectID.generate.toString(),y.dateCreation,rangeChecker.checkRange(y.value,SensorModel.intToSensorType(y.dataType.toInt)),y.sensorName,y.dataType,y.value))
+  override def newDataDouble: Enumeratee[DataReceivedDoubleJsonModel, DataDBJsonModel[Double]] = {
+    Enumeratee.map[DataReceivedDoubleJsonModel](y =>
+        DataDBJsonModel(BSONObjectID.generate.toString(),y.dateCreation,rangeChecker.checkRange(y.value,SensorModel.intToSensorType(y.sensorType.toInt)),y.sensorName,y.sensorType,y.value))
+  }
+
+  override def newDataBoolean: Enumeratee[DataReceivedBooleanJsonModel, DataDBJsonModel[Boolean]] = {
+    Enumeratee.map[DataReceivedBooleanJsonModel](y =>
+      DataDBJsonModel(BSONObjectID.generate.toString(),y.dateCreation,rangeChecker.checkRange(y.value,SensorModel.intToSensorType(y.sensorType.toInt)),y.sensorName,y.sensorType,y.value))
   }
 }

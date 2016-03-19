@@ -43,8 +43,8 @@ printfn "==============================="
 
 // Some parameters
 let targetApiUrl = "http://localhost:9000/domoticRoom/submitNewData"
-let sleepTimeMillis = 5000
-let recursionTimes = 10
+let sleepTimeMillis = 2000
+let recursionTimes = 20
 
 // Translate random int 0->100 to boolean
 let booleanFromRandom rnd = if (rnd <= 50) then true else false
@@ -53,7 +53,8 @@ let booleanFromRandom rnd = if (rnd <= 50) then true else false
 let jsonBooleanToSend (sensorName: string) (sensorType: int) (value: bool) (date: string)  = sprintf "{ \"sensorName\": \"%s\", \"sensorType\": %d, \"value\": %b, \"date\": \"%s\" } " sensorName sensorType value date
 
 // Function to build the Second of the two json to randomly send.
-let jsonToSend (sensorName: string) (sensorType: int) (value: int) (date: string)  = sprintf "{ \"sensorName\": \"%s\", \"sensorType\": %d, \"value\": %d, \"date\": \"%s\" } " sensorName sensorType value date
+let jsonToSend (sensorName: string) (sensorType: int) (value: int) (date: string)  = sprintf "{ \"sensorName\": \"%s\", \"sensorType\": %d, \"value\": %d, \"date\": \"%s\"} " sensorName sensorType value date
+
 
 // Function that randomly choose one of the previous json.
 let randomBuildBodyRequest () =
@@ -61,10 +62,10 @@ let randomBuildBodyRequest () =
     match rnd.Next(100) with
         | x when x < 80  ->
             printfn "Send Boolean Sensor Json"
-            jsonBooleanToSend "booleanSensorName" (rnd.Next(1,4)) (booleanFromRandom (rnd.Next(100))) (DateTime.UtcNow.ToString "yyyy-MM-ddTHH:mm:ss.fffZ")
+            jsonBooleanToSend "booleanSensorName" (rnd.Next(1,4)) (booleanFromRandom (rnd.Next(100))) (DateTime.UtcNow.ToString "yyyy-MM-dd HH:mm:ss.fff")
         | _ ->
             printfn "Send Non-Boolean Sensor Json"
-            jsonToSend "nonBooleanSensorName" 5 (rnd.Next(100)) (DateTime.UtcNow.ToString "yyyy-MM-ddTHH:mm:ss.fffZ")
+            jsonToSend "nonBooleanSensorName" 5 (rnd.Next(100)) (DateTime.UtcNow.ToString "yyyy-MM-dd HH:mm:ss.fff")
 
 // Main function.
 let rec send recursionTime =

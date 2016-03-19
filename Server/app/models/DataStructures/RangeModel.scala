@@ -74,4 +74,7 @@ object RangeModel {
     case 4 => RangeType.Movement
     case 5 => RangeType.Temperature
   }
+
+  def isBoolean(rangeType : RangeType) = rangeType != RangeType.Temperature
+
 }
