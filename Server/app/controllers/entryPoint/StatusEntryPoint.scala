@@ -35,7 +35,6 @@ class StatusEntryPoint @Inject() (system: ActorSystem) extends Controller{
     val content = request.body.asJson
     content match {
       case Some(x)  => {
-          System.out.println("new Data Arrived")
           dataReceiverActor   ! x
           Ok
       }

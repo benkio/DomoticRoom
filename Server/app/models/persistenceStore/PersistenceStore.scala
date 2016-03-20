@@ -7,7 +7,6 @@ import models.persistenceStore.savers._
 import org.joda.time.{DateTime, ReadableDuration}
 import play.api.Play.current
 import play.modules.reactivemongo.ReactiveMongoApi
-import play.modules.reactivemongo.json.collection.JSONCollection
 import reactivemongo.bson.BSONDocument
 
 /**
@@ -60,13 +59,13 @@ object PersistenceStore extends IPersistenceStore{
     pss.saveRange(data)
 
   override def saveData(data:BSONDocument) =
-    pss.saveRange(data)
+    pss.saveData(data)
 }
 
 
 object ReactiveMongoInjector {
   lazy val reactiveMongoApi = current.injector.instanceOf[ReactiveMongoApi]
 
-  def collection(name: String): JSONCollection =
-    reactiveMongoApi.db.collection[JSONCollection](name)
+  def collection(name: String): reactivemongo.play.json.collection.JSONCollection =
+    reactiveMongoApi.db.collection[reactivemongo.play.json.collection.JSONCollection](name)
 }

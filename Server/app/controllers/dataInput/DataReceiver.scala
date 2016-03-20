@@ -24,7 +24,6 @@ object DataReceiver {
 
     def receive = {
       case message: JsValue =>
-        System.out.println("Push data to stream " + message)
         // push the message to the stream
         dataEnumeratorChannel.push(message)
 
