@@ -5,11 +5,15 @@ import models.DataStructures.SensorModel.SensorType
 import models.DataStructures.SensorModel.SensorType.SensorType
 import org.joda.time.DateTime
 import reactivemongo.bson._
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
+import reactivemongo.play.json._
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
   */
 object RangeModel {
+  val ISO8601 = "yyyy-MM-dd HH:mm:ss.SSS"
 
   // MODELS
 
@@ -55,6 +59,29 @@ object RangeModel {
   implicit val RangeBooleanDBBsonHandler =  Macros.handler[RangeBooleanDBJson]
   implicit val RangeDBBsonHandler = Macros.handler[RangeDBJson]
 
+  def convertToRangeDBJson(bson : BSONDocument) = bson.as[RangeDBJson]
+  def convertToRangeBooleanDBJson(bson : BSONDocument) = bson.as[RangeBooleanDBJson]
+
+  // JSON DOCUMENT
+
+  implicit val dateReads = Reads.jodaDateReads(ISO8601)
+
+  implicit def DataDoubleReceivedJsonModelReader : Reads[RangeBooleanDBJson] = (
+    (JsPath \ RangeBooleanDBJsonModel.Id).read[BSONObjectID]         and
+    (JsPath \ RangeBooleanDBJsonModel.value).read[Boolean]           and
+      (JsPath \ RangeBooleanDBJsonModel.rangeType).read[Int]         and
+      (JsPath \ RangeBooleanDBJsonModel.dateCreated).read[DateTime]
+    )(RangeBooleanDBJson.apply _)
+
+  implicit def DataBooleanReceivedJsonModelReader : Reads[RangeDBJson] = (
+    (JsPath \ RangeDBJsonModel.Id).read[BSONObjectID]           and
+      (JsPath \ RangeDBJsonModel.minBound).read[Double]         and
+      (JsPath \ RangeDBJsonModel.maxBound).read[Double]         and
+      (JsPath \ RangeDBJsonModel.rangeType).read[Int]           and
+      (JsPath \ RangeDBJsonModel.dateCreated).read[DateTime]
+    )(RangeDBJson.apply _)
+
+
   // SENSOR TYPE
 
   def rangeTypeToSensorType(rangeType : RangeType): SensorType = rangeType match {
@@ -75,6 +102,16 @@ object RangeModel {
     case 5 => RangeType.Temperature
   }
 
+  def rangeTypeToInt(rangeType: RangeType) = rangeType match {
+    case RangeType.Gas          => 1
+    case RangeType.Humidity     => 2
+    case RangeType.Light        => 3
+    case RangeType.Movement     => 4
+    case RangeType.Temperature  => 5
+  }
+
   def isBoolean(rangeType : RangeType) = rangeType != RangeType.Temperature
+  def validateRangeDBJson(data : JsValue) = data.validate[RangeDBJson]
+  def validateRangeBooleanDBJson(data : JsValue) = data.validate[RangeBooleanDBJson]
 
 }
