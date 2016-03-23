@@ -14,7 +14,7 @@ import play.api.libs.json.{JsNumber, JsObject, JsString}
 import reactivemongo.play.json._
 import play.modules.reactivemongo.json.collection.JSONCollection
 import play.modules.reactivemongo.{ReactiveMongoApi, ReactiveMongoComponents}
-import reactivemongo.bson.{BSONDocument, BSONInteger, BSONString}
+import reactivemongo.bson.{BSONDateTime, BSONDocument, BSONInteger, BSONString}
 
 import scala.concurrent.Future
 
@@ -33,14 +33,13 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
   val rangesCollection : JSONCollection = reactiveMongoApi.db.collection[JSONCollection](RangeDBJsonModel.RangeDBCollectionName)
 
   override def loadRange(rangeType: RangeType, startDate: DateTime, duration:ReadableDuration) = {
-    val finalDate = startDate.plus(duration).toString(patternFormat)
-    val startDateString = startDate.toString(patternFormat)
+    val finalDate = startDate.plus(duration)
 
     val query = BSONDocument(
       RangeDBJsonModel.rangeType -> BSONInteger(RangeModel.rangeTypeToInt(rangeType)),
       RangeDBJsonModel.dateCreated -> BSONDocument(
-        "$gte" -> BSONString(startDateString),
-        "$lt" -> BSONString(finalDate)
+        "$gte" -> BSONDateTime(startDate.getMillis),
+        "$lt" -> BSONDateTime(finalDate.getMillis)
       )
     )
 
@@ -55,7 +54,7 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
       RangeDBJsonModel.rangeType -> BSONInteger(RangeModel.rangeTypeToInt(rangeType))
     )
 
-    rangesCollection.find(query).sort(JsObject(Seq(RangeDBJsonModel.dateCreated -> JsNumber(-1)))).one[JsObject]
+    rangesCollection.find(query).sort(JsObject(Seq(RangeDBJsonModel.Id -> JsNumber(-1)))).one[JsObject]
   }
 
   override def loadLastRanges = {

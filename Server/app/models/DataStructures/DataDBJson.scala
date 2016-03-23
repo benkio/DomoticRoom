@@ -2,6 +2,10 @@ package models.DataStructures
 
 import play.api.libs.json._
 import reactivemongo.bson._
+import reactivemongo.play.json._
+import reflect.runtime.universe._
+
+import scala.util.Success
 
 /**
   * Created by parallels on 1/26/16.
@@ -21,12 +25,26 @@ object DataDBJson {
   val DataDBCollectionName = "Data"
 
   case class DataRangeViolationDBJson(delta : Double)
-  case class DataDBJsonModel[T](id : String,
+  case class DataDBJsonModel[T](id : BSONObjectID,
                              dateCreation: DateTime,
                              rangeViolation : Option[DataRangeViolationDBJson],
                              sensorName : String,
                              dataType : Double,
                              value : T)
+
+  implicit val RangeViolationDBBsonHandler =  Macros.handler[DataRangeViolationDBJson]
+
+  implicit val rangeViolationDBJsonReader : Reads[DataRangeViolationDBJson] =
+    (JsPath \ rangeViolationDelta).read[Double].map(DataRangeViolationDBJson)
+
+  implicit val rangeViolationDBJsonWrites = new Writes[Option[DataRangeViolationDBJson]] {
+    def writes(data: Option[DataRangeViolationDBJson]) = data match {
+      case Some(d) => Json.obj(
+        rangeViolationDelta -> d.delta
+      )
+      case None => JsString("")
+    }
+  }
 
 
   implicit object BSONDateTimeHandler extends BSONHandler[BSONDateTime, DateTime] {
@@ -34,11 +52,9 @@ object DataDBJson {
     def write(jdtime: DateTime) = BSONDateTime(jdtime.getMillis)
   }
 
-  implicit val RangeViolationDBBsonHandler =  Macros.handler[DataRangeViolationDBJson]
-
   implicit object DataDBBsonDoubleHandler extends BSONDocumentReader[DataDBJsonModel[Double]] with BSONDocumentWriter[DataDBJsonModel[Double]] {
     def read(bson: BSONDocument): DataDBJsonModel[Double] = DataDBJsonModel[Double](
-      bson.getAs[String](id).get,
+      bson.getAs[BSONObjectID](id).get,
       bson.getAs[DateTime](dateCreation).get,
       bson.getAs[DataRangeViolationDBJson](rangeViolation),
       bson.getAs[String](sensorName).get,
@@ -58,7 +74,7 @@ object DataDBJson {
 
   implicit object DataDBBsonBooleanHandler extends BSONDocumentReader[DataDBJsonModel[Boolean]] with BSONDocumentWriter[DataDBJsonModel[Boolean]] {
     def read(bson: BSONDocument): DataDBJsonModel[Boolean] = DataDBJsonModel[Boolean](
-      bson.getAs[String](id).get,
+      bson.getAs[BSONObjectID](id).get,
       bson.getAs[DateTime](dateCreation).get,
       bson.getAs[DataRangeViolationDBJson](rangeViolation),
       bson.getAs[String](sensorName).get,
@@ -76,12 +92,10 @@ object DataDBJson {
     )
   }
 
-  implicit val rangeViolationDBJsonReader : Reads[DataRangeViolationDBJson] =
-    (JsPath \ rangeViolationDelta).read[Double].map(DataRangeViolationDBJson)
 
   implicit def DataDBJsonModelViolationReader[T](implicit fmt: Reads[T]): Reads[DataDBJsonModel[T]] = new Reads[DataDBJsonModel[T]] {
     def reads(json: JsValue): JsResult[DataDBJsonModel[T]] = JsSuccess(new DataDBJsonModel[T] (
-      (json \ id).as[String],
+      (json \ id).as[BSONObjectID],
       (json \ dateCreation).as[DateTime],
       (json \ rangeViolation).asOpt[DataRangeViolationDBJson],
       (json \ sensorName).as[String],
@@ -91,7 +105,7 @@ object DataDBJson {
     )
   }
 
-    implicit def DataReceivedJsonModelWriter[T](implicit fmt: Writes[T]): Writes[DataDBJsonModel[T]] = new Writes[DataDBJsonModel[T]] {
+  implicit def DataJsonModelWriter[T](implicit fmt: Writes[T]): Writes[DataDBJsonModel[T]] = new Writes[DataDBJsonModel[T]] {
       def writes(ts: DataDBJsonModel[T]) = JsObject(Seq(
       id -> JsString(BSONObjectID.generate.toString()),
       dateCreation -> JsString(ts.dateCreation.toString()),
@@ -102,23 +116,29 @@ object DataDBJson {
     ))
   }
 
-  implicit val rangeViolationDBJsonWrites = new Writes[Option[DataRangeViolationDBJson]] {
-    def writes(data: Option[DataRangeViolationDBJson]) = data match {
-      case Some(d) => Json.obj(
-        rangeViolationDelta -> d.delta
-      )
-      case None => JsString("")
-    }
-  }
-
   def validateJsonData(Json: JsValue) = {
     (Json.validate[DataDBJsonModel[Double]].isSuccess, Json.validate[DataDBJsonModel[Boolean]].isSuccess) match {
       case (true, _)  => Json.validate[DataDBJsonModel[Double]].get
       case (_, true)  => Json.validate[DataDBJsonModel[Boolean]].get
       case _          => throw new Exception
     }
-
   }
-  def DoubleDataJsonModeltoBsonDocument(t: DataDBJsonModel[Double]) = DataDBBsonDoubleHandler.write(t)
-  def BooleanDataJsonModeltoBsonDocument(t: DataDBJsonModel[Boolean]) = DataDBBsonBooleanHandler.write(t)
+
+  def validateBsonDocument(bson: BSONDocument) : DataDBJsonModel[_] = {
+    (DataDBBsonDoubleHandler.readTry(bson), DataDBBsonBooleanHandler.readTry(bson)) match {
+      case (Success(x),_) => x
+      case (_,Success(x)) => x
+      case _              => throw new Exception
+    }
+  }
+
+  def DataJsonModelToJson[T: TypeTag](t: DataDBJsonModel[T]) = t match {
+    case x if typeOf[T] <:< typeOf[Double]  => DataJsonModelWriter[Double].writes(new DataDBJsonModel[Double](x.id,x.dateCreation,x.rangeViolation,x.sensorName,x.dataType, x.value.asInstanceOf[Double]))
+    case x if typeOf[T] <:< typeOf[Boolean] => DataJsonModelWriter[Boolean].writes(new DataDBJsonModel[Boolean](x.id,x.dateCreation,x.rangeViolation,x.sensorName,x.dataType, x.value.asInstanceOf[Boolean]))
+  }
+
+  def DataJsonModelToBson[T: TypeTag](t: DataDBJsonModel[T]) = t match {
+    case x if typeOf[T] <:< typeOf[Double]  => DataDBBsonDoubleHandler.write(new DataDBJsonModel[Double](x.id,x.dateCreation,x.rangeViolation,x.sensorName,x.dataType, x.value.asInstanceOf[Double]))
+    case x if typeOf[T] <:< typeOf[Boolean] => DataDBBsonBooleanHandler.write(new DataDBJsonModel[Boolean](x.id,x.dateCreation,x.rangeViolation,x.sensorName,x.dataType, x.value.asInstanceOf[Boolean]))
+  }
 }

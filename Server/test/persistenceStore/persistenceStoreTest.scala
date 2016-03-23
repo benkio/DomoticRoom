@@ -34,7 +34,7 @@ class persistenceStoreRangeLoaderTest extends Specification with MongoMocks {
   "PersistenceStoreRangeLoader" should {
     val startDate = new DateTime(2016,3,1,0,0)
     val duration = Days.days(30).toStandardDuration
-    "loadRange Temperature in date range" in {
+   /* "loadRange Temperature in date range" in {
 
       val result : Future[Boolean] = Await.result(persistenceStoreRangeLoader.loadRange(RangeType.Temperature,startDate,duration)(Iteratee.fold(true)((state,x) => {
         RangeModel.validateRangeDBJson(x) match {
@@ -54,7 +54,7 @@ class persistenceStoreRangeLoaderTest extends Specification with MongoMocks {
         Await.result(result,30.seconds) must beTrue
 
     }
-
+*/
     "load last range of Temperature" in {
       var result = Await.result(persistenceStoreRangeLoader.loadLastRange(RangeType.Temperature),30.seconds).get
 
@@ -68,5 +68,7 @@ class persistenceStoreRangeLoaderTest extends Specification with MongoMocks {
           y.dateCreated.toString(RangeModel.ISO8601) must beEqualTo("2016-02-27 10:40:25.347")
       }
     }
+
+
   }
 }

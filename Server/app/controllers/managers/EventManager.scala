@@ -28,11 +28,11 @@ object EventManager extends IEventManager{
 
   override def newDataDouble: Enumeratee[DataReceivedDoubleJsonModel, DataDBJsonModel[Double]] = {
     Enumeratee.map[DataReceivedDoubleJsonModel](y =>
-        DataDBJsonModel(BSONObjectID.generate.toString(),y.dateCreation,rangeChecker.checkRange(y.value,SensorModel.intToSensorType(y.sensorType.toInt)),y.sensorName,y.sensorType,y.value))
+        DataDBJsonModel(BSONObjectID.generate,y.dateCreation,rangeChecker.checkRange(y.value,SensorModel.intToSensorType(y.sensorType.toInt)),y.sensorName,y.sensorType,y.value))
   }
 
   override def newDataBoolean: Enumeratee[DataReceivedBooleanJsonModel, DataDBJsonModel[Boolean]] = {
     Enumeratee.map[DataReceivedBooleanJsonModel](y =>
-      DataDBJsonModel(BSONObjectID.generate.toString(),y.dateCreation,rangeChecker.checkRange(y.value,SensorModel.intToSensorType(y.sensorType.toInt)),y.sensorName,y.sensorType,y.value))
+      DataDBJsonModel(BSONObjectID.generate,y.dateCreation,rangeChecker.checkRange(y.value,SensorModel.intToSensorType(y.sensorType.toInt)),y.sensorName,y.sensorType,y.value))
   }
 }

@@ -24,7 +24,7 @@ object SaveDataStreamBuilder extends IDataSaveStreamBuilder {
       }) &>
       Enumeratee.map(y => DataReceivedJson.validateReceivedDataDoubleJson(y).get) &>
       EventManager.newDataDouble  &>
-      Enumeratee.map(y => DataDBJson.DoubleDataJsonModeltoBsonDocument(y)))(Iteratee.foreach[BSONDocument](z => PersistenceStore.saveData(z)))
+      Enumeratee.map(y => DataDBJson.DataJsonModelToBson(y)))(Iteratee.foreach[BSONDocument](z => PersistenceStore.saveData(z)))
   }
 
   override def buildDataBooleanSaveStream(stream : Enumerator[JsValue]): Future[Iteratee[BSONDocument, Unit]] = {
@@ -34,6 +34,6 @@ object SaveDataStreamBuilder extends IDataSaveStreamBuilder {
       }) &>
       Enumeratee.map(y => DataReceivedJson.validateReceivedDataBooleanJson(y).get) &>
       EventManager.newDataBoolean  &>
-      Enumeratee.map(y => DataDBJson.BooleanDataJsonModeltoBsonDocument(y)))(Iteratee.foreach[BSONDocument](z => PersistenceStore.saveData(z)))
+      Enumeratee.map(y => DataDBJson.DataJsonModelToBson(y)))(Iteratee.foreach[BSONDocument](z => PersistenceStore.saveData(z)))
   }
 }
