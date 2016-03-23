@@ -36,27 +36,4 @@ class DBDataFormatterTest extends Specification with ScalaCheck {
     result.get(RangeModel.RangeBooleanDBJsonModel.rangeType) must beEqualTo(Some(BSONDouble(rangeType)))
     result.get(RangeModel.RangeBooleanDBJsonModel.value) must beEqualTo(Some(BSONBoolean(value)))
   })
-
-/*
-  def e3 = prop(( sensorName : String,
-                  dataType : Double,
-                  value : Double) => {
-    val jsonData = Json.obj(
-      DataDBJson.id -> BSONObjectID.generate.toString(),
-      DataDBJson.dateCreation -> DateTime.now(),
-      DataDBJson.rangeViolation -> Json.toJson[Option[DataRangeViolationDBJson]](None),
-      DataDBJson.sensorName -> sensorName,
-      DataDBJson.dataType -> dataType,
-      DataDBJson.value -> value
-    )
-    val stream = Enumerator(jsonData) &> DBDataFormatter.getFormatterStreamStep
-    val futureCheck = Await.result(stream |>> Iteratee.fold[BSONDocument,Boolean](true)((result,doc) => {
-      result &&
-      doc.get(DataDBJson.sensorName).equals(BSONString(sensorName)) &&
-      doc.get(DataDBJson.dataType).equals(BSONDouble(dataType)) &&
-      doc.get(DataDBJson.value).equals(BSONDouble(value))
-    }), DurationInt(30).seconds)
-    Await.result(futureCheck.run,DurationInt(30).seconds) must beTrue
-  })
-  */
 }

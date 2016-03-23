@@ -1,22 +1,18 @@
 package models.persistenceStore.loaders
 
-import controllers.dataFormatter.DBDataFormatter
-import interfaces.presistenceStore.IPersistenceStoreRangeLoader
-import models.DataStructures.RangeModel
-import models.DataStructures.RangeModel.{RangeType, RangeDBJsonModel}
-import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter}
-import org.joda.time.{ReadableDuration,DateTime}
-
 import javax.inject.Inject
 
+import interfaces.presistenceStore.IPersistenceStoreRangeLoader
+import models.DataStructures.RangeModel.{RangeDBJsonModel, RangeType}
+import org.joda.time.format.{DateTimeFormatter, DateTimeFormatterBuilder}
+import org.joda.time.{DateTime, ReadableDuration}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.iteratee.{Enumeratee, Enumerator}
+import play.api.libs.json.{JsNumber, JsObject, JsString}
+import play.modules.reactivemongo.json._
 import play.modules.reactivemongo.json.collection.JSONCollection
-
-
-import reactivemongo.api.collections.bson.BSONCollection
-import reactivemongo.bson.{BSONInteger, BSONString, BSONDocument}
 import play.modules.reactivemongo.{ReactiveMongoApi, ReactiveMongoComponents}
+import reactivemongo.bson.{BSONDocument, BSONInteger, BSONString}
 
 import scala.concurrent.Future
 
@@ -33,7 +29,7 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
     .toFormatter
 
 
-  val rangesCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection](RangeDBJsonModel.RangeDBCollectionName)
+  val rangesCollection : JSONCollection = reactiveMongoApi.db.collection[JSONCollection](RangeDBJsonModel.RangeDBCollectionName)
 
   override def loadRange(rangeType: RangeType.Value, startDate: DateTime, duration:ReadableDuration) = {
     val finalDate = startDate.plus(duration).toString(patternFormat)
@@ -56,18 +52,19 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
       RangeDBJsonModel.rangeType -> BSONInteger(rangeType.id)
     )
 
-    val futureResult = rangesCollection.find(query).sort(BSONDocument(RangeDBJsonModel.dateCreated -> -1)).one[BSONDocument]
+    val futureResult = rangesCollection.find(query).sort(JsObject(Seq(RangeDBJsonModel.dateCreated -> JsNumber(-1)))).one[BSONDocument]
+
     Enumerator(futureResult) &> Enumeratee.mapM(identity)
   }
 
   override def loadLastRanges = {
-    import rangesCollection.BatchCommands.AggregationFramework.{Group, Max }
+    import rangesCollection.BatchCommands.AggregationFramework.{Group, Max}
 
-    val command = Group(BSONString("$"+RangeDBJsonModel.rangeType))("realmaxdate" -> Max(RangeDBJsonModel.dateCreated))
+    val command = Group(JsString("$"+RangeDBJsonModel.rangeType))("realmaxdate" -> Max(RangeDBJsonModel.dateCreated))
 
     val findidQuery = rangesCollection.aggregate(command) flatMap {r =>
       Future.sequence(r.documents map { x =>
-          val t = x.get("realmaxdate").get
+          val t = x.value("realmaxdate")
           rangesCollection.find(BSONDocument(RangeDBJsonModel.dateCreated -> t)).cursor[BSONDocument]() collect[List]()
         }
       )
