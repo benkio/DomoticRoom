@@ -16,6 +16,7 @@ object DataDBJson {
 
   //Fields
   val id = "_id"
+  val jsonID = "id"
   val dateCreation = "dateCreation"
   val rangeViolation = "rangeViolation"
   val rangeViolationDelta = "delta"
@@ -107,7 +108,7 @@ object DataDBJson {
 
   implicit def DataJsonModelWriter[T](implicit fmt: Writes[T]): Writes[DataDBJsonModel[T]] = new Writes[DataDBJsonModel[T]] {
       def writes(ts: DataDBJsonModel[T]) = JsObject(Seq(
-      id -> JsString(BSONObjectID.generate.toString()),
+      jsonID -> JsString(BSONObjectID.generate.toString()),
       dateCreation -> JsString(ts.dateCreation.toString()),
       rangeViolation -> Json.toJson[Option[DataRangeViolationDBJson]](ts.rangeViolation),
       sensorName -> JsString(ts.sensorName),

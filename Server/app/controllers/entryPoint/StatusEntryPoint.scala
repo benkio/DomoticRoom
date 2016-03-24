@@ -6,8 +6,9 @@ import com.google.inject.{Inject, Singleton}
 import controllers.StreamBuilder
 import controllers.StreamBuilder._
 import controllers.dataInput._
-import play.api.libs.iteratee.{Enumerator, Iteratee}
-import play.api.libs.json.JsValue
+import play.api.libs.concurrent.Promise
+import play.api.libs.iteratee.{Enumeratee, Enumerator, Iteratee}
+import play.api.libs.json.{JsString, JsValue}
 import play.api.mvc.{Action, Controller, WebSocket}
 
 import scala.concurrent.Await
@@ -32,16 +33,11 @@ class StatusEntryPoint @Inject() (system: ActorSystem) extends Controller{
   def status = Action {Ok(views.html.statusView.render)}
 
   def dataStream = WebSocket.using[JsValue]{ request =>
-    // Concurrent.broadcast returns (Enumerator, Concurrent.Channel)
-    val out : Enumerator[JsValue] = Enumerator()
+
+    val out : Enumerator[JsValue] = LoadDataStreamBuilder.getDataStream
 
     // log the message to stdout and send response back to client
-    val in = Iteratee.foreach[JsValue] {
-      msg => println(msg)
-        // the Enumerator returned by Concurrent.broadcast subscribes to the channel and will
-        // receive the pushed messages
-        out >- StreamBuilder.LoadDataStreamBuilder.getDataStream
-    }
+    val in = Iteratee.ignore[JsValue]
     (in,out)
   }
 
