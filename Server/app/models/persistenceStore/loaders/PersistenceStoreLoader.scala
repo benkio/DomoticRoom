@@ -3,6 +3,10 @@ package models.persistenceStore.loaders
 import interfaces.presistenceStore.{IPersistenceStoreDataLoader, IPersistenceStoreLoader, IPersistenceStoreRangeLoader, IPersistenceStoreSensorsLoader}
 import models.DataStructures.RangeModel.RangeType
 import org.joda.time.{DateTime, ReadableDuration}
+import play.api.libs.iteratee.Enumerator
+import reactivemongo.bson.BSONDocument
+
+import scala.concurrent.duration.Duration
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -27,6 +31,9 @@ class PersistenceStoreLoader(psdl:IPersistenceStoreDataLoader, psrl:IPersistence
 
   override def loadCurrentSensorsData() =
     psdl.loadCurrentSensorsData()
+
+  override def loadCurrentSensorDataContinuously(duration: Duration): Enumerator[BSONDocument] =
+    psdl.loadCurrentSensorDataContinuously(duration)
 
   override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration)=
     psdl.loadData(sensorName,startDate,duration)

@@ -34,7 +34,7 @@ class StatusEntryPoint @Inject() (system: ActorSystem) extends Controller{
 
   def dataStream = WebSocket.using[JsValue]{ request =>
 
-    val out : Enumerator[JsValue] = LoadDataStreamBuilder.getDataStream
+    val out : Enumerator[JsValue] = /*Enumerator(JsString("hello")) */ LoadDataStreamBuilder.getDataStream(3.seconds)
 
     // log the message to stdout and send response back to client
     val in = Iteratee.ignore[JsValue]

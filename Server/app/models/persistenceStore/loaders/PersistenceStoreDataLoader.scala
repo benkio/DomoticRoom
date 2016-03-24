@@ -7,12 +7,14 @@ import org.joda.time.{DateTime, ReadableDuration}
 import play.api.libs.iteratee.{Enumeratee, Enumerator}
 import play.modules.reactivemongo.json._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import play.api.libs.concurrent.Promise
 import play.api.libs.json.{JsNumber, JsObject, JsString}
 import play.modules.reactivemongo.ReactiveMongoApi
 import play.modules.reactivemongo.json.collection.JSONCollection
 import reactivemongo.bson.{BSONDocument, BSONString}
 
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration.Duration
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -43,22 +45,37 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
 
   override def loadCurrentSensorsData() : Enumerator[BSONDocument] = {
 
-    import dataCollection.BatchCommands.AggregationFramework.{Group, Max }
-
-    val command =
-      Group(JsString("$" + DataDBJson.dataType))("realmaxid" -> Max("$" + DataDBJson.id))
-
-    val findidQuery = dataCollection.aggregate(command) flatMap {r =>
-      Future.sequence(r.documents map { x =>
-        val t = x.value("realmaxid")
-        dataCollection.find(BSONDocument(DataDBJson.id -> t)).cursor[BSONDocument]() collect[List]()
-        }
-      )
-    } flatMap(x => Future{x.flatten})
+    val findidQuery: Future[List[BSONDocument]] = loadCurrentSensorsDataFuture
 
     (Enumerator(findidQuery) &>
       Enumeratee.mapM(identity)) &>
       Enumeratee.mapFlatten(x => Enumerator.enumerate(x))
+  }
+
+  protected def loadCurrentSensorsDataFuture: Future[List[BSONDocument]] = {
+    import dataCollection.BatchCommands.AggregationFramework.{Group, Max}
+
+    val command =
+      Group(JsString("$" + DataDBJson.dataType))("realmaxid" -> Max(DataDBJson.id))
+
+    val findidQuery = dataCollection.aggregate(command) flatMap { r =>
+      Future.sequence(r.documents map { x =>
+        val t = x.value("realmaxid")
+        dataCollection.find(BSONDocument(DataDBJson.id -> t)).cursor[BSONDocument]() collect[List]()
+      }
+      )
+    } flatMap (x => Future {
+      x.flatten
+    })
+    findidQuery
+  }
+
+  override def loadCurrentSensorDataContinuously(duration : Duration): Enumerator[BSONDocument] ={
+
+    val findidQuery = Promise.timeout(loadCurrentSensorsDataFuture, duration).flatMap(identity);
+
+    (Enumerator.repeatM(findidQuery) &>
+      Enumeratee.mapFlatten(x => Enumerator.enumerate(x)))
   }
 
   override def loadCurrentSensorData(sensorName: String) = {

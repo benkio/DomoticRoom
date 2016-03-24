@@ -6,8 +6,11 @@ import models.persistenceStore.loaders._
 import models.persistenceStore.savers._
 import org.joda.time.{DateTime, ReadableDuration}
 import play.api.Play.current
+import play.api.libs.iteratee.Enumerator
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.bson.BSONDocument
+
+import scala.concurrent.duration.Duration
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -32,6 +35,9 @@ object PersistenceStore extends IPersistenceStore{
 
   override def loadCurrentSensorsData() =
     psl.loadCurrentSensorsData()
+
+  override def loadCurrentSensorDataContinuously(duration : Duration): Enumerator[BSONDocument] =
+    psl.loadCurrentSensorDataContinuously(duration)
 
   override def loadCurrentSensorData(sensorName: String) =
     psl.loadCurrentSensorData(sensorName)

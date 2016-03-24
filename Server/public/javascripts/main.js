@@ -7,13 +7,7 @@ function connectToWS() {
     }
     myWebSocket = new WebSocket(socketUrl);
     myWebSocket.onmessage = function(event) {
-        var leng;
-        if (event.data.size === undefined) {
-            leng = event.data.length
-        } else {
-            leng = event.data.size
-        }
-        console.log("onmessage. size: " + leng + ", content: " + event.data);
+        console.log("onmessage. content: " + event.data);
     }
     myWebSocket.onopen = function(evt) {
         console.log("onopen.");

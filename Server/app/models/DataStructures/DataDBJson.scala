@@ -16,7 +16,6 @@ object DataDBJson {
 
   //Fields
   val id = "_id"
-  val jsonID = "id"
   val dateCreation = "dateCreation"
   val rangeViolation = "rangeViolation"
   val rangeViolationDelta = "delta"
@@ -108,7 +107,7 @@ object DataDBJson {
 
   implicit def DataJsonModelWriter[T](implicit fmt: Writes[T]): Writes[DataDBJsonModel[T]] = new Writes[DataDBJsonModel[T]] {
       def writes(ts: DataDBJsonModel[T]) = JsObject(Seq(
-      jsonID -> JsString(BSONObjectID.generate.toString()),
+      id -> JsString(BSONObjectID.generate.toString()),
       dateCreation -> JsString(ts.dateCreation.toString()),
       rangeViolation -> Json.toJson[Option[DataRangeViolationDBJson]](ts.rangeViolation),
       sensorName -> JsString(ts.sensorName),
@@ -133,9 +132,10 @@ object DataDBJson {
     }
   }
 
-  def DataJsonModelToJson[T: TypeTag](t: DataDBJsonModel[T]) = t match {
-    case x if typeOf[T] <:< typeOf[Double]  => DataJsonModelWriter[Double].writes(new DataDBJsonModel[Double](x.id,x.dateCreation,x.rangeViolation,x.sensorName,x.dataType, x.value.asInstanceOf[Double]))
-    case x if typeOf[T] <:< typeOf[Boolean] => DataJsonModelWriter[Boolean].writes(new DataDBJsonModel[Boolean](x.id,x.dateCreation,x.rangeViolation,x.sensorName,x.dataType, x.value.asInstanceOf[Boolean]))
+  def DataJsonModelToJson(t: DataDBJsonModel[_]) = t.value match {
+    case x if x.isInstanceOf[Double]  => DataJsonModelWriter[Double].writes(new DataDBJsonModel[Double](t.id,t.dateCreation,t.rangeViolation,t.sensorName,t.dataType, t.value.asInstanceOf[Double]))
+    case x if x.isInstanceOf[Boolean] => DataJsonModelWriter[Boolean].writes(new DataDBJsonModel[Boolean](t.id,t.dateCreation,t.rangeViolation,t.sensorName,t.dataType, t.value.asInstanceOf[Boolean]))
+    case _ => JsString("WTF")
   }
 
   def DataJsonModelToBson[T: TypeTag](t: DataDBJsonModel[T]) = t match {
