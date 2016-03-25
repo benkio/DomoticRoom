@@ -25,7 +25,7 @@ $(function () {
     }
 
     // setup control widget
-    var updateInterval = 30;
+    var updateInterval = 200;
     $("#updateInterval").val(updateInterval).change(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {

@@ -10,7 +10,7 @@ import play.api.libs.iteratee.Enumerator
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.bson.BSONDocument
 
-import scala.concurrent.duration.Duration
+import scala.concurrent.duration.{Duration, FiniteDuration}
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -36,7 +36,7 @@ object PersistenceStore extends IPersistenceStore{
   override def loadCurrentSensorsData() =
     psl.loadCurrentSensorsData()
 
-  override def loadCurrentSensorDataContinuously(duration : Duration): Enumerator[BSONDocument] =
+  override def loadCurrentSensorDataContinuously(duration : FiniteDuration): Enumerator[BSONDocument] =
     psl.loadCurrentSensorDataContinuously(duration)
 
   override def loadCurrentSensorData(sensorName: String) =

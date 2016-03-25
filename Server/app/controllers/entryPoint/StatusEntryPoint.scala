@@ -7,7 +7,7 @@ import controllers.StreamBuilder
 import controllers.StreamBuilder._
 import controllers.dataInput._
 import play.api.libs.concurrent.Promise
-import play.api.libs.iteratee.{Enumeratee, Enumerator, Iteratee}
+import play.api.libs.iteratee.{Concurrent, Enumeratee, Enumerator, Iteratee}
 import play.api.libs.json.{JsString, JsValue}
 import play.api.mvc.{Action, Controller, WebSocket}
 
@@ -34,10 +34,20 @@ class StatusEntryPoint @Inject() (system: ActorSystem) extends Controller{
 
   def dataStream = WebSocket.using[JsValue]{ request =>
 
-    val out : Enumerator[JsValue] = /*Enumerator(JsString("hello")) */ LoadDataStreamBuilder.getDataStream(3.seconds)
+    // Concurrent.broadcast returns (Enumerator, Concurrent.Channel)
+    val (outRequestEnumerator, channel) = Concurrent.broadcast[JsValue]
+
+    val out : Enumerator[JsValue] = LoadDataStreamBuilder.getDataStreamSingle() >- outRequestEnumerator //LoadDataStreamBuilder.getDataStream(30.seconds)
 
     // log the message to stdout and send response back to client
-    val in = Iteratee.ignore[JsValue]
+    val in = Iteratee.foreach[JsValue] {
+      msg => println(msg)
+        // the Enumerator returned by Concurrent.broadcast subscribes to the channel and will
+        // receive the pushed messages
+        LoadDataStreamBuilder.getDataStreamSingle()(Iteratee.foreach(x =>{
+          channel push(x)
+        }))
+    }
     (in,out)
   }
 

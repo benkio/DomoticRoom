@@ -9,7 +9,31 @@
 
 <p>Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds</p>
 
-<div id="sse">
-    <a href="javascript:connectToWS()">Run WebSocket</a>
+<div>
+    <button id="btnStartStreaming">(re)Start Streaming</button>
 </div>
+<div>
+    <button id="btnStopStreaming">Stop Streaming</button>
+</div>
+
+<script>
+    var updateIntervalId;
+
+    $("#btnStartStreaming").click(function() {
+        connectToWS(function (){
+            var updateInterval = $("#updateInterval").val();
+            console.log(updateInterval);
+            updateIntervalId = setInterval(function() {
+                var json = JSON.stringify({ request: true });
+                sendMsg(json);
+            }, updateInterval);
+        });
+    });
+    $("#btnStopStreaming").click(function() {
+        if (updateIntervalId != undefined)
+            clearInterval(updateIntervalId);
+        closeConn();
+        updateIntervalId = undefined
+    });
+</script>
 }

@@ -1,7 +1,7 @@
 var socketUrl = "ws://localhost:9000/domoticRoom/status/getCurrentData";
 
 var myWebSocket;
-function connectToWS() {
+function connectToWS(_callback) {
     if (myWebSocket !== undefined) {
         myWebSocket.close()
     }
@@ -18,9 +18,11 @@ function connectToWS() {
     myWebSocket.onerror = function(evt) {
         console.log("Error!");
     };
+    setTimeout(function() {
+        _callback();
+      }, 1000);
 }
-function sendMsg() {
-    var message = document.getElementById("myMessage").value;
+function sendMsg(message) {
     myWebSocket.send(message);
 }
 function closeConn() {
