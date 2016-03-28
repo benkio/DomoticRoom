@@ -45,6 +45,7 @@ class StatusEntryPoint @Inject() (system: ActorSystem) extends Controller{
         // the Enumerator returned by Concurrent.broadcast subscribes to the channel and will
         // receive the pushed messages
         LoadDataStreamBuilder.getDataStreamSingle()(Iteratee.foreach(x =>{
+          println(x)
           channel push(x)
         }))
     }

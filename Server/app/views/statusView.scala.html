@@ -7,33 +7,36 @@
 <p>You can update a chart periodically to get a real-time effect
     by using a timer to insert the new data in the plot and redraw it.</p>
 
-<p>Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds</p>
+<p>Time between updates: <input id="updateInterval" type="number" value="" style="text-align: right; width:5em"> milliseconds</p>
 
-<div>
-    <button id="btnStartStreaming">(re)Start Streaming</button>
-</div>
-<div>
-    <button id="btnStopStreaming">Stop Streaming</button>
-</div>
-
+<script src="@routes.Assets.versioned("javascripts/webSocket.js")"></script>
 <script>
-    var updateIntervalId;
+    var updateIntervalElement = $('#updateInterval');
+    var startUpdateIntervalValue = updateIntervalElement.val();
+    var json = JSON.stringify({ request: true });
 
-    $("#btnStartStreaming").click(function() {
-        connectToWS(function (){
-            var updateInterval = $("#updateInterval").val();
-            console.log(updateInterval);
-            updateIntervalId = setInterval(function() {
-                var json = JSON.stringify({ request: true });
-                sendMsg(json);
-            }, updateInterval);
-        });
-    });
-    $("#btnStopStreaming").click(function() {
-        if (updateIntervalId != undefined)
-            clearInterval(updateIntervalId);
-        closeConn();
-        updateIntervalId = undefined
-    });
+    var senderIntervalStream = createNewIntervalStream(updateIntervalElement.val());
+/*
+    //try to change che update stream interval, not really needed
+
+    var updateIntervalStream = Rx.Observable.fromEvent(updateIntervalElement, 'change').startWith(null);
+
+    var updateIntervalSubscription = updateIntervalStream.subscribe(
+        function (x) {
+            console.log(x)
+            if (senderIntervalStream != undefined){
+                senderIntervalStream.dispose;
+            }
+            senderIntervalStream = createNewIntervalStream(updateIntervalElement.val());
+        },
+        function (err) {
+            console.log('Error: ' + err);
+        },
+        function () {
+            console.log('Completed');
+        }
+    );
+*/
 </script>
+
 }
