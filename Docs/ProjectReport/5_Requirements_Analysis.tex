@@ -32,7 +32,7 @@ Si prevede che il sistema sia opportunamente configurato e settato a livello har
 \subsubsection{Inserimento Range}
 
 \begin{enumerate}
-  \item Attraverso un apposito men\'u l'utente \'e in grado di accedere alla funzionalit\'a di settaggio dei range associati ai parametri ambientali.
+  \item Attraverso un apposito form l'utente \'e in grado di accedere alla funzionalit\'a di settaggio dei range associati ai parametri ambientali.
   \item Il server conosce gi\'a i sensori collegati al raspberry. Appena questi inviano qualche dato l'utente \'e in grado di visualizzare i controlli relativi ad ogni tipologia di sensore attualmente connesso. Conseguentemente l'utente \'e in grado di modificare tali intervalli.
   \item Al termine della modifica degli intervalli l'utente dovr\'a confermare le modifiche attraverso un'apposito pulsante.
   \item Il sistema mostra un messaggio di conferma o di errore.
@@ -72,7 +72,7 @@ In particolare le parti individuate sono tre:
   \item Web site: parte che, prendendo i risultati dalle parti precedenti, li mostra all'utente rispettando i casi d'uso predecenti.
 \end{itemize}
 
-Chiaramente in questa fase tutto viene semplificato e ridotto a poche entit\'a. Questo per\'o non significa che, ogni entit\'a presente negli schemi sottostanti, non si riveli essere poi a sua volta un sottosistema pi\'u complesso.
+Chiaramente in questa fase tutto viene semplificato e ridotto a poche entit\'a. Questo per\'o non significa che, ogni entit\'a presente negli schemi sottostanti, non si riveli essere poi a sua volta un sottosistema pi\'u complesso. A sua volta in futuro puo\' accadere di accorpare altre parti insieme. Di conseguenza si vuole mostrare il processo mentale effettuato in ogni fase.
 
 Lo scopo di questa fase \'e appunto quella riflettere, in un primo modello, i requisiti. Successivamente, iniziare a sviluppare il progetto cercando di mantenere coerenza nelle interfaccie principali che indicano le interazioni pi\'u importanti.
 
@@ -82,7 +82,7 @@ Lo scopo di questa fase \'e appunto quella riflettere, in un primo modello, i re
 
 \paragraph{}Per quanto riguarda il sistema embedded \'e necessario prima effettuare delle indagini su come interagire e comunicare con i sensori in modo da modellare adeguatamente il tutto e quindi assicurarsi che in seguito sar\'a semplice riuscire a integrare il tutto con la tecnologia che avremo intenzione di utilizzare. Questa \'e una piccola eccezione che \'e necessario fare a questo livello. Tuttavia si fa riferimento a un paradigma pi\'u che ad una tecnologia specifica.
 
-\textbf{Il modello di interrogazione dei sensori \'e a polling} di consequenza il nostro modello dovr\'a riflettere questa modalit\'a di interazione. Sfortunatamente questo implica che a livello di modello gi\'a \textbf{un'entit\'a attiva} che si occupa di reperire i valori visto, che in una modalit\'a a polling devo esplicitamente chiedere ai sensori i valori.
+Data la nostra esperienza del corso e da vari esperimenti intendiamo l'interrogazione del \textbf{il modello di interrogazione dei sensori \'e a polling} di consequenza il nostro modello dovr\'a riflettere questa modalit\'a di interazione. Sfortunatamente questo implica che a livello di modello gi\'a \textbf{un'entit\'a attiva} che si occupa di reperire i valori visto, che in una modalit\'a a polling devo esplicitamente chiedere ai sensori i valori.
 
 \begin{center}
  \textbf{Struttura}
