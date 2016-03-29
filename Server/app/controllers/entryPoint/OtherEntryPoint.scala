@@ -13,7 +13,10 @@ class OtherEntryPoint extends Controller{
   def echo = Action { implicit request =>
     val content = request.body.asJson
     content match {
-      case Some(x)  => Ok(x)
+      case Some(x)  => {
+        println(x)
+        Ok(x)
+      }
       case None     => BadRequest("the content of the request is not a Json Value")
     }
   }
