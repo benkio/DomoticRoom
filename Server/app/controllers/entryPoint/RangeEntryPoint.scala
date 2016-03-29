@@ -1,22 +1,29 @@
 package controllers.entryPoint
 
+import controllers.StreamBuilder._
 import controllers.dataFormatter.DBDataFormatter
 import controllers.managers.EventManager
-import models.DataStructures
 import models.DataStructures.RangeModel._
 import models.persistenceStore.PersistenceStore
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
-import play.api.i18n.{Messages, Lang}
+import play.api.i18n.{Lang, Messages}
 import play.api.mvc._
 import views.html._
+
+import scala.concurrent._
+import scala.concurrent.duration.Duration
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class RangeEntryPoint extends Controller {
 
   implicit val messages: Messages = play.api.i18n.Messages.Implicits.applicationMessages(
     Lang("en"), play.api.Play.current)
 
+  val rangesBooleanStream = FetchRangesStreamBuilder.buildBooleanRangeStream
+  val rangesStream = FetchRangesStreamBuilder.buildRangeStream
   /////////////////////////////////
   // FORMS
   /////////////////////////////////
@@ -37,7 +44,12 @@ class RangeEntryPoint extends Controller {
   )
 
   // List ranges entry
-  def ranges = Action { Ok(views.html.index("test")) }
+  def ranges = Action {
+    val booleanRanges = StreamUtils.runIterateeFuture(rangesBooleanStream)
+    val ranges = StreamUtils.runIterateeFuture(rangesStream)
+
+    Ok(range.render(Await.result(ranges,Duration.Inf),Await.result(booleanRanges,Duration.Inf)))
+  }
 
   //////////////////////////////////////////
   // Form range entries
@@ -52,7 +64,7 @@ class RangeEntryPoint extends Controller {
       formWithErrors => { BadRequest(newrange.render(formWithErrors,rangeBooleanForm,messages))},
       userData => {
 
-        val rangeDBDocument = new DBDataFormatter().convertToBson(userData)
+        val rangeDBDocument = DBDataFormatter.convertToBson(userData)
         PersistenceStore.saveRange(rangeDBDocument)
         EventManager.newRange(userData)
 
@@ -70,7 +82,7 @@ class RangeEntryPoint extends Controller {
       formWithErrors => { BadRequest(newrange.render(rangeForm,formWithErrors,messages))},
       userData => {
 
-        val rangeDBDocument = new DBDataFormatter().convertToBson(userData)
+        val rangeDBDocument = DBDataFormatter.convertToBson(userData)
         PersistenceStore.saveRange(rangeDBDocument)
         EventManager.newRange(userData)
 

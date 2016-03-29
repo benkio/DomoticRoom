@@ -2,21 +2,18 @@ package models.persistenceStore.loaders
 
 import interfaces.presistenceStore.IPersistenceStoreDataLoader
 import models.DataStructures.DataDBJson
-import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter}
-import org.joda.time.{ReadableDuration, DateTime}
-import play.api.libs.iteratee.{Enumeratee, Enumerator}
-import play.modules.reactivemongo.json._
-
+import org.joda.time.format.{DateTimeFormatter, DateTimeFormatterBuilder}
+import org.joda.time.{DateTime, ReadableDuration}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
-
+import play.api.libs.iteratee.{Enumeratee, Enumerator}
+import play.api.libs.json.{JsNumber, JsObject, JsString}
 import play.modules.reactivemongo.ReactiveMongoApi
-
+import play.modules.reactivemongo.json._
+import play.modules.reactivemongo.json.collection.JSONCollection
 import reactivemongo.bson.{BSONDocument, BSONString}
 
-import reactivemongo.api.collections.bson.{ BSONCollection}
-
-import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import scala.concurrent.duration.{Duration, FiniteDuration}
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -28,7 +25,7 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
     .appendTimeZoneOffset("Z", true, 2, 4)
     .toFormatter();
 
-  val dataCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection](DataDBJson.DataDBCollectionName)
+  val dataCollection : JSONCollection = reactiveMongoApi.db.collection[JSONCollection](DataDBJson.DataDBCollectionName)
 
   override def loadData(sensorName: String, startDate: DateTime, duration:ReadableDuration) = {
     val finalDate = startDate.plus(duration).toString(patternFormat)
@@ -47,22 +44,42 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
 
   override def loadCurrentSensorsData() : Enumerator[BSONDocument] = {
 
-    import dataCollection.BatchCommands.AggregationFramework.{Group, Max }
-
-    val command =
-      Group(BSONString("$" + DataDBJson.dataType))("realmaxid" -> Max("$" + DataDBJson.id))
-
-    val findidQuery = dataCollection.aggregate(command) flatMap {r =>
-      Future.sequence(r.documents map { x =>
-        val t = x.get("realmaxid").get
-        dataCollection.find(BSONDocument(DataDBJson.id -> t)).cursor[BSONDocument]() collect[List]()
-        }
-      )
-    } flatMap(x => Future{x.flatten})
+    val findidQuery: Future[List[BSONDocument]] = loadCurrentSensorsDataFuture(Duration.Zero)
 
     (Enumerator(findidQuery) &>
       Enumeratee.mapM(identity)) &>
       Enumeratee.mapFlatten(x => Enumerator.enumerate(x))
+  }
+
+  protected def loadCurrentSensorsDataFuture(delay : FiniteDuration): Future[List[BSONDocument]] = {
+    import dataCollection.BatchCommands.AggregationFramework.{Group, Max}
+
+    val system = akka.actor.ActorSystem("system")
+
+    val delayFuture = akka.pattern.after(delay, using = system.scheduler)(Future.successful(None))
+
+    val command =
+      Group(JsString("$" + DataDBJson.dataType))("realmaxid" -> Max(DataDBJson.id))
+
+    val findidQuery = dataCollection.aggregate(command) flatMap { r =>
+      Future.sequence(r.documents map { x =>
+        val t = x.value("realmaxid")
+        dataCollection.find(BSONDocument(DataDBJson.id -> t)).cursor[BSONDocument]() collect[List]()
+      }
+      )
+    } flatMap (x => Future {
+      Await.result(delayFuture,Duration.Inf)
+      x.flatten
+    })
+    findidQuery
+  }
+
+  override def loadCurrentSensorDataContinuously(duration : FiniteDuration): Enumerator[BSONDocument] ={
+
+    val findidQuery = loadCurrentSensorsDataFuture(duration);
+
+    (Enumerator.repeatM(findidQuery) &>
+      Enumeratee.mapFlatten(x => Enumerator.enumerate(x)))
   }
 
   override def loadCurrentSensorData(sensorName: String) = {
@@ -70,7 +87,7 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
       DataDBJson.sensorName -> BSONString(sensorName)
     )
 
-    val futureResult = dataCollection.find(query).sort(BSONDocument(DataDBJson.dateCreation -> -1)).one[BSONDocument]
+    val futureResult = dataCollection.find(query).sort(JsObject(Seq(DataDBJson.dateCreation -> JsNumber(-1)))).one[BSONDocument]
 
     Enumerator(futureResult) &> Enumeratee.mapM(identity)
   }

@@ -3,14 +3,17 @@
 # ~~~~
 
 # Home page
-GET 	/							        controllers.entryPoint.OtherEntryPoint.root()
-GET		/domoticRoom/status			        controllers.entryPoint.StatusEntryPoint.status()
-GET		/domoticRoom/analysis		        controllers.entryPoint.AnalysisEntryPoint.analysis()
-GET		/domoticRoom/newrange		        controllers.entryPoint.RangeEntryPoint.newRange()
-GET		/domoticRoom/ranges		            controllers.entryPoint.RangeEntryPoint.ranges()
+GET     /					                    controllers.entryPoint.OtherEntryPoint.root()
+GET	    /domoticRoom/status			            controllers.entryPoint.StatusEntryPoint.status()
+GET	    /domoticRoom/analysis		            controllers.entryPoint.AnalysisEntryPoint.analysis()
+GET	    /domoticRoom/newrange		            controllers.entryPoint.RangeEntryPoint.newRange()
+GET	    /domoticRoom/ranges		                controllers.entryPoint.RangeEntryPoint.ranges()
+GET     /domoticRoom/status/getCurrentData      controllers.entryPoint.StatusEntryPoint.dataStream()
 
-POST	/domoticRoom/submitNewRange	        controllers.entryPoint.RangeEntryPoint.submitNewRange()
-POST	/domoticRoom/submitNewRangeBoolean  controllers.entryPoint.RangeEntryPoint.submitNewRangeBoolean()
+POST    /domoticRoom/submitNewRange             controllers.entryPoint.RangeEntryPoint.submitNewRange()
+POST    /domoticRoom/submitNewRangeBoolean      controllers.entryPoint.RangeEntryPoint.submitNewRangeBoolean()
+POST    /domoticRoom/submitNewData              controllers.entryPoint.StatusEntryPoint.submitNewData()
+POST    /echo                                   controllers.entryPoint.OtherEntryPoint.echo()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file                           controllers.Assets.versioned(path="/public", file: Asset)

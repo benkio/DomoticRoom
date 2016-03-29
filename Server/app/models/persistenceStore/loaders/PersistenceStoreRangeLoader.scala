@@ -1,19 +1,20 @@
 package models.persistenceStore.loaders
 
-import interfaces.presistenceStore.IPersistenceStoreRangeLoader
-import models.DataStructures.RangeModel.{RangeType, RangeDBJsonModel}
-import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter}
-import org.joda.time.{ReadableDuration,DateTime}
-
 import javax.inject.Inject
 
+import interfaces.presistenceStore.IPersistenceStoreRangeLoader
+import models.DataStructures.RangeModel
+import models.DataStructures.RangeModel.RangeType.RangeType
+import models.DataStructures.RangeModel.{RangeDBJsonModel, RangeType}
+import org.joda.time.format.{DateTimeFormatter, DateTimeFormatterBuilder}
+import org.joda.time.{DateTime, ReadableDuration}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.iteratee.{Enumeratee, Enumerator}
-
-
-import reactivemongo.api.collections.bson.BSONCollection
-import reactivemongo.bson.{BSONInteger, BSONString, BSONDocument}
+import play.api.libs.json.{JsNumber, JsObject, JsString}
+import reactivemongo.play.json._
+import play.modules.reactivemongo.json.collection.JSONCollection
 import play.modules.reactivemongo.{ReactiveMongoApi, ReactiveMongoComponents}
+import reactivemongo.bson.{BSONDateTime, BSONDocument, BSONInteger, BSONString}
 
 import scala.concurrent.Future
 
@@ -25,48 +26,46 @@ class PersistenceStoreRangeLoader  @Inject() (val reactiveMongoApi: ReactiveMong
     with ReactiveMongoComponents{
 
   val patternFormat:DateTimeFormatter = new DateTimeFormatterBuilder()
-    .appendPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
-    .appendTimeZoneOffset("Z", true, 2, 4)
+    .appendPattern(RangeModel.ISO8601)
     .toFormatter
 
 
-  val rangesCollection : BSONCollection = reactiveMongoApi.db.collection[BSONCollection](RangeDBJsonModel.RangeDBCollectionName)
+  val rangesCollection : JSONCollection = reactiveMongoApi.db.collection[JSONCollection](RangeDBJsonModel.RangeDBCollectionName)
 
-  override def loadRange(rangeType: RangeType.Value, startDate: DateTime, duration:ReadableDuration) = {
-    val finalDate = startDate.plus(duration).toString(patternFormat)
-    val startDateString = startDate.toString(patternFormat)
+  override def loadRange(rangeType: RangeType, startDate: DateTime, duration:ReadableDuration) = {
+    val finalDate = startDate.plus(duration)
 
     val query = BSONDocument(
-      RangeDBJsonModel.rangeType -> BSONInteger(rangeType.id),
+      RangeDBJsonModel.rangeType -> BSONInteger(RangeModel.rangeTypeToInt(rangeType)),
       RangeDBJsonModel.dateCreated -> BSONDocument(
-        "$gte" -> BSONString(startDateString),
-        "$lt" -> BSONString(finalDate)
+        "$gte" -> BSONDateTime(startDate.getMillis),
+        "$lt" -> BSONDateTime(finalDate.getMillis)
       )
     )
 
-    rangesCollection.find(query).cursor[BSONDocument]().enumerate()
+    println(toJSON(query))
+
+    rangesCollection.find(query).cursor[JsObject].enumerate()
 
   }
 
   override def loadLastRange(rangeType: RangeType.Value) = {
     val query = BSONDocument(
-      RangeDBJsonModel.rangeType -> BSONInteger(rangeType.id)
+      RangeDBJsonModel.rangeType -> BSONInteger(RangeModel.rangeTypeToInt(rangeType))
     )
 
-    val futureResult = rangesCollection.find(query).sort(BSONDocument(RangeDBJsonModel.dateCreated -> -1)).one[BSONDocument]
-    Enumerator(futureResult) &> Enumeratee.mapM(identity)
+    rangesCollection.find(query).sort(JsObject(Seq(RangeDBJsonModel.Id -> JsNumber(-1)))).one[JsObject]
   }
 
   override def loadLastRanges = {
+    import rangesCollection.BatchCommands.AggregationFramework.{Group, Max}
 
-    import rangesCollection.BatchCommands.AggregationFramework.{Group, Max }
-
-    val command = Group(BSONString("$"+RangeDBJsonModel.rangeType))("realmaxid" -> Max("$"+RangeDBJsonModel.Id))
+    val command = Group(JsString("$"+RangeDBJsonModel.rangeType))("realmaxdate" -> Max(RangeDBJsonModel.dateCreated))
 
     val findidQuery = rangesCollection.aggregate(command) flatMap {r =>
       Future.sequence(r.documents map { x =>
-          val t = x.get("realmaxid").get
-          rangesCollection.find(BSONDocument(RangeDBJsonModel.Id -> t)).cursor[BSONDocument]() collect[List]()
+          val t = x.value("realmaxdate")
+          rangesCollection.find(BSONDocument(RangeDBJsonModel.dateCreated -> t)).cursor[BSONDocument]() collect[List]()
         }
       )
     } flatMap(x => Future{x.flatten})

@@ -7,7 +7,36 @@
 <p>You can update a chart periodically to get a real-time effect
     by using a timer to insert the new data in the plot and redraw it.</p>
 
-<p>Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds</p>
+<p>Time between updates: <input id="updateInterval" type="number" value="" style="text-align: right; width:5em"> milliseconds</p>
 
+<script src="@routes.Assets.versioned("javascripts/webSocket.js")"></script>
+<script>
+    var updateIntervalElement = $('#updateInterval');
+    var startUpdateIntervalValue = updateIntervalElement.val();
+    var json = JSON.stringify({ request: true });
+
+    var senderIntervalStream = createNewIntervalStream(updateIntervalElement.val());
+/*
+    //try to change che update stream interval, not really needed
+
+    var updateIntervalStream = Rx.Observable.fromEvent(updateIntervalElement, 'change').startWith(null);
+
+    var updateIntervalSubscription = updateIntervalStream.subscribe(
+        function (x) {
+            console.log(x)
+            if (senderIntervalStream != undefined){
+                senderIntervalStream.dispose;
+            }
+            senderIntervalStream = createNewIntervalStream(updateIntervalElement.val());
+        },
+        function (err) {
+            console.log('Error: ' + err);
+        },
+        function () {
+            console.log('Completed');
+        }
+    );
+*/
+</script>
 
 }

@@ -9,15 +9,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/17/16.
   */
-class RawDataFormatter extends IRawDataFormatter{
-  override def getFormatterStreamStep = {
+object RawDataFormatter extends IRawDataFormatter {
 
-    val convertToModel : Enumeratee[JsValue,DataReceivedJsonModel]=
-      Enumeratee.map[JsValue](in => in.validate[DataReceivedJsonModel].get)
-
-    val ValidateJson : Enumeratee[JsValue,JsValue] =
-      Enumeratee.filter(input => input.validate[DataReceivedJsonModel].isSuccess)
-
-    ValidateJson ><> convertToModel
-  }
 }

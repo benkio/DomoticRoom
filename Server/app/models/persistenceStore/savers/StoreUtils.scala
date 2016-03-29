@@ -1,16 +1,18 @@
 package models.persistenceStore.savers
 
-import reactivemongo.api.collections.bson.BSONCollection
+import play.modules.reactivemongo.json.collection.JSONCollection
 import reactivemongo.bson.BSONDocument
-import scala.concurrent.ExecutionContext.Implicits.global
 
-import scala.util.{Success, Failure}
+import scala.concurrent.ExecutionContext.Implicits.global
+import reactivemongo.play.json._
+
+import scala.util.{Failure, Success}
 
 /**
   * Created by parallels on 1/24/16.
   */
 object StoreUtils {
-  def store(dataCollection:BSONCollection, dataFormatted : BSONDocument): Unit ={
+  def store(dataCollection:JSONCollection, dataFormatted : BSONDocument): Unit ={
     val future = dataCollection.insert(dataFormatted)
 
     future.onComplete {
