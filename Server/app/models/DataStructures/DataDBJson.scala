@@ -14,6 +14,7 @@ import scala.util.Success
 object DataDBJson {
   import org.joda.time.DateTime
 
+  val ISO8601 = "yyyy-MM-dd HH:mm:ss"
   //Fields
   val id = "_id"
   val dateCreation = "dateCreation"
@@ -32,7 +33,7 @@ object DataDBJson {
                              dataType : Double,
                              value : T)
 
-  implicit val RangeViolationDBBsonHandler =  Macros.handler[DataRangeViolationDBJson]
+  implicit val rangeViolationDBBsonHandler =  Macros.handler[DataRangeViolationDBJson]
 
   implicit val rangeViolationDBJsonReader : Reads[DataRangeViolationDBJson] =
     (JsPath \ rangeViolationDelta).read[Double].map(DataRangeViolationDBJson)
@@ -51,6 +52,9 @@ object DataDBJson {
     def read(time: BSONDateTime) = new DateTime(time.value)
     def write(jdtime: DateTime) = BSONDateTime(jdtime.getMillis)
   }
+
+  implicit val dateFormat =
+    Format[DateTime](Reads.jodaDateReads(ISO8601), Writes.jodaDateWrites(ISO8601))
 
   implicit object DataDBBsonDoubleHandler extends BSONDocumentReader[DataDBJsonModel[Double]] with BSONDocumentWriter[DataDBJsonModel[Double]] {
     def read(bson: BSONDocument): DataDBJsonModel[Double] = DataDBJsonModel[Double](
@@ -108,7 +112,7 @@ object DataDBJson {
   implicit def DataJsonModelWriter[T](implicit fmt: Writes[T]): Writes[DataDBJsonModel[T]] = new Writes[DataDBJsonModel[T]] {
       def writes(ts: DataDBJsonModel[T]) = JsObject(Seq(
       id -> JsString(BSONObjectID.generate.toString()),
-      dateCreation -> JsString(ts.dateCreation.toString()),
+      dateCreation -> Json.toJson(ts.dateCreation),
       rangeViolation -> Json.toJson[Option[DataRangeViolationDBJson]](ts.rangeViolation),
       sensorName -> JsString(ts.sensorName),
       dataType -> JsNumber(ts.dataType),

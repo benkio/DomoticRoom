@@ -27,6 +27,7 @@ socket = Rx.DOM.fromWebSocket(
 socket.subscribe(
   function(e) {
     console.log('message: %s', e.data);
+    addNewDataToChart(e.data);
   },
   function(e) {
     // errors and "unclean" closes land here

@@ -1,42 +1,18 @@
 @main("Domotic Room Control Panel") {
 
-<h1>Flot Examples</h1>
+<div class='chart'>
+    <div id='chart'></div>
+</div>
+<div id='ace-error'></div>
 
-<div id="placeholder" style="width:600px;height:300px;"></div>
 
-<p>You can update a chart periodically to get a real-time effect
-    by using a timer to insert the new data in the plot and redraw it.</p>
-
-<p>Time between updates: <input id="updateInterval" type="number" value="" style="text-align: right; width:5em"> milliseconds</p>
-
+<script src="@routes.Assets.versioned("javascripts/chartBuilder.js")"></script>
 <script src="@routes.Assets.versioned("javascripts/webSocket.js")"></script>
 <script>
-    var updateIntervalElement = $('#updateInterval');
-    var startUpdateIntervalValue = updateIntervalElement.val();
     var json = JSON.stringify({ request: true });
 
-    var senderIntervalStream = createNewIntervalStream(updateIntervalElement.val());
-/*
-    //try to change che update stream interval, not really needed
-
-    var updateIntervalStream = Rx.Observable.fromEvent(updateIntervalElement, 'change').startWith(null);
-
-    var updateIntervalSubscription = updateIntervalStream.subscribe(
-        function (x) {
-            console.log(x)
-            if (senderIntervalStream != undefined){
-                senderIntervalStream.dispose;
-            }
-            senderIntervalStream = createNewIntervalStream(updateIntervalElement.val());
-        },
-        function (err) {
-            console.log('Error: ' + err);
-        },
-        function () {
-            console.log('Completed');
-        }
-    );
-*/
+    // A stream start to ask at the server for new data every 500 mills
+    var senderIntervalStream = createNewIntervalStream(500);
 </script>
 
 }

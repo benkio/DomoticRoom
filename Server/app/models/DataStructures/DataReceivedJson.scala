@@ -31,7 +31,7 @@ import play.api.libs.json._
 * */
 
 object DataReceivedJson {
-  private val ISO8601 = "yyyy-MM-dd HH:mm:ss.SSS"
+  val ISO8601 = "yyyy-MM-dd HH:mm:ss.SSS"
 
   // Fields
   val dateCreation = "date"
