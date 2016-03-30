@@ -16,11 +16,7 @@
   <div id="newRangeForm">
     @form(action = controllers.entryPoint.routes.RangeEntryPoint.submitNewRange,'role -> "form") {
 
-      @input(newRangeForm("rangeType")) { (id, name, value, args) =>
-        <p>Temperature Sensor</p>
-        <input type="hidden" name="@name" id="@id" value="5" @toHtmlArgs(args)>
-      }
-
+      @select(field = newRangeForm("rangeType"), options = options("2"->"Humidity","5" -> "Temperature"))
       <div class="form-group">
        @inputText(newRangeForm("minBound"),'class -> "form-control",'type -> "number")
       </div>
@@ -34,7 +30,7 @@
   <div id="newRangeBooleanForm" style="display: none">
     @form(action = controllers.entryPoint.routes.RangeEntryPoint.submitNewRangeBoolean, 'role -> "form") {
 
-    @select(field = newRangeBooleanForm("rangeType"),options = options("1"->"Gas","2"->"Humidity","3"->"Light","4"->"Movement"))
+    @select(field = newRangeBooleanForm("rangeType"),options = options("1"->"Gas", "3"->"Light", "4"->"Movement"))
     <div class="form-group">
       @checkbox(field = newRangeBooleanForm("value"))
     </div>
