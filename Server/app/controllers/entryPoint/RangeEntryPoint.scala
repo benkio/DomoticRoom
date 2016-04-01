@@ -22,8 +22,6 @@ class RangeEntryPoint extends Controller {
   implicit val messages: Messages = play.api.i18n.Messages.Implicits.applicationMessages(
     Lang("en"), play.api.Play.current)
 
-  val rangesBooleanStream = FetchRangesStreamBuilder.buildBooleanRangeStream
-  val rangesStream = FetchRangesStreamBuilder.buildRangeStream
   /////////////////////////////////
   // FORMS
   /////////////////////////////////
@@ -45,6 +43,8 @@ class RangeEntryPoint extends Controller {
 
   // List ranges entry
   def ranges = Action {
+    val rangesBooleanStream = FetchRangesStreamBuilder.buildBooleanRangeStream
+    val rangesStream = FetchRangesStreamBuilder.buildRangeStream
     val booleanRanges = StreamUtils.runIterateeFuture(rangesBooleanStream)
     val ranges = StreamUtils.runIterateeFuture(rangesStream)
 

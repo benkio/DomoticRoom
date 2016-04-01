@@ -43,8 +43,8 @@ printfn "==============================="
 
 // Some parameters
 let targetApiUrl = "http://localhost:9000/domoticRoom/submitNewData"
-let sleepTimeMillis = 2000
-let recursionTimes = 20
+let sleepTimeMillis = 500
+let recursionTimes = 100
 
 // Translate random int 0->100 to boolean
 let booleanFromRandom rnd = if (rnd <= 50) then true else false
@@ -55,17 +55,24 @@ let jsonBooleanToSend (sensorName: string) (sensorType: int) (value: bool) (date
 // Function to build the Second of the two json to randomly send.
 let jsonToSend (sensorName: string) (sensorType: int) (value: int) (date: string)  = sprintf "{ \"sensorName\": \"%s\", \"sensorType\": %d, \"value\": %d, \"date\": \"%s\"} " sensorName sensorType value date
 
+let pickRandomElement (list:int List) : int =
+    let rnd = new Random()
+    List.item (rnd.Next(0,(List.length list))) list
 
 // Function that randomly choose one of the previous json.
 let randomBuildBodyRequest () =
     let rnd = new Random()
+    let booleanSensorsID = [ 1;3;4 ]
+    let nonBooleanSensorsID = [ 2;5 ]
     match rnd.Next(100) with
-        | x when x < 80  ->
+        | x when x < 60  ->
             printfn "Send Boolean Sensor Json"
-            jsonBooleanToSend "booleanSensorName" (rnd.Next(1,4)) (booleanFromRandom (rnd.Next(100))) (DateTime.UtcNow.ToString "yyyy-MM-dd HH:mm:ss.fff")
+            let sensorType = (pickRandomElement booleanSensorsID)
+            jsonBooleanToSend ("booleanSensorName" + sensorType.ToString() ) sensorType (booleanFromRandom (rnd.Next(100))) (DateTime.UtcNow.ToString "yyyy-MM-dd HH:mm:ss.fff")
         | _ ->
             printfn "Send Non-Boolean Sensor Json"
-            jsonToSend "nonBooleanSensorName" 5 (rnd.Next(100)) (DateTime.UtcNow.ToString "yyyy-MM-dd HH:mm:ss.fff")
+            let sensorType = (pickRandomElement nonBooleanSensorsID)
+            jsonToSend ("nonBooleanSensorName" + sensorType.ToString()) sensorType (rnd.Next(100)) (DateTime.UtcNow.ToString "yyyy-MM-dd HH:mm:ss.fff")
 
 // Main function.
 let rec send recursionTime =
