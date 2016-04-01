@@ -1,4 +1,7 @@
 @main("Domotic Room Control Panel") {
+<script>
+      var requestjson = JSON.stringify({ request: true });
+</script>
 
 <div class='chart'>
     <div id='chart'></div>
@@ -9,10 +12,13 @@
 <script src="@routes.Assets.versioned("javascripts/chartBuilder.js")"></script>
 <script src="@routes.Assets.versioned("javascripts/webSocket.js")"></script>
 <script>
-    var json = JSON.stringify({ request: true });
-
-    // A stream start to ask at the server for new data every 1000 mills
-    var senderIntervalStream = createNewIntervalStream(1000);
+    // A stream start to ask at the server for new data every 1500 mills
+    var senderIntervalStream = createNewIntervalStream(10000, requestjson);
+    /*
+    $(document).ready(function() {
+        socketSubmit(requestjson);
+    });
+    */
 </script>
 
 }

@@ -1,36 +1,40 @@
-var chartBaseStructure = {
+////////////////////////////////////
+// Chart Configuration and Initialization
+///////////////////////////////////
+
+var pubnub = PUBNUB.init({
+  publish_key: 'demo',
+  subscribe_key: 'demo'
+});
+var channel = "c3-spline" + Math.random();
+eon.chart({
+  channel: channel,
+  history: true,
+  flow: true,
+  pubnub: pubnub,
+  generate: {
     bindto: '#chart',
     data: {
-        x: 'x',
-        xFormat : '%Y-%m-%d %H:%M:%S',
-//        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-        columns: [
-          ['x']//, '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
-//            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
-            // ['data1', 30, 200, 100, 400, 250],
-            //['data2', 130, 340, 200, 500, 250, 350]
-        ]
-    },
-    axis: {
-        x: {
-            type: 'timeseries',
-            tick: {
-                format: '%H:%M:%S'
-            }
-        }
+      labels: false
     }
-};
+  }
+});
 
-
-var currentChart = c3.generate(chartBaseStructure);
-
-var previousData;
+////////////////////////////////////////////
+//  Function to update the chart
+////////////////////////////////////////////
 
 function addNewDataToChart(data){
   var json = JSON.parse(data);
-  return {
-      columns: [
-        ['x', json.dateCreation],
-        [json.sensorName, json.value]
-    ]};
+  var sensorName = JSON.stringify(json.sensorName);
+  var sensorValue = JSON.stringify(json.value);
+  var data = { };
+  data[sensorName] = sensorValue;
+  console.log(data);
+  pubnub.publish({
+    channel: channel,
+    message: {
+      eon: data
+    }
+  });
 }
