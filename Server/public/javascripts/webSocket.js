@@ -1,6 +1,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // WebSocket Setup
+// Require the Chart construction
 /////////////////////////////////////////////////////////////////////////
 
 var socketUrl = 'ws://localhost:9000/domoticRoom/status/getCurrentData';
@@ -24,20 +25,33 @@ socket = Rx.DOM.fromWebSocket(
 
 // subscribing creates the underlying socket and will emit a stream of incoming
 // message events
-socket.subscribe(
-  function(e) {
-    console.log('message: %s', e.data);
-    addNewDataToChart(e.data);
-  },
-  function(e) {
-    // errors and "unclean" closes land here
-    console.error('error: %s', e);
-  },
-  function() {
-    // the socket has been closed
-    console.info('socket closed');
-  }
-);
+socket
+    .filter(function (x, idx, obs) {
+        var json = JSON.parse(x.data);
+        return json.type == 2 || json.type == 5;
+     })
+    .map(function (x, idx, obs) {
+        var json = JSON.parse(JSON.stringify(x.data));
+        var result = addNewDataToChart(json);
+        return result;
+     })
+     .filter(function (x, idx, obs) {
+        return previousData != x
+     })
+    .subscribe(
+      function(e) {
+        console.log(JSON.stringify(e));
+        currentChart.flow(e);
+        previousData = e;
+      },
+      function(e) {
+        // errors and "unclean" closes land here
+        console.error('error: %s', e);
+      },
+      function() {
+        // the socket has been closed
+        console.info('socket closed');
+      });
 
 ////////////////////////////////////////////////
 // Utitilies Functions Using the Web Socket

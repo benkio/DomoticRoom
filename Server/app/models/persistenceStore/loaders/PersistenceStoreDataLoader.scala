@@ -59,12 +59,12 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
     val delayFuture = akka.pattern.after(delay, using = system.scheduler)(Future.successful(None))
 
     val command =
-      Group(JsString("$" + DataDBJson.dataType))("realmaxid" -> Max(DataDBJson.id))
+      Group(JsString("$" + DataDBJson.dataType))("realmaxdate" -> Max(DataDBJson.dateCreation))
 
     val findidQuery = dataCollection.aggregate(command) flatMap { r =>
       Future.sequence(r.documents map { x =>
-        val t = x.value("realmaxid")
-        dataCollection.find(BSONDocument(DataDBJson.id -> t)).cursor[BSONDocument]() collect[List]()
+        val t = x.value("realmaxdate")
+        dataCollection.find(BSONDocument(DataDBJson.dateCreation -> t)).cursor[BSONDocument]() collect[List]()
       }
       )
     } flatMap (x => Future {
