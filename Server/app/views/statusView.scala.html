@@ -1,4 +1,4 @@
-@main("Domotic Room Control Panel") {
+@Templates.main("Domotic Room Control Panel") {
 <script>
       var requestjson = JSON.stringify({ request: true });
 </script>
@@ -8,12 +8,18 @@
 </div>
 <div id='ace-error'></div>
 
+<table>
+    <tbody id="BooleanSensorGridBody">
+    </tbody>
+</table>
 
-<script src="@routes.Assets.versioned("javascripts/chartBuilder.js")"></script>
-<script src="@routes.Assets.versioned("javascripts/webSocket.js")"></script>
+
+<script src="@routes.Assets.versioned("javascripts/chartBuilder.js")">      </script>
+<script src="@routes.Assets.versioned("javascripts/booleanGridBuilder.js")"></script>
+<script src="@routes.Assets.versioned("javascripts/webSocket.js")">         </script>
 <script>
     // A stream start to ask at the server for new data every 1500 mills
-    var senderIntervalStream = createNewIntervalStream(10000, requestjson);
+    var senderIntervalStream = createNewIntervalStream(1500, requestjson);
     /*
     $(document).ready(function() {
         socketSubmit(requestjson);

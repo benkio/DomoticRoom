@@ -2,7 +2,7 @@
 
 @(ranges : List[RangeDBJson], rangesBoolean : List[RangeBooleanDBJson])
 
-@main("Domotic Room Control Panel") {
+@Templates.main("Domotic Room Control Panel") {
 
     <table class="table" id="rangesTable">
         <thead>
@@ -20,7 +20,7 @@
             <td></td>
             <td>@range.minBound</td>
             <td>@range.maxBound</td>
-            <td>@range.rangeType</td>
+            <td class="rangeType">@range.rangeType</td>
             <td>@range.dateCreated</td>
         </tr>
         } 
@@ -30,10 +30,20 @@
             <td>@rangeBoolean.value</td>
             <td></td>
             <td></td>
-            <td>@rangeBoolean.rangeType</td>
+            <td class="rangeType">@rangeBoolean.rangeType</td>
             <td>@rangeBoolean.dateCreated</td>
         </tr>
         }
         </tbody>
     </table>
+
+    <script>
+        $(document).ready(function() {
+            $(".rangeType").html(function(){
+                var content = convertSensorTypeIdToString($(this).html());
+                return content;
+            });
+         });
+    </script>
+
 }

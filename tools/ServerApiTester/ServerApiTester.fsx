@@ -44,7 +44,7 @@ printfn "==============================="
 // Some parameters
 let targetApiUrl = "http://localhost:9000/domoticRoom/submitNewData"
 let sleepTimeMillis = 500
-let recursionTimes = 100
+let recursionTimes = 400
 
 // Translate random int 0->100 to boolean
 let booleanFromRandom rnd = if (rnd <= 50) then true else false

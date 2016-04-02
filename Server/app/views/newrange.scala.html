@@ -6,7 +6,7 @@
 
 @(newRangeForm: Form[Range], newRangeBooleanForm : Form[RangeBoolean])(implicit messages: Messages)
 
-@main("Domotic Room Control Panel") {
+@Templates.main("Domotic Room Control Panel") {
 
   <button id="switchForm" name="switchForm" onclick="(function() {
     $('#newRangeForm').toggle();
@@ -32,7 +32,7 @@
 
     @select(field = newRangeBooleanForm("rangeType"),options = options("1"->"Gas", "3"->"Light", "4"->"Movement"))
     <div class="form-group">
-      @checkbox(field = newRangeBooleanForm("value"))
+      @checkbox(field = newRangeBooleanForm("value"), 'class -> "checkbox")
     </div>
     <button type="submit" name="action" class="btn btn-default">Add New Range</button>
     }

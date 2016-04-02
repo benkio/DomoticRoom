@@ -1,3 +1,15 @@
 .info{
     display: none;
 }
+.booleanSensorStatusImg {
+    max-width:25%;
+    max-height:25%;
+}
+.booleanSensorNameText {
+    text-align: center;
+}
+
+div img {
+    margin:auto;
+    display: block;
+}

@@ -28,14 +28,19 @@ socket = Rx.DOM.fromWebSocket(
 // message events
 socket
     .distinct()
-    .filter(function (x, idx, obs) {
-      var json = JSON.parse(x.data);
-      return json.type == 2 || json.type == 5;
-    })
     .subscribe(
       function(e) {
         console.log(JSON.stringify(e.data));
-        addNewDataToChart(e.data);
+        var json = JSON.parse(e.data);
+        switch (json.type){
+            case 2:
+            case 5:
+                addNewDataToChart(e.data);
+                break;
+            default:
+                AddOrUpdateBooleanSensorContent(e.data);
+                break;
+        }
       },
       function(e) {
         // errors and "unclean" closes land here
@@ -46,7 +51,6 @@ socket
         console.info('socket closed');
       }
     );
-
 ////////////////////////////////////////////////
 // Utitilies Functions Using the Web Socket
 ////////////////////////////////////////////////
