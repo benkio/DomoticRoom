@@ -21,7 +21,6 @@ In questa collezione di documenti vengono raggruppati tutti i documenti relativi
 \caption{Documento dei Ranges Booleani}
 \end{figure}
 
-
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth,natwidth=610,natheight=642]{Figures/DataStructures/RangesValues.png}
@@ -50,33 +49,49 @@ Per quanto riguarda la collezione dei sensori si utilizza un'apposita collection
 \caption{Rappresentazione a DB dei Sensori}
 \end{figure}
 
+\newpage
+
 \begin{center}
 \textbf{Collection Data}
 \end{center}
 
-Per quanto riguarda la rappresentazione dei dati raccolti, anche in questo caso sono presenti 2 tipologie di dati:
+Per quanto riguarda la rappresentazione dei dati raccolti, anche in questo caso sono presenti 2 tipologie di dati, che a loro volta differiscono leggermente per la tipologia di dato, se booleano o meno:
 \begin{itemize}
 \item Dati Corretti: cio\'e quella tipologia di dati che rientrano all'interno del range prestabilito per la loro tipologia.
 \item Dati Incorretti: quelli che invece non rientrano nella tipologia corretta e quindi vanno a violare il range attivo.
 \end{itemize}
 
-Come si pu\'o osservare il primo tipo \'e pi\'u semplice e ingloba i precedenti. Di seguito come fatto in precedenza si indica un esempio di struttura di un dato corretto e non corretto.
+Come si pu\'o osservare il primo tipo \'e pi\'u semplice in quanto non richiede di salvare anche l'informazione riguardante di quanto il dato risulta errato. Di seguito come fatto in precedenza si indica un esempio di struttura di un dato corretto e non corretto per ogni tipologia di dato.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/DataStructures/DataNoViolation.png}
-\caption{Dato Corretto salvato in database}
+\caption{Dato Non Booleano Corretto salvato in database}
 \end{figure}
 
-Come si pu\'o osservare \'e stato comunque inserito un valore per la violazione a \textit{null} in modo da poter distinguere meglio i dati violati da quelli invece corretti.
+Come si pu\'o osservare non \'e stato comunque inserito un valore per la violazione in modo da poter distinguere meglio i dati violati da quelli invece corretti.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/DataStructures/DataViolation.png}
-\caption{Dato Non Corretto salvato in database}
+\caption{Dato Non Booleano Non Corretto salvato in database}
 \end{figure}
 
-In questo caso appunto il valore della violazione non e' piu' nullo ma contiene un semplice campo \textit{delta} che indicher\'a la differenza rispetto al range. In particolare questo sar\'a positivo se il valore registrato supera il range attuale, negativo se invece \'e troppo basso o booleano se il tipo di sensoristica e quindi anche di range \'e booleano.
+In questo caso appunto il valore della violazione non e' piu' nullo ma contiene un semplice campo \textit{delta} che indicher\'a la differenza rispetto al range. In particolare questo sar\'a positivo se il valore registrato supera il range attuale, negativo se invece \'e troppo basso o zero se il tipo di sensoristica e quindi anche di range \'e booleano. Come si puo' vedere nelle seguenti immagini.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/DataStructures/BooleanDataNoViolation.png}
+\caption{Dato Booleano Corretto salvato in database}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/DataStructures/BooleanDataViolation.png}
+\caption{Dato Non Booleano Non Corretto salvato in database}
+\end{figure}
+
+\newpage
 
 \begin{center}
   \textbf{Rappresentazione Dati Attraverso la Rete}
@@ -93,7 +108,7 @@ Di seguito si riporta un esempio di dati in formato JSON:
     "sensorName": "nomeSensore",
     "sensorType": 1,
     "value": true,
-    "date": "2012-04-23T18:25:43.511Z"
+    "date": "2016-04-05 17:52:55.058"
   }
 \end{lstlisting}
 
