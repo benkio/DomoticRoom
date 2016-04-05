@@ -1,7 +1,7 @@
 '''
 Created on 24/gen/2016
 
-@author: Enrico Benini, Nicola Casadei, Marco Benedetti
+@author: nicola
 '''
 from rx.observer import Observer
 from rx.subjects.subject import Subject

@@ -1,7 +1,7 @@
 '''
 Created on 24/gen/2016
 
-@author: Enrico Benini, Nicola Casadei, Marco Benedetti
+@author: nicola
 '''
 import json
 from domain.streamworkers.AStreamWorker import AStreamWorker
@@ -21,7 +21,9 @@ class Packager(AStreamWorker):
     def on_next(self,x):
         nameS = x.getName()
         typeS = x.getTypeSensor()
-        dateS = x.getRelevationTime().strftime('%Y/%m/%d %H:%M:%S')
+        dateS = x.getRelevationTime().strftime('%Y-%m-%d %H:%M:%S.')
+        microS = str(x.getRelevationTime().microsecond)[0:3]
+        dateS = dateS + microS
         valS  = str(x.getValore())        
         valoreFinale = json.dumps([{'sensorName': nameS, 'sensorType': typeS, 'value':valS,'date':dateS}], separators=(',',':'))
 	    #valoreFinale = json.dumps([{'nomeSensore': nameS, 'dataRel':dateS}], separators=(',',':'))

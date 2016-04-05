@@ -1,7 +1,7 @@
 '''
 Created on 26/gen/2016
 
-@author: Enrico Benini, Nicola Casadei, Marco Benedetti
+@author: nicola
 '''
 import RPi.GPIO as GPIO
 from domain.streamworkers.AStreamWorker import AStreamWorker

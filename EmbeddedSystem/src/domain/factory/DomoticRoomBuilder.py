@@ -1,7 +1,7 @@
 '''
 Created on 29/gen/2016
 
-@author: Enrico Benini, Nicola Casadei, Marco Benedetti
+@author: nicola
 '''
 import socket
 from RPi import GPIO
@@ -20,7 +20,7 @@ class DomoticRoomBuilder(object):
     classdocs
     '''
     
-    def __init__(self,address):
+    def __init__(self,address,port):
         '''
         Constructor
         '''
@@ -30,6 +30,7 @@ class DomoticRoomBuilder(object):
         self.domoticPackager=Packager("Domotic_Room_Packager")
         self.domoticSender=Sender("Domotic_Room-Sender")
         self.address=address
+        self.port=port
         
     def initialize(self):
         #inizializzo la GPIO
@@ -37,6 +38,7 @@ class DomoticRoomBuilder(object):
         self.socketD = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.domoticSender.setSocket(self.socketD)
         self.domoticSender.setAddress(self.address)
+        self.domoticSender.setPort(self.port)
         self.domoticPackager.getOutputStream().subscribe(self.domoticSender)
     
     def setAddress(self,address):

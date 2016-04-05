@@ -1,8 +1,9 @@
 '''
 Created on 24/gen/2016
 
-@author: Enrico Benini, Nicola Casadei, Marco Benedetti
+@author: nicola
 '''
+import httplib
 from rx.observer import Observer
 
 class Sender(Observer):
@@ -15,8 +16,12 @@ class Sender(Observer):
         message = x.getValore()
         #test
         #print("Log_sender_data_finali: "+message)
-        self.socket.sendto(message,self.address)
-        print("dato inviato")
+        #self.socket.sendto(message,self.)
+        connectionHttp = httplib.HTTPConnection(self.address,self.port)
+        headers = {"Content-type": "application/json"}
+        connectionHttp.request("POST", "/domoticRoom/submitNewData", message, headers)
+        print("LOG:dato inviato")
+        print("LOG:"+message)
         
     def on_error(self, e):
         pass
@@ -29,3 +34,6 @@ class Sender(Observer):
     
     def setAddress(self,address):
         self.address=address
+        
+    def setPort(self,port):
+        self.port=port

@@ -1,7 +1,7 @@
 '''
 Created on 23/gen/2016
 
-@author: Enrico Benini, Nicola Casadei, Marco Benedetti
+@author: nicola
 '''
 from datetime import datetime
 

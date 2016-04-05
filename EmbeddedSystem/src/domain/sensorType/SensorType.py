@@ -1,15 +1,15 @@
 '''
 Created on 23/gen/2016
 
-@author: Enrico Benini, Nicola Casadei, Marco Benedetti
+@author: nicola
 '''
 
 class SensorType(enumerate):
     '''
     classdocs
     '''
-    Temperature_DHT11 = "DHT11_Temperature_sensor"
-    Gas_MQ2 = "MQ2_Gas_sensor"
-    Light = "Light_sensor"
-    PIR = "PIR_sensor"
-    
+    Gas_MQ2 = "1"
+    Humidity = "2"
+    Light = "3"
+    PIR = "4"
+    Temperature_DHT11 = "5"
