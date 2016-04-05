@@ -23,7 +23,6 @@
 
 \input{jsonListing.tex}
 
-
 \makeatletter
 
 \usepackage{manifest}
@@ -130,8 +129,9 @@
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
 
-\begin{document}
+\pagenumbering{arabic}
 
+\begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  Inserimento della pagina iniziale   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -143,13 +143,14 @@
 
 %
 %%%  \xunibo\\\xaddrCE, \xcityCE\\\email{\{nameA.studentA, nameB.studentB\}@studio.unibo.it}
-\institute {  \xunibo\\\xaddrCE, \xcityCE\\\email{\{name1.surename1, name2.surename2, name3.surename3\}@mail.com }}
+\institute {  \xunibo\\\xaddrCE, \xcityCE\\\email{\{enrico.benini5, name2.surename2, name3.surename3\}@mail.com }}
 
 \maketitle
 
 \tableofcontents
 
 \newpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % inclusione dei capitoli e intestazione  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -177,10 +178,6 @@
 \input{9_Implementation.tex}
 
 \input{10_Testing.tex}
-
-\input{11_Deployment.tex}
-
-\input{12_Maintenance.tex}
 
 %%% \begin{itemize}
 %%% \item Titolo di studio:\\ \\
