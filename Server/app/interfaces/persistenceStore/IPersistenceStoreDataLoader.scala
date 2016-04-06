@@ -1,5 +1,7 @@
 package interfaces.presistenceStore
 
+import models.DataStructures.DataDBJson.DataAnalizeDBJson
+import models.DataStructures.SensorModel.SensorType.SensorType
 import org.joda.time.{DateTime, Interval, ReadableDuration}
 import play.api.libs.iteratee.Enumerator
 import reactivemongo.bson.BSONDocument
@@ -15,4 +17,7 @@ trait IPersistenceStoreDataLoader {
   def loadCurrentSensorData(sensorName : String) : Enumerator[Option[BSONDocument]]
   def loadCurrentSensorsData() : Enumerator[BSONDocument]
   def loadCurrentSensorDataContinuously(duration : FiniteDuration) : Enumerator[BSONDocument]
+  def loadMininumValue(sensorType : SensorType) : Enumerator[DataAnalizeDBJson]
+  def loadMaximumValue(sensorType : SensorType) : Enumerator[DataAnalizeDBJson]
+  def loadAverageValue(sensorType : SensorType) : Enumerator[DataAnalizeDBJson]
 }

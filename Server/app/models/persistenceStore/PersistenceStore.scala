@@ -2,6 +2,7 @@ package models.persistenceStore
 
 import interfaces.presistenceStore._
 import models.DataStructures.RangeModel.RangeType
+import models.DataStructures.SensorModel.SensorType.SensorType
 import models.persistenceStore.loaders._
 import models.persistenceStore.savers._
 import org.joda.time.{DateTime, ReadableDuration}
@@ -66,6 +67,19 @@ object PersistenceStore extends IPersistenceStore{
 
   override def saveData(data:BSONDocument) =
     pss.saveData(data)
+
+  //////////////////////////////////////////////
+  ////////////////Analisys Operations///////////
+  //////////////////////////////////////////////
+
+  override def loadMininumValue(sensorType: SensorType) =
+    psl.loadMininumValue(sensorType)
+
+  override def loadAverageValue(sensorType: SensorType) =
+    psl.loadAverageValue(sensorType)
+
+  override def loadMaximumValue(sensorType: SensorType) =
+    psl.loadMaximumValue(sensorType)
 }
 
 

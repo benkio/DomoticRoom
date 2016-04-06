@@ -25,6 +25,10 @@ object DataDBJson {
   val value = "value"
   val DataDBCollectionName = "Data"
 
+  //////////////////////////////////////////
+  //////////// Data Patterns ///////////////
+  //////////////////////////////////////////
+
   case class DataRangeViolationDBJson(delta : Double)
   case class DataDBJsonModel[T](id : BSONObjectID,
                              dateCreation: DateTime,
@@ -32,6 +36,12 @@ object DataDBJson {
                              sensorName : String,
                              dataType : Double,
                              value : T)
+
+  case class DataAnalizeDBJson(value : Double)
+
+  //////////////////////////////////////////
+  //////////// JSON - BSON Convertors //////
+  //////////////////////////////////////////
 
   implicit val rangeViolationDBBsonHandler =  Macros.handler[DataRangeViolationDBJson]
 

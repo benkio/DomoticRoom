@@ -43,4 +43,13 @@ object SensorModel {
     case 4 => SensorType.Movement
     case 5 => SensorType.Temperature
   }
+
+  def sensorTypeToInt(rangeType: SensorType) = rangeType match {
+    case SensorType.Gas          => 1
+    case SensorType.Humidity     => 2
+    case SensorType.Light        => 3
+    case SensorType.Movement     => 4
+    case SensorType.Temperature  => 5
+  }
+
 }
