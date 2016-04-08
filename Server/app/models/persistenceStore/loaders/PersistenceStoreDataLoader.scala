@@ -81,7 +81,7 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
 
 
     val average = dataCollection.aggregate(filteringCommand,List(groupCommand)) map (x => x.documents.map(y => {
-      DataAnalizeDBJson(y.value("maxValue").as[Double])
+      DataAnalizeDBJson(sensorTypeToInt(sensorType), y.value("maxValue").as[Double])
     }).head)
 
     Enumerator(average) &> Enumeratee.mapM(identity)
@@ -94,7 +94,7 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
     val groupCommand = Group(JsString("null"))("avg" -> Avg(DataDBJson.value))
 
     val average = dataCollection.aggregate(filteringCommand,List(groupCommand)) map (x => x.documents.map(y => {
-      DataAnalizeDBJson(y.value("avg").as[Double])
+      DataAnalizeDBJson(sensorTypeToInt(sensorType), y.value("avg").as[Double])
     }).head)
 
     Enumerator(average) &> Enumeratee.mapM(identity)
@@ -108,7 +108,7 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
 
 
     val average = dataCollection.aggregate(filteringCommand,List(groupCommand)) map (x => x.documents.map(y => {
-      DataAnalizeDBJson(y.value("maxValue").as[Double])
+      DataAnalizeDBJson(sensorTypeToInt(sensorType), y.value("maxValue").as[Double])
     }).head)
 
     Enumerator(average) &> Enumeratee.mapM(identity)

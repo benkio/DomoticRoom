@@ -27,4 +27,10 @@ object LoadDataStreamBuilder extends IDataLoadStreamBuilder{
       Enumeratee.map(x => DataDBJson.DataJsonModelToJson(x)))
     stream
   }
+
+  def getDataMininum : Enumerator[JsValue] = { ??? }
+
+  def getDataMaxinum : Enumerator[JsValue] = { ??? }
+
+  def getDataAverage : Enumerator[JsValue] = { ??? }
 }

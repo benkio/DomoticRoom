@@ -37,7 +37,7 @@ object DataDBJson {
                              dataType : Double,
                              value : T)
 
-  case class DataAnalizeDBJson(value : Double)
+  case class DataAnalizeDBJson(dataType : Int, value : Double)
 
   //////////////////////////////////////////
   //////////// JSON - BSON Convertors //////
