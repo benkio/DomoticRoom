@@ -24,17 +24,23 @@ object SensorModel {
     val SensorDBCollectionName = "Sensors"
   }
 
-  // RangeType TYPE
+  //////////////////////////////////// 
+  // SENSOR TYPE TO - FROM
+  ////////////////////////////////////
+  // RangeType
+  ////////////////////////////////////
 
   def sensorTypeToRangeType(sensorType : SensorType): RangeType = sensorType match {
-    case SensorType.Gas => RangeType.Gas
-    case SensorType.Humidity => RangeType.Humidity
-    case SensorType.Light => RangeType.Light
-    case SensorType.Movement => RangeType.Movement
+    case SensorType.Gas         => RangeType.Gas
+    case SensorType.Humidity    => RangeType.Humidity
+    case SensorType.Light       => RangeType.Light
+    case SensorType.Movement    => RangeType.Movement
     case SensorType.Temperature => RangeType.Temperature
   }
 
+  ////////////////////////////////////
   // INTEGER
+  ////////////////////////////////////
 
   def intToSensorType(id : Int): SensorType = id match {
     case 1 => SensorType.Gas
@@ -44,12 +50,22 @@ object SensorModel {
     case 5 => SensorType.Temperature
   }
 
-  def sensorTypeToInt(rangeType: SensorType) = rangeType match {
+  def sensorTypeToInt(sensorType: SensorType) = sensorType match {
     case SensorType.Gas          => 1
     case SensorType.Humidity     => 2
     case SensorType.Light        => 3
     case SensorType.Movement     => 4
     case SensorType.Temperature  => 5
   }
+
+  ////////////////////////////////////
+  // Utilities Functions
+  ////////////////////////////////////
+
+    def isBoolean(sensorType : SensorType) = sensorType != SensorType.Temperature && sensorType != SensorType.Humidity
+
+  def getNonBooleanSensorType = SensorType.values.filter(x => !isBoolean(x))
+   def getBooleanSensorType = SensorType.values.filter(isBoolean _)
+
 
 }
