@@ -110,7 +110,7 @@ object RangeModel {
     case RangeType.Temperature  => 5
   }
 
-  def isBoolean(rangeType : RangeType) = rangeType != RangeType.Temperature
+  def isBoolean(rangeType : RangeType) = rangeType != RangeType.Temperature && rangeType != RangeType.Humidity
   def validateRangeDBJson(data : JsValue) = data.validate[RangeDBJson]
   def validateRangeBooleanDBJson(data : JsValue) = data.validate[RangeBooleanDBJson]
 
