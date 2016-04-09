@@ -62,10 +62,10 @@ object SensorModel {
   // Utilities Functions
   ////////////////////////////////////
 
-    def isBoolean(sensorType : SensorType) = sensorType != SensorType.Temperature && sensorType != SensorType.Humidity
+  def isBoolean(sensorType : SensorType) = sensorType != SensorType.Temperature && sensorType != SensorType.Humidity
 
   def getNonBooleanSensorType = SensorType.values.filter(x => !isBoolean(x))
-   def getBooleanSensorType = SensorType.values.filter(isBoolean _)
+  def getBooleanSensorType = SensorType.values.filter(isBoolean _)
 
 
 }

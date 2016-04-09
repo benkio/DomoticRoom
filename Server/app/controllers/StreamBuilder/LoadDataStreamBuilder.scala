@@ -1,8 +1,9 @@
 package controllers.StreamBuilder
 
 import interfaces.streamBuilder.IDataLoadStreamBuilder
-import models.DataStructures.DataDBJson
-import models.DataStructures.DataDBJson.DataDBJsonModel
+import models.DataStructures.{DataDBJson, SensorModel}
+import models.DataStructures.DataDBJson.{DataAnalizeDBJson, DataDBJsonModel}
+import models.DataStructures.SensorModel.SensorType.SensorType
 import models.persistenceStore.PersistenceStore
 import play.api.libs.iteratee.{Enumeratee, Enumerator}
 import play.api.libs.json.JsValue
@@ -28,9 +29,22 @@ object LoadDataStreamBuilder extends IDataLoadStreamBuilder{
     stream
   }
 
-  def getDataMininum : Enumerator[JsValue] = { ??? }
+  def getDataMininum : Enumerator[JsValue] = {
+    mapReduceTemplate(PersistenceStore.loadMininumValue)
+  }
 
-  def getDataMaxinum : Enumerator[JsValue] = { ??? }
+  def getDataMaxinum : Enumerator[JsValue] = {
+    mapReduceTemplate(PersistenceStore.loadMaximumValue)
+  }
 
-  def getDataAverage : Enumerator[JsValue] = { ??? }
+  def getDataAverage : Enumerator[JsValue] = {
+    mapReduceTemplate(PersistenceStore.loadAverageValue)
+  }
+
+  private def mapReduceTemplate(f: SensorType => Enumerator[DataAnalizeDBJson]) = {
+    val stream : Enumerator[JsValue] = SensorModel.getBooleanSensorType map { sensorType =>
+      f(sensorType) map(x => DataDBJson.DataAnalizeModelToJson(x))
+    } reduce { (x,y) => x.andThen(y)}
+    stream
+  }
 }

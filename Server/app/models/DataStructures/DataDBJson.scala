@@ -106,7 +106,6 @@ object DataDBJson {
     )
   }
 
-
   implicit def DataDBJsonModelViolationReader[T](implicit fmt: Reads[T]): Reads[DataDBJsonModel[T]] = new Reads[DataDBJsonModel[T]] {
     def reads(json: JsValue): JsResult[DataDBJsonModel[T]] = JsSuccess(new DataDBJsonModel[T] (
       (json \ id).as[BSONObjectID],
@@ -128,6 +127,13 @@ object DataDBJson {
       dataType -> JsNumber(ts.dataType),
       value -> Json.toJson[T](ts.value)
     ))
+  }
+
+  implicit val DataAnalizeDBJsonWrites = new Writes[DataAnalizeDBJson] {
+    def writes(dataAnalizeDBJson: DataAnalizeDBJson) = Json.obj(
+      dataType -> dataAnalizeDBJson.dataType,
+      value -> dataAnalizeDBJson.value
+    )
   }
 
   def validateJsonData(Json: JsValue) = {
@@ -156,4 +162,6 @@ object DataDBJson {
     case x if typeOf[T] <:< typeOf[Double]  => DataDBBsonDoubleHandler.write(new DataDBJsonModel[Double](x.id,x.dateCreation,x.rangeViolation,x.sensorName,x.dataType, x.value.asInstanceOf[Double]))
     case x if typeOf[T] <:< typeOf[Boolean] => DataDBBsonBooleanHandler.write(new DataDBJsonModel[Boolean](x.id,x.dateCreation,x.rangeViolation,x.sensorName,x.dataType, x.value.asInstanceOf[Boolean]))
   }
+
+  def DataAnalizeModelToJson(t : DataAnalizeDBJson) = Json.toJson(t)
 }
