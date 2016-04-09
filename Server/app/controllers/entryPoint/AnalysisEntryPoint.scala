@@ -1,5 +1,6 @@
 package controllers.entryPoint
 
+import controllers.StreamBuilder.LoadDataStreamBuilder
 import play.api.mvc._
 import models.persistenceStore.PersistenceStore
 /**
@@ -8,7 +9,8 @@ import models.persistenceStore.PersistenceStore
 class AnalysisEntryPoint extends Controller{
   def analysis = Action {
 
-    // TODO: call the streambuilder to get the jsEnumerator for every kind of analysis, check che interface
+    var analisysStream = LoadDataStreamBuilder.getDataMininum.andThen(LoadDataStreamBuilder.getDataMaxinum).andThen(LoadDataStreamBuilder.getDataAverage)
+    // TODO: add an iteratee that reduce the enumerator to an array of json, and pass all to the page. The page analyse the responce and fullfill the view.
 
     Ok(views.html.index.render("test"))
   }
