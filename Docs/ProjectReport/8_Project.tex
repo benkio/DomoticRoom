@@ -2,6 +2,7 @@
 \labelsec{Project}
 %===========================================================================
 \subsection{Database e Altre Rappresentazioni di Dati}
+
 Per la gestione del database si \'e scelto di utilizzare un database NoSql, nell'accezione MongoDB\cite{MongoDB}. In questa sede non si discuteranno i vantaggi, gli svantaggi o le particolarit\'a di questa tecnologia in quanto \'e stato fatto gi\'a ampiamente durante il corso. Di seguito si riportano gli schemi dei documenti che sono stati salvati, le collezioni e il significato di alcuni dei valori inseriti.
 
 \begin{center}
@@ -117,7 +118,7 @@ Si veda il tipo di sensore dai valori indicati precedentemente e si sottolinea c
 \subsection{Introduzione All'Architettura di Progetto}
 
 Nelle prossime sezioni si vuole inserire le modifiche che sono state fatte alla architettura logica appena introdotta, ma cercando di evitare di ripetere aspetti che non sono effettivamnete cambiati. Di conseguenza si \'e deciso di riportare solamente quegli aspetti che sono stati modificati in base alle scelte tecnologiche effettivamente fatte.\\
-In ogni caso si \'e deciso di cercare il pi\'u possibile di sfruttare quanto gi\'a \'e stato concordato dagli analisti cercando di effettuare meno modifiche possibili all'architettura.
+In ogni caso si \'e deciso di cercare il pi\'u possibile di sfruttare quanto gi\'a \'e stato concordato dagli analisti cercando di effettuare meno modifiche possibili all'architettura, ma allo stesso tempo di cercare di ridurre le entit\'a che, per ragioni tecnologiche, risultano inutili per la creazione del progetto.
 
 \begin{center}
   \textbf{Server}
@@ -128,11 +129,14 @@ In ogni caso si \'e deciso di cercare il pi\'u possibile di sfruttare quanto gi\
 Vista l'introduzione della tecnologia in questa fase si \'e deciso di apportare alcune modifiche architetturali. Si riporta una lista di modifiche apportate all'architettura:
 
 \begin{itemize}
-  \item \textit{DataStructures:} Si \'e ritenuto necessario introdurre un'ulteriore package che non era stato previsto precedentemente contenente le rappresentazioni interne in forma di classi dei dati che circolano nel sistema, cos\'i come delle classi di utilit\'a che servono per la conversione, da e verso, questi dati.
+  \item \textit{DataStructures:} Si \'e ritenuto necessario introdurre un'ulteriore package che non era stato previsto precedentemente contenente le rappresentazioni interne in forma di classi dei dati che circolano nel sistema, cos\'i come delle classi di utilit\'a che servono per la conversione, da e verso, questi dati. (eg . JSON, BSON, DATETIME)
   \item \textit{IDataFormatter:} Visto che le elaborazioni di trasformazione dei dati non richiedono tanta computazione si \'e deciso di eliminare il metodo che, dato un valore lo validava inglobandolo direttamente dentro il primo metodo che restituisce lo stream. Inoltre nella costruzione dello stream ci si \'e accorti che il valore dell'input non viene passato per parametro al metodo, ma viene gestito dall'infrastruttura, quindi si \'e deciso di eliminarlo. Spesso gli oggetti che validano e formattano i dati passano da una rappresentazione ad un'altra: tra valori JSON, BSON e classi interne per i dati.
   \item \textit{IDBDataFormatter:} Viene aggiunto un'ulteriore metodo che gestisce la creazione di dati da un formato inerente alle strutture dati presenti in un altro utilizzabile per lo storage dei dati nel DB. Questo metodo \'e estraneo a quelli per la costruzione di stream e serve per la gestione delle richieste di inserimento di un nuovo range.
+  \item \textit{Eliminazione della Maggior Parte dei Formatter:} Questa scelta \'e data dalla possibilit\'a che PlayFramework e altre build in librerie che abbiamo utilizzato consentono per la conversione automatica dei dati da un formato ad un altro, di coseguenza queste operazioni vengono agilmente svolte all'interno del package DataStructures.
+  \item \textit{Eliminazione del Presentator:} Anche in questo caso le funzionalit\'a di playframework ci hanno evitato questa implementazione.
   \item \textit{Eliminazione delle Factory:} Visto che la maggior parte delle classi che erano state pensate non inglobano uno stato, ma vengono utilizzate semplicemente per applicare delle computazioni allo stream allora sono state eliminate la maggior parte delle factory class. Grazie anche alla tecnologia scelta (scala) molte delle classi sono state convertite in objects (build-in singletons).
   \item \textit{Eliminazione della classe Configurator:} Si \'e deciso di eliminare tale classe in quando non \'e pi\'u possibile pensare a un entry point per l'applicazione, ma questa viene risvegliata attraverso chiamate rest e di conseguenza molti dei processi legati alla creazione di oggetti \'e stata ridotta.
+  \item \textit{Eliminazione del Data Analisys:} A fronte delle semplici operazioni di analisi sui dati (Min, Max, Average) si \'e decisodi sfruttare direttamente le capacit\'a forniteci dal database.
 \end{itemize}
 
 \subsection{Interazione}
