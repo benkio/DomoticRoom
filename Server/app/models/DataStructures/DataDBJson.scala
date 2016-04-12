@@ -3,8 +3,8 @@ package models.DataStructures
 import play.api.libs.json._
 import reactivemongo.bson._
 import reactivemongo.play.json._
-import reflect.runtime.universe._
 
+import reflect.runtime.universe._
 import scala.util.Success
 
 /**
@@ -24,6 +24,7 @@ object DataDBJson {
   val dataType = "type"
   val value = "value"
   val DataDBCollectionName = "Data"
+  val analisysType = "analisysType"
 
   //////////////////////////////////////////
   //////////// Data Patterns ///////////////
@@ -37,8 +38,8 @@ object DataDBJson {
                              dataType : Double,
                              value : T)
 
-  case class DataAnalizeDBJson(dataType : Int, value : Double)
-
+  case class DataAnalizeDBJson(dataType : Int, analisysType : Int ,value : Double)
+  case class DataAnalizeDBJsonMerged(dataType : Int, keyValue : List[(Int, Double)])
   //////////////////////////////////////////
   //////////// JSON - BSON Convertors //////
   //////////////////////////////////////////
@@ -132,7 +133,8 @@ object DataDBJson {
   implicit val DataAnalizeDBJsonWrites = new Writes[DataAnalizeDBJson] {
     def writes(dataAnalizeDBJson: DataAnalizeDBJson) = Json.obj(
       dataType -> dataAnalizeDBJson.dataType,
-      value -> dataAnalizeDBJson.value
+      value -> dataAnalizeDBJson.value,
+      analisysType -> dataAnalizeDBJson.analisysType
     )
   }
 
@@ -164,4 +166,25 @@ object DataDBJson {
   }
 
   def DataAnalizeModelToJson(t : DataAnalizeDBJson) = Json.toJson(t)
+
+  object AnalisysType extends Enumeration {
+    type AnalisysType = Value
+    val Min, Max, Average = Value
+
+    ////////////////////////////////////
+    // INTEGER
+    ////////////////////////////////////
+
+    def intToAnalisysType(id : Int): AnalisysType = id match {
+      case 1                             => AnalisysType.Average
+      case 2                             => AnalisysType.Max
+      case 3                             => AnalisysType.Min
+    }
+
+    def analisysTypeToInt(sensorType: AnalisysType) = sensorType match {
+      case AnalisysType.Average          => 1
+      case AnalisysType.Max              => 2
+      case AnalisysType.Min              => 3
+    }
+  }
 }

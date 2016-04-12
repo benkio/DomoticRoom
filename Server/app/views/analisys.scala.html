@@ -1,0 +1,36 @@
+@import models.DataStructures.DataDBJson._
+@import models.DataStructures.DataDBJson.AnalisysType._
+@import models.DataStructures.SensorModel._
+
+@(analisysData: Seq[DataAnalizeDBJsonMerged])
+
+@Templates.main("Domotic Room Control Panel") {
+
+    <table class="table" id="rangesTable">
+        <thead>
+        <td>DataType</td>
+        <td>Average</td>
+        <td>Max</td>
+        <td>Min</td>
+        </thead>
+        <tbody>
+        @for(data <- analisysData) {
+            <tr>
+                <td class="dataType">@data.dataType</td>
+                <td>@data.keyValue(analisysTypeToInt(AnalisysType.Average))</td>
+                <td>@data.keyValue(analisysTypeToInt(AnalisysType.Max))</td>
+                <td>@data.keyValue(analisysTypeToInt(AnalisysType.Min))</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function() {
+            $(".dataType").html(function(){
+                var content = sensorTypeToInt($(this).html());
+                return content;
+            });
+         });
+    </script>
+}

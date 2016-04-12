@@ -66,6 +66,4 @@ object SensorModel {
 
   def getNonBooleanSensorType = SensorType.values.filter(x => !isBoolean(x))
   def getBooleanSensorType = SensorType.values.filter(isBoolean _)
-
-
 }

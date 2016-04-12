@@ -43,13 +43,13 @@ class PersistenceStoreLoader(psdl:IPersistenceStoreDataLoader, psrl:IPersistence
   override def loadCurrentSensorData(sensorName: String) =
     psdl.loadCurrentSensorData(sensorName)
 
-  override def loadMininumValue(sensorType: SensorType): Enumerator[DataAnalizeDBJson] =
+  override def loadMininumValue(sensorType: SensorType) =
     psdl.loadMaximumValue(sensorType)
 
-  override def loadAverageValue(sensorType: SensorType): Enumerator[DataAnalizeDBJson] =
+  override def loadAverageValue(sensorType: SensorType) =
     psdl.loadAverageValue(sensorType)
 
-  override def loadMaximumValue(sensorType: SensorType): Enumerator[DataAnalizeDBJson] =
+  override def loadMaximumValue(sensorType: SensorType) =
     psdl.loadMaximumValue(sensorType)
 
   ///////////////////////////////////////

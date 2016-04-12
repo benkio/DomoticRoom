@@ -29,21 +29,21 @@ object LoadDataStreamBuilder extends IDataLoadStreamBuilder{
     stream
   }
 
-  def getDataMininum : Enumerator[JsValue] = {
+  def getDataMininum : Enumerator[DataAnalizeDBJson] = {
     mapReduceTemplate(PersistenceStore.loadMininumValue)
   }
 
-  def getDataMaxinum : Enumerator[JsValue] = {
+  def getDataMaxinum : Enumerator[DataAnalizeDBJson] = {
     mapReduceTemplate(PersistenceStore.loadMaximumValue)
   }
 
-  def getDataAverage : Enumerator[JsValue] = {
+  def getDataAverage : Enumerator[DataAnalizeDBJson] = {
     mapReduceTemplate(PersistenceStore.loadAverageValue)
   }
 
-  private def mapReduceTemplate(f: SensorType => Enumerator[DataAnalizeDBJson]) = {
-    val stream : Enumerator[JsValue] = SensorModel.getBooleanSensorType map { sensorType =>
-      f(sensorType) map(x => DataDBJson.DataAnalizeModelToJson(x))
+  private def mapReduceTemplate(f: SensorType => Enumerator[Option[DataAnalizeDBJson]]) = {
+    val stream : Enumerator[DataAnalizeDBJson] = SensorModel.getBooleanSensorType map { sensorType =>
+      f(sensorType).map[DataAnalizeDBJson](x => if (x.isDefined) x.get else DataAnalizeDBJson(0,0,0))
     } reduce { (x,y) => x.andThen(y)}
     stream
   }

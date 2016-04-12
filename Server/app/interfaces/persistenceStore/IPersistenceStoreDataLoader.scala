@@ -17,7 +17,7 @@ trait IPersistenceStoreDataLoader {
   def loadCurrentSensorData(sensorName : String) : Enumerator[Option[BSONDocument]]
   def loadCurrentSensorsData() : Enumerator[BSONDocument]
   def loadCurrentSensorDataContinuously(duration : FiniteDuration) : Enumerator[BSONDocument]
-  def loadMininumValue(sensorType : SensorType) : Enumerator[DataAnalizeDBJson]
-  def loadMaximumValue(sensorType : SensorType) : Enumerator[DataAnalizeDBJson]
-  def loadAverageValue(sensorType : SensorType) : Enumerator[DataAnalizeDBJson]
+  def loadMininumValue(sensorType : SensorType) : Enumerator[Option[DataAnalizeDBJson]]
+  def loadMaximumValue(sensorType : SensorType) : Enumerator[Option[DataAnalizeDBJson]]
+  def loadAverageValue(sensorType : SensorType) : Enumerator[Option[DataAnalizeDBJson]]
 }

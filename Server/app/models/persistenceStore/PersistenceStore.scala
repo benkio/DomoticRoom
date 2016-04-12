@@ -1,6 +1,7 @@
 package models.persistenceStore
 
 import interfaces.presistenceStore._
+import models.DataStructures.DataDBJson.DataAnalizeDBJsonMerged
 import models.DataStructures.RangeModel.RangeType
 import models.DataStructures.SensorModel.SensorType.SensorType
 import models.persistenceStore.loaders._
