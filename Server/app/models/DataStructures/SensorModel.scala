@@ -64,6 +64,6 @@ object SensorModel {
 
   def isBoolean(sensorType : SensorType) = sensorType != SensorType.Temperature && sensorType != SensorType.Humidity
 
-  def getNonBooleanSensorType = SensorType.values.filter(x => !isBoolean(x))
-  def getBooleanSensorType = SensorType.values.filter(isBoolean _)
+  def getNonBooleanSensorType = SensorType.values.filter(x => isBoolean(x))
+  def getBooleanSensorType = SensorType.values.filter(x => !isBoolean(x))
 }

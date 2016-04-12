@@ -73,14 +73,15 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
   }
 
   override def loadMininumValue(sensorType: SensorType) = {
-    import dataCollection.BatchCommands.AggregationFramework.{Group, Match, Max}
+    import dataCollection.BatchCommands.AggregationFramework.{Group, Match, Min}
 
     val filteringCommand = Match(JsObject(Seq(DataDBJson.dataType -> JsNumber(sensorTypeToInt(sensorType)))))
-    val groupCommand = Group(JsString("null"))("maxValue" -> Max(DataDBJson.value))
+    val groupCommand = Group(JsString("null"))("minValue" -> Min(DataDBJson.value))
 
 
     val average = dataCollection.aggregate(filteringCommand,List(groupCommand)) map (x => x.documents.map(y => {
-      DataAnalizeDBJson(sensorTypeToInt(sensorType), AnalisysType.analisysTypeToInt(AnalisysType.Min) , y.value("maxValue").as[Double])
+      val value : Double = y.value("minValue").asOpt[Double].getOrElse(0)
+      DataAnalizeDBJson(sensorTypeToInt(sensorType), AnalisysType.analisysTypeToInt(AnalisysType.Min) ,value)
     }).headOption)
 
     Enumerator(average) &> Enumeratee.mapM(identity)
@@ -93,7 +94,8 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
     val groupCommand = Group(JsString("null"))("avg" -> Avg(DataDBJson.value))
 
     val average = dataCollection.aggregate(filteringCommand,List(groupCommand)) map (x => x.documents.map(y => {
-      DataAnalizeDBJson(sensorTypeToInt(sensorType), AnalisysType.analisysTypeToInt(AnalisysType.Average), y.value("avg").as[Double])
+      val value : Double = y.value("avg").asOpt[Double].getOrElse(0)
+      DataAnalizeDBJson(sensorTypeToInt(sensorType), AnalisysType.analisysTypeToInt(AnalisysType.Average), value)
     }).headOption)
 
     Enumerator(average) &> Enumeratee.mapM(identity)
@@ -107,7 +109,8 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
 
 
     val average = dataCollection.aggregate(filteringCommand,List(groupCommand)) map (x => x.documents.map(y => {
-      DataAnalizeDBJson(sensorTypeToInt(sensorType),AnalisysType.analisysTypeToInt(AnalisysType.Max), y.value("maxValue").as[Double])
+      val value : Double = y.value("maxValue").asOpt[Double].getOrElse(0)
+      DataAnalizeDBJson(sensorTypeToInt(sensorType),AnalisysType.analisysTypeToInt(AnalisysType.Max), value)
     }).headOption)
 
     Enumerator(average) &> Enumeratee.mapM(identity)

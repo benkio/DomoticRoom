@@ -17,9 +17,9 @@
         @for(data <- analisysData) {
             <tr>
                 <td class="dataType">@data.dataType</td>
-                <td>@data.keyValue(analisysTypeToInt(AnalisysType.Average))</td>
-                <td>@data.keyValue(analisysTypeToInt(AnalisysType.Max))</td>
-                <td>@data.keyValue(analisysTypeToInt(AnalisysType.Min))</td>
+                <td>@data.keyValue.find(x => x._1 == analisysTypeToInt(AnalisysType.Average)).map(y => y._2)</td>
+                <td>@data.keyValue.find(x => x._1 == analisysTypeToInt(AnalisysType.Max)).map(y => y._2)</td>
+                <td>@data.keyValue.find(x => x._1 == analisysTypeToInt(AnalisysType.Min)).map(y => y._2)</td>
             </tr>
         }
         </tbody>
