@@ -30,7 +30,12 @@ class StatusEntryPoint @Inject() (system: ActorSystem) extends Controller{
   val saveDataStream = SaveDataStreamBuilder.buildDataDoubleSaveStream(Await.result(stream,duration))
   val saveDataBooleanStream = SaveDataStreamBuilder.buildDataBooleanSaveStream(Await.result(stream,duration))
 
-  def status = Action {Ok(views.html.statusView.render)}
+  def status = Action {
+    val rangesStream = FetchRangesStreamBuilder.buildRangeStream
+    val ranges = StreamUtils.runIterateeFuture(rangesStream)
+
+    Ok(views.html.statusView.render(Await.result(ranges,30.seconds)))
+  }
 
   def dataStream = WebSocket.using[JsValue]{ request =>
 

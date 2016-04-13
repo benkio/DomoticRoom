@@ -73,15 +73,14 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
   }
 
   override def loadMininumValue(sensorType: SensorType) = {
-    import dataCollection.BatchCommands.AggregationFramework.{Group, Match, Min}
+    import dataCollection.BatchCommands.AggregationFramework.{Min, Group, Match}
 
     val filteringCommand = Match(JsObject(Seq(DataDBJson.dataType -> JsNumber(sensorTypeToInt(sensorType)))))
     val groupCommand = Group(JsString("null"))("minValue" -> Min(DataDBJson.value))
 
-
     val average = dataCollection.aggregate(filteringCommand,List(groupCommand)) map (x => x.documents.map(y => {
       val value : Double = y.value("minValue").asOpt[Double].getOrElse(0)
-      DataAnalizeDBJson(sensorTypeToInt(sensorType), AnalisysType.analisysTypeToInt(AnalisysType.Min) ,value)
+      DataAnalizeDBJson(sensorTypeToInt(sensorType), AnalisysType.analisysTypeToInt(AnalisysType.Min), value)
     }).headOption)
 
     Enumerator(average) &> Enumeratee.mapM(identity)

@@ -8,10 +8,10 @@
 
     <table class="table" id="rangesTable">
         <thead>
-        <td>DataType</td>
-        <td>Average</td>
-        <td>Max</td>
-        <td>Min</td>
+        <td><strong>DataType</strong></td>
+        <td><strong>Average</strong></td>
+        <td><strong>Max</strong></td>
+        <td><strong>Min</strong></td>
         </thead>
         <tbody>
         @for(data <- analisysData) {
@@ -25,10 +25,12 @@
         </tbody>
     </table>
 
+    @println(analisysData)
+
     <script>
         $(document).ready(function() {
             $(".dataType").html(function(){
-                var content = sensorTypeToInt($(this).html());
+                var content = convertSensorTypeIdToString($(this).html());
                 return content;
             });
          });

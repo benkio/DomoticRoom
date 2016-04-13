@@ -18,7 +18,7 @@ class AnalysisEntryPoint extends Controller{
 
     var analisysStream = LoadDataStreamBuilder.getDataMininum.andThen(LoadDataStreamBuilder.getDataMaxinum).andThen(LoadDataStreamBuilder.getDataAverage)
 
-    val analisysData : Future[Seq[DataAnalizeDBJsonMerged]] = StreamUtils.runIterateeFuture (analisysStream &> Enumeratee.filter(x => x.dataType != 0) |>> Iteratee.fold[DataAnalizeDBJson,Seq[DataAnalizeDBJsonMerged]](Seq())((sequence:Seq[DataAnalizeDBJsonMerged], elem:DataAnalizeDBJson) => {
+    val analisysData : Future[Seq[DataAnalizeDBJsonMerged]] = StreamUtils.runIterateeFuture (analisysStream &> Enumeratee.filter(x => x.dataType != -1) |>> Iteratee.fold[DataAnalizeDBJson,Seq[DataAnalizeDBJsonMerged]](Seq())((sequence:Seq[DataAnalizeDBJsonMerged], elem:DataAnalizeDBJson) => {
       if (sequence.exists(x => x.dataType == elem.dataType)) {
         val index = sequence.indexWhere(x => x.dataType == elem.dataType,0)
         val y : Seq[DataAnalizeDBJsonMerged] = sequence.patch(index, Seq(DataAnalizeDBJsonMerged(elem.dataType, sequence(index).keyValue.:+(elem.analisysType, elem.value))) ,1)

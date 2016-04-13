@@ -43,7 +43,7 @@ object LoadDataStreamBuilder extends IDataLoadStreamBuilder{
 
   private def mapReduceTemplate(f: SensorType => Enumerator[Option[DataAnalizeDBJson]]) = {
     val stream : Enumerator[DataAnalizeDBJson] = SensorModel.getBooleanSensorType map { sensorType =>
-      f(sensorType).map[DataAnalizeDBJson](x => if (x.isDefined) x.get else DataAnalizeDBJson(0,0,0))
+      f(sensorType).map[DataAnalizeDBJson](x => if (x.isDefined) x.get else DataAnalizeDBJson(-1,0,0))
     } reduce { (x,y) => x.andThen(y)}
     stream
   }

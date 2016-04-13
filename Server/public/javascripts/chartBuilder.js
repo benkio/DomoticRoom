@@ -16,7 +16,12 @@ eon.chart({
     bindto: '#chart',
     data: {
       labels: false
-    }
+    },
+    grid: {
+          y: {
+              lines: [{value: temperatureHighBound, class: 'temperatureBoundary'}, {value: temperatureLowerBound, class: 'temperatureBoundary'},{value: humidityHighBound, class: 'humidityBoundary'},{value: humidityLowerBound, class: 'humidityBoundary'}]
+          }
+      }
   }
 });
 

@@ -1,6 +1,14 @@
+@import models.DataStructures.RangeModel._
+
+@(ranges : List[RangeDBJson])
+
 @Templates.main("Domotic Room Control Panel") {
 <script>
       var requestjson = JSON.stringify({ request: true });
+      var temperatureHighBound = @ranges.filter(x => x.rangeType == rangeTypeToInt(RangeType.Temperature)).headOption.map(y => y.maxBound)
+      var temperatureLowerBound = @ranges.filter(x => x.rangeType == rangeTypeToInt(RangeType.Temperature)).headOption.map(y => y.minBound)
+      var humidityHighBound = @ranges.filter(x => x.rangeType == rangeTypeToInt(RangeType.Humidity)).headOption.map(y => y.maxBound)
+      var humidityLowerBound = @ranges.filter(x => x.rangeType == rangeTypeToInt(RangeType.Humidity)).headOption.map(y => y.minBound)
 </script>
 
 <div class='chart'>
