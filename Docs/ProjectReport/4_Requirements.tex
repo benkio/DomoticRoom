@@ -1,17 +1,17 @@
 \section{Requisiti}
 \labelsec{Requirements}
 
-Si vuole monitorare lo stato ambientale di una stanza. In particolare si vogliono monitorare lo stato di: luce, temperatura e movimento, mantenendo la possibilit\'a di aggiungere altre tipologie di sensori.
+Si vuole monitorare lo stato ambientale di una stanza. In particolare si vogliono monitorare lo stato di: luce, temperatura, umidit\'a, gas e movimento, mantenendo la possibilit\'a di aggiungere altre tipologie di sensori.
 
-Il sistema dovr\'a dare all'utente la possibilit\'a di inserire, attraverso un'interfaccia web, per ogni valore misurato, un'apposito range che indichi i valori ammessi all'interno della stanza in modo che, in caso uno dei valori misurati non risulti conforme alle specifiche, venga indicata una notifica di allarme sull'interfaccia stessa. Questo con l'idea di simulare la possibilit\'a di eseguire delle azioni collegate all'allarme (ad esempio, accensione delle luci o del riscaldamento)
+Il sistema dovr\'a dare all'utente la possibilit\'a di inserire, attraverso un'interfaccia web, per ogni tipologia di dato, un'apposito range che indichi i valori ammessi all'interno della stanza in modo che, in caso uno dei valori misurati non risulti conforme alle specifiche, venga indicata una notifica di allarme sull'interfaccia stessa. Questo con l'idea di simulare la possibilit\'a di eseguire delle azioni collegate all'allarme (ad esempio, accensione delle luci o del riscaldamento)
 
-L'utente potr\'a inoltre visualizzare all'interno del sito i valori misurati in tempo reale e il valore dei vari sensori nel tempo, potendone quindi consultare la storia.
+L'utente potr\'a inoltre visualizzare all'interno del sito i valori misurati in tempo reale e il valore dei vari sensori nel tempo.
 
 \subsection{Requisiti Non Funzionali}
 
 Aggiungiamo nei requsiti non funzionali tutte le propriet\'a che il sistema deve avere e che non sono state ufficialmente formalizzate.
 
 \begin{itemize}
-  \item Logging: Possibilit\'a di controllare il fluire delle informazioni e delle operazioni svolte attraverso una qualsivoglia forma di logging
   \item Separazione dei compiti e indipendenza tra le parti: garantire i principi SOLID dove \'e possibile evitare che un qualsiasi componente sia strettamente legato ad un'altro.
+  \item Reattivit\'a: si visualizzi il Reactive Manifesto per i dettagli delle propriet\'a.
 \end{itemize}

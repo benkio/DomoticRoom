@@ -1,16 +1,28 @@
 \section{Analisi dei Requisiti}
 \labelsec{ReqAnalysis}
 %===========================================================================
-\subsection{Casi D'Uso}
-\labelssec{UseCases}
+\subsection{Casi D'Uso e Macro Operazioni}
+\labelssec{UseCases and Macro Operations}
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{Figures/UseCases}
-\caption{Casi d'Uso}
+\caption{Casi D'uso}
+\label{useCases}
 \end{figure}
 
-Nell'immagine sopra si possono vedere le macro operazioni principali effettuate dal sistema e le interazioni con l'esterno. In particolare gli attori che interagiscono con il sistema saranno:
+Nell'immagine \ref{useCases} si pu\'o osservare come l'utente interagisce con il sistema e quali sono gli obbiettivi principali che si possono intuire dai requisiti. Questa \'e il punto di partenza per l'analisi di questi ultimi e quindi in quanto comunica immediatamente lo scopo del progetto.
+
+\noindent\rule[0.5ex]{\linewidth}{1pt}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{Figures/MacroOperations}
+\caption{Macro Operazioni}
+\label{macroOperation}
+\end{figure}
+
+Nell'immagine \ref{macroOperation} si possono vedere le macro operazioni principali effettuate dal sistema e le interazioni con l'esterno. In particolare gli attori che interagiscono con il sistema saranno:
 
 \begin{itemize}
   \item La stanza: con questo attore si intendono i vari parametri che si possono rilevare attraverso i sensori e che quindi saranno di input per il sistema.
@@ -20,7 +32,6 @@ Nell'immagine sopra si possono vedere le macro operazioni principali effettuate 
 Il sistema \'e stato volutamente suddiviso in tre parti distinte con l'idea di seguire un modello MVC dove la parte di modello non viene aggiornata solamente attraverso l'input inserito dall'utente, ma anche e soprattutto dall'input dei sensori. L'organizzazione hardware ha fortemente influito su questa suddivisione.
 
 \'E inoltre possibile visualizzare le macro operazioni effettuate e modellate dal sistema. Si vedano gli scenari di seguito per avere una pi\'u dettagliata visualizzazione dell'interazione tra le varie parti che lo schema sovrastante vuole rappresentare.
-
 
 \subsection{Scenario}
 \labelssec{Scenarios}
@@ -50,13 +61,13 @@ In questa modalit\'a l'utente non pu\'o effettuare alcuna operazione.
 
 \subsubsection{Visualizzazione Dati}
 
-\paragraph{} Attraverso un apposito men\'u l'utente \'e in grado di accedere alla visualizzazione dei dati storici dei vari sensori.
+\paragraph{} Attraverso un apposito men\'u l'utente \'e in grado di accedere alla visualizzazione di alcuni semplici informazioni sui dati del sistema.
 
 \newpage
 
 \subsection{Modello del Dominio}
 
-In questa sezione vogliamo cercare di modellare le entit\'a inserite all'interno dei requisiti senza fare riferimento alla parti tecnologiche e hardware. In questo modo siamo in grado di decidere le interfaccie con cui vogliamo lavorare, costruendo la parte software, aumentando il disaccoppiamento con la parte fisica, aumentando anche la possibilit\'a di utilizzare volendo lo stesso software su diverse configurazioni. In questo progetto, ad ogni modo, si utilizzer\'a solamente la configurazione descritta in questo report.
+In questa sezione vogliamo cercare di modellare le entit\'a inserite all'interno dei requisiti senza fare riferimento alla parti tecnologiche e hardware, ma concentrandoci principalmente sui principali componenti del dominio. In questo modo siamo in grado di decidere le interfaccie con cui vogliamo lavorare, costruendo la parte software, aumentando il disaccoppiamento con la parte fisica, aumentando anche la possibilit\'a di utilizzare volendo lo stesso software su diverse configurazioni. In questo progetto, ad ogni modo, si utilizzer\'a solamente la configurazione descritta in questo report.
 
 \paragraph{Suddivisione del Sistema:} visto che \'e emerso gi\'a dai casi d'uso la separazione del sistema in varie parti, ci \'e sembrato giusto iniziare a modellare dividendolo fin da subito in modo da:
 \begin{itemize}
@@ -82,7 +93,7 @@ Lo scopo di questa fase \'e appunto quella riflettere, in un primo modello, i re
 
 \paragraph{}Per quanto riguarda il sistema embedded \'e necessario prima effettuare delle indagini su come interagire e comunicare con i sensori in modo da modellare adeguatamente il tutto e quindi assicurarsi che in seguito sar\'a semplice riuscire a integrare il tutto con la tecnologia che avremo intenzione di utilizzare. Questa \'e una piccola eccezione che \'e necessario fare a questo livello. Tuttavia si fa riferimento a un paradigma pi\'u che ad una tecnologia specifica.
 
-Data la nostra esperienza del corso e da vari esperimenti intendiamo l'interrogazione del \textbf{il modello di interrogazione dei sensori \'e a polling} di consequenza il nostro modello dovr\'a riflettere questa modalit\'a di interazione. Sfortunatamente questo implica che a livello di modello gi\'a \textbf{un'entit\'a attiva} che si occupa di reperire i valori visto, che in una modalit\'a a polling devo esplicitamente chiedere ai sensori i valori.
+Data la nostra esperienza del corso e da vari esperimenti intendiamo l'interrogazione del \textbf{il modello di interrogazione dei sensori \'e a polling} di consequenza il nostro modello dovr\'a riflettere questa modalit\'a di interazione. Sfortunatamente questo implica che a livello di modello \'e gi\'a \textbf{un'entit\'a attiva} che si occupa di reperire i valori visto, che in una modalit\'a a polling devo esplicitamente chiedere ai sensori i valori.
 
 \begin{center}
  \textbf{Struttura}
