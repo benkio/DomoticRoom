@@ -22,8 +22,8 @@ class TempConverter(AStreamWorker):
     def on_next(self,x):
         if x.getTypeSensor() == SensorType.Temperature_DHT11 :
             dataReceived = x.getValore()
-            tempValue=StreamMessage(x.getName(),SensorType.Temperature_DHT11,dataReceived[2],x.getRelevationTime())
-            humidityValue=StreamMessage(x.getName(),SensorType.Humidity,dataReceived[0], x.getRelevationTime())
+            tempValue=StreamMessage(x.getName()+"_Temperature",SensorType.Temperature_DHT11,dataReceived[2],x.getRelevationTime())
+            humidityValue=StreamMessage(x.getName()+"_Humidity",SensorType.Humidity,dataReceived[0], x.getRelevationTime())
             self.outputStream.on_next(tempValue)
             #print(str(tempValue.getValore()))
             self.outputStream.on_next(humidityValue)

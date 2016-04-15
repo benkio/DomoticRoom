@@ -34,10 +34,10 @@ class BooleanSensor(ASensor):
         ASensor.getValue(self)
         if self.flag.is_set()== False:
             if (GPIO.input(self.pin)):
-                s=StreamMessage(self.getName(),self.getType(),1,datetime.now())
+                s=StreamMessage(self.getName(),self.getType(),True,datetime.now())
                 self.stream.on_next(s)
             else :
-                s=StreamMessage(self.getName(),self.getType(),0,datetime.now())
+                s=StreamMessage(self.getName(),self.getType(),False,datetime.now())
                 self.stream.on_next(s)
         else:
             self.stream.on_completed()

@@ -15,8 +15,10 @@ addressIP = raw_input("Inserire IP del Server:")
 portIP = raw_input("Inserire porta del Server:")
 #address = (addressIP,int(portIP))
 room = DomoticRoomBuilder(addressIP,int(portIP))
-room.addSensor("DHT11", SensorType.Temperature_DHT11, 7, 5)
-room.addSensor("UUGear_LightSensor",SensorType.Light,11)
+room.addSensor("DHT11", SensorType.Temperature_DHT11, 3, 5)
+room.addSensor("UUGear_LightSensor",SensorType.Light,5)
+room.addSensor("PIR",SensorType.PIR,7)
+room.addSensor("Gas_Sensor", SensorType.Gas_MQ2,11)
 
 while True:
     answer = raw_input("Vuoi iniziare il monitoraggio ? [s\\n]")
@@ -26,6 +28,8 @@ while True:
         answer1= raw_input("Digitare   stop   quando si vuole terminare...")
         if(answer1 == 'stop'):
             room.stop()
+	    exit()
+            break
     else :
         exit()
         break

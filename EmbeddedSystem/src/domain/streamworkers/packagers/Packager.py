@@ -24,9 +24,10 @@ class Packager(AStreamWorker):
         dateS = x.getRelevationTime().strftime('%Y-%m-%d %H:%M:%S.')
         microS = str(x.getRelevationTime().microsecond)[0:3]
         dateS = dateS + microS
-        valS  = str(x.getValore())        
-        valoreFinale = json.dumps([{'sensorName': nameS, 'sensorType': typeS, 'value':valS,'date':dateS}], separators=(',',':'))
-	    #valoreFinale = json.dumps([{'nomeSensore': nameS, 'dataRel':dateS}], separators=(',',':'))
+        valS  = x.getValore()        
+        valoreFinale = json.dumps({'sensorName': nameS, 'sensorType': typeS, 'value':valS,'date':dateS}, separators=(',',':'))
+	#valoreFinale = json.dumps([{'nomeSensore': nameS, 'dataRel':dateS}], separators=(',',':'))
+	#print("LOG>" + valoreFinale)
         x.setValore(valoreFinale)
         self.outputStream.on_next(x)
         
