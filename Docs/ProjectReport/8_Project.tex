@@ -155,5 +155,41 @@ Un'ulteriore modifica che va apportata visto che ci si trova in ambito web e si 
 \end{center}
 
 \subsection{Struttura}
+La struttura del Sistema Embedded non ha subito cambiamenti drastici dalla progettazione logica, sono state solo apportate alcune modifiche necessarie per i limiti e le propriet\'a imposte dall Hardware e dalle tecnologie utilizzate.
+La prima modifica è l'assenza delle Interface, sostituite interamente dalle classi Abstract, questo perch\'e Python non prevede l'implementazione delle Interface.
+L'entit\'a \textit{ASensor} quindi rappresenta il comportamento comune a tutti i sensori, come l'inizializzazione sulla GPIO Board.
+La classe ASensor poi viene effettivamente implementata dalle classi:
+\begin{itemize}
+\item \textit{TemperatureSensor}: Rappresenta il sensore di Temperatura, il quale dopo un intervallo di tempo determinato all'istanzazione richiede al sensore il valore percepito.
+\item \textit{BooleanSensor}: I sensori Booleani invece comunicano col Sistema in modo Asincrono notificando solamente quando percepiscono un cambiamento dell'ambiente monitorato.
+\end{itemize}
+
+Si pu\'o quindi notare come il sensore di temperatura sia gestito a polling dal sistema, con letture fatte ad intervalli regolari; a differenza dei sensori Booleani che invece vengono gestiti tramite Interupt.
+
+Ogni sensore implementa un canale Stream per l'invio dei dati, come previsto dal progetto logico.
+I dati inviati nel canale Stream vengono elaborati dalle entità di tipo AStreamWorker, le quali vengono poi implementate in differenti specializzazioni, in base al compito a loro affidato:
+\begin{itemize}
+\item \textit{Validator}: Il Validator \'e l'unica entit\'a dal prevista inizialmente dal progetto logico, \'e stata aggiunta perch\'e si occupa di validare tramite checksum il valore ricevuto dal sensore di Temperatura.
+\item \textit{Converter}: Il Converter invece modifica i valori ricevuti dal Validator secondo una particolare funzione di conversione.
+\item \textit{Packager}: Il Packager trasforma i dati ricevuti dai Convert in una stringa in formato Json che contiene tutte le informazioni necessarie al Server.
+\item \textit{Sender}: L'ultimo StreamWorker \'e rappresentato dal Sender che invia la stringa Json tramite richiesta http al Server.
+\end{itemize}
+
+Infine \'e stata implementata \textit{DomoticRoomBuilder} per l'inizializzazione del Sistema Embedded, la quale inizializza i Sensori e il reticolo di StreamWorker necessario per la gestione dei valori.
+
 \subsection{Interazione}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.5]{Figures/Project/EmbeddedSystem/FlowDiagram1}
+\caption{Marable diagram dei singoli dati proveniente da una sorgente}
+\end{figure}
+
+L'interazione del sistema Embedded è rimasta pressoch\'e invariata da quanto descritto nel progetto logico.
+L'introduzione dell'entit\'a Validator aggiunge, semplicemente, un altro passaggio al flusso di elaborazione dei dati rilevati dai sensori.
+Questo dimostra come il flusso di StreamWorker sia una struttura molto flessibile ed estendibile in base alle necessità del sistema.
+
 \subsection{Comportamento}
+
+Il sistema viene inizializzato dalla classe \textit{DomoticRoomBuilder}, la quale inizializza i sensori e crea gli StreamWorker necessari alla gestione del flusso dei dati.
+L'unica informazione richiesta all'utente è l'indirizzo IP e la porta tramite cui comunicare col Server.

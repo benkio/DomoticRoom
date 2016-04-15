@@ -2,6 +2,9 @@ package models.persistenceStore.loaders
 
 import interfaces.presistenceStore.IPersistenceStoreDataLoader
 import models.DataStructures.DataDBJson
+import models.DataStructures.DataDBJson.{AnalisysType, DataAnalizeDBJson}
+import models.DataStructures.SensorModel.SensorType.SensorType
+import models.DataStructures.SensorModel._
 import org.joda.time.format.{DateTimeFormatter, DateTimeFormatterBuilder}
 import org.joda.time.{DateTime, ReadableDuration}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
@@ -12,8 +15,8 @@ import play.modules.reactivemongo.json._
 import play.modules.reactivemongo.json.collection.JSONCollection
 import reactivemongo.bson.{BSONDocument, BSONString}
 
-import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.{Duration, FiniteDuration}
+import scala.concurrent.{Await, Future}
 
 /**
   * Created by Enrico Benini (AKA Benkio) benkio89@gmail.com on 1/16/16.
@@ -51,6 +54,67 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
       Enumeratee.mapFlatten(x => Enumerator.enumerate(x))
   }
 
+  override def loadCurrentSensorDataContinuously(duration : FiniteDuration): Enumerator[BSONDocument] ={
+
+    val findidQuery = loadCurrentSensorsDataFuture(duration);
+
+    (Enumerator.repeatM(findidQuery) &>
+      Enumeratee.mapFlatten(x => Enumerator.enumerate(x)))
+  }
+
+  override def loadCurrentSensorData(sensorName: String) = {
+    val query = BSONDocument(
+      DataDBJson.sensorName -> BSONString(sensorName)
+    )
+
+    val futureResult = dataCollection.find(query).sort(JsObject(Seq(DataDBJson.dateCreation -> JsNumber(-1)))).one[BSONDocument]
+
+    Enumerator(futureResult) &> Enumeratee.mapM(identity)
+  }
+
+  override def loadMininumValue(sensorType: SensorType) = {
+    import dataCollection.BatchCommands.AggregationFramework.{Min, Group, Match}
+
+    val filteringCommand = Match(JsObject(Seq(DataDBJson.dataType -> JsNumber(sensorTypeToInt(sensorType)))))
+    val groupCommand = Group(JsString("null"))("minValue" -> Min(DataDBJson.value))
+
+    val average = dataCollection.aggregate(filteringCommand,List(groupCommand)) map (x => x.documents.map(y => {
+      val value : Double = y.value("minValue").asOpt[Double].getOrElse(0)
+      DataAnalizeDBJson(sensorTypeToInt(sensorType), AnalisysType.analisysTypeToInt(AnalisysType.Min), value)
+    }).headOption)
+
+    Enumerator(average) &> Enumeratee.mapM(identity)
+  }
+
+  override def loadAverageValue(sensorType: SensorType)  = {
+    import dataCollection.BatchCommands.AggregationFramework.{Avg, Group, Match}
+
+    val filteringCommand = Match(JsObject(Seq(DataDBJson.dataType -> JsNumber(sensorTypeToInt(sensorType)))))
+    val groupCommand = Group(JsString("null"))("avg" -> Avg(DataDBJson.value))
+
+    val average = dataCollection.aggregate(filteringCommand,List(groupCommand)) map (x => x.documents.map(y => {
+      val value : Double = y.value("avg").asOpt[Double].getOrElse(0)
+      DataAnalizeDBJson(sensorTypeToInt(sensorType), AnalisysType.analisysTypeToInt(AnalisysType.Average), value)
+    }).headOption)
+
+    Enumerator(average) &> Enumeratee.mapM(identity)
+  }
+
+  override def loadMaximumValue(sensorType: SensorType) = {
+    import dataCollection.BatchCommands.AggregationFramework.{Group, Match, Max}
+
+    val filteringCommand = Match(JsObject(Seq(DataDBJson.dataType -> JsNumber(sensorTypeToInt(sensorType)))))
+    val groupCommand = Group(JsString("null"))("maxValue" -> Max(DataDBJson.value))
+
+
+    val average = dataCollection.aggregate(filteringCommand,List(groupCommand)) map (x => x.documents.map(y => {
+      val value : Double = y.value("maxValue").asOpt[Double].getOrElse(0)
+      DataAnalizeDBJson(sensorTypeToInt(sensorType),AnalisysType.analisysTypeToInt(AnalisysType.Max), value)
+    }).headOption)
+
+    Enumerator(average) &> Enumeratee.mapM(identity)
+  }
+
   protected def loadCurrentSensorsDataFuture(delay : FiniteDuration): Future[List[BSONDocument]] = {
     import dataCollection.BatchCommands.AggregationFramework.{Group, Max}
 
@@ -72,23 +136,5 @@ class PersistenceStoreDataLoader(val reactiveMongoApi : ReactiveMongoApi) extend
       x.flatten
     })
     findidQuery
-  }
-
-  override def loadCurrentSensorDataContinuously(duration : FiniteDuration): Enumerator[BSONDocument] ={
-
-    val findidQuery = loadCurrentSensorsDataFuture(duration);
-
-    (Enumerator.repeatM(findidQuery) &>
-      Enumeratee.mapFlatten(x => Enumerator.enumerate(x)))
-  }
-
-  override def loadCurrentSensorData(sensorName: String) = {
-    val query = BSONDocument(
-      DataDBJson.sensorName -> BSONString(sensorName)
-    )
-
-    val futureResult = dataCollection.find(query).sort(JsObject(Seq(DataDBJson.dateCreation -> JsNumber(-1)))).one[BSONDocument]
-
-    Enumerator(futureResult) &> Enumeratee.mapM(identity)
   }
 }

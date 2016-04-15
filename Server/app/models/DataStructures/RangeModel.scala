@@ -31,24 +31,26 @@ object RangeModel {
   }
 
   object RangeBooleanDBJsonModel {
-    val Id = "_id"
-    val value = "value"
-    val rangeType = "rangeType"
+    val Id          = "_id"
+    val value       = "value"
+    val rangeType   = "rangeType"
     val dateCreated = "dateCreated"
   }
 
   object RangeDBJsonModel {
-    val Id = "_id"
-    val minBound = "minBound"
-    val maxBound = "maxBound"
-    val rangeType = "rangeType"
-    val dateCreated = "dateCreated"
+    val Id                    = "_id"
+    val minBound              = "minBound"
+    val maxBound              = "maxBound"
+    val rangeType             = "rangeType"
+    val dateCreated           = "dateCreated"
     val RangeDBCollectionName = "Ranges"
   }
 
+  //////////////////////////////////// 
   // CONVERSIONS
-
+  //////////////////////////////////// 
   // BSON DOCUMENT
+  ////////////////////////////////////
 
   implicit object BSONDateTimeHandler extends BSONHandler[BSONDateTime, DateTime] {
     def read(time: BSONDateTime) = new DateTime(time.value)
@@ -62,7 +64,9 @@ object RangeModel {
   def convertToRangeDBJson(bson : BSONDocument) = bson.as[RangeDBJson]
   def convertToRangeBooleanDBJson(bson : BSONDocument) = bson.as[RangeBooleanDBJson]
 
+  ////////////////////////////////////
   // JSON DOCUMENT
+  ////////////////////////////////////
 
   implicit val dateReads = Reads.jodaDateReads(ISO8601)
 
@@ -81,18 +85,23 @@ object RangeModel {
       (JsPath \ RangeDBJsonModel.dateCreated).read[DateTime]
     )(RangeDBJson.apply _)
 
-
-  // SENSOR TYPE
+  //////////////////////////////////// 
+  // RANGE TYPE TO - FROM
+  ////////////////////////////////////
+  // RangeType
+  ////////////////////////////////////
 
   def rangeTypeToSensorType(rangeType : RangeType): SensorType = rangeType match {
-    case RangeType.Gas => SensorType.Gas
-    case RangeType.Humidity => SensorType.Humidity
-    case RangeType.Light => SensorType.Light
-    case RangeType.Movement => SensorType.Movement
+    case RangeType.Gas         => SensorType.Gas
+    case RangeType.Humidity    => SensorType.Humidity
+    case RangeType.Light       => SensorType.Light
+    case RangeType.Movement    => SensorType.Movement
     case RangeType.Temperature => SensorType.Temperature
   }
 
+  //////////////////////////////////// 
   // INTEGER
+  ////////////////////////////////////
 
   def intToRangeType(id : Int): RangeType = id match {
     case 1 => RangeType.Gas
@@ -110,7 +119,19 @@ object RangeModel {
     case RangeType.Temperature  => 5
   }
 
-  def isBoolean(rangeType : RangeType) = rangeType != RangeType.Temperature
+  ////////////////////////////////////
+  // Utilities funcions
+  ////////////////////////////////////
+
+  def isBoolean(rangeType : RangeType) = rangeType != RangeType.Temperature && rangeType != RangeType.Humidity
+
+  def getNonBooleanRangeType = RangeType.values.filter(x => !isBoolean(x))
+   def getBooleanRangeType = RangeType.values.filter(isBoolean _)
+
+  ////////////////////////////////////
+  // Data JSON validation
+  //////////////////////////////////// 
+
   def validateRangeDBJson(data : JsValue) = data.validate[RangeDBJson]
   def validateRangeBooleanDBJson(data : JsValue) = data.validate[RangeBooleanDBJson]
 

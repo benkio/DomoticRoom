@@ -1,0 +1,38 @@
+@import models.DataStructures.DataDBJson._
+@import models.DataStructures.DataDBJson.AnalisysType._
+@import models.DataStructures.SensorModel._
+
+@(analisysData: Seq[DataAnalizeDBJsonMerged])
+
+@Templates.main("Domotic Room Control Panel") {
+
+    <table class="table" id="rangesTable">
+        <thead>
+        <td><strong>DataType</strong></td>
+        <td><strong>Average</strong></td>
+        <td><strong>Max</strong></td>
+        <td><strong>Min</strong></td>
+        </thead>
+        <tbody>
+        @for(data <- analisysData) {
+            <tr>
+                <td class="dataType">@data.dataType</td>
+                <td>@data.keyValue.find(x => x._1 == analisysTypeToInt(AnalisysType.Average)).map(y => y._2)</td>
+                <td>@data.keyValue.find(x => x._1 == analisysTypeToInt(AnalisysType.Max)).map(y => y._2)</td>
+                <td>@data.keyValue.find(x => x._1 == analisysTypeToInt(AnalisysType.Min)).map(y => y._2)</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    @println(analisysData)
+
+    <script>
+        $(document).ready(function() {
+            $(".dataType").html(function(){
+                var content = convertSensorTypeIdToString($(this).html());
+                return content;
+            });
+         });
+    </script>
+}
