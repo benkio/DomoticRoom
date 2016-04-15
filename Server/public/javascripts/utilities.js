@@ -19,4 +19,4 @@ function convertSensorTypeIdToString(id){
             break;
     }
     return result;
-}
+};

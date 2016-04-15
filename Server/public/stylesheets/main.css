@@ -13,3 +13,11 @@ div img {
     margin:auto;
     display: block;
 }
+
+.c3-ygrid-line.temperatureBoundary line {
+    stroke: blue;
+}
+
+.c3-ygrid-line.humidityBoundary line {
+    stroke: orange;
+}

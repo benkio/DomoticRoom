@@ -1,7 +1,9 @@
 package models.persistenceStore.loaders
 
 import interfaces.presistenceStore.{IPersistenceStoreDataLoader, IPersistenceStoreLoader, IPersistenceStoreRangeLoader, IPersistenceStoreSensorsLoader}
+import models.DataStructures.DataDBJson.DataAnalizeDBJson
 import models.DataStructures.RangeModel.RangeType
+import models.DataStructures.SensorModel.SensorType.SensorType
 import org.joda.time.{DateTime, ReadableDuration}
 import play.api.libs.iteratee.Enumerator
 import reactivemongo.bson.BSONDocument
@@ -41,10 +43,20 @@ class PersistenceStoreLoader(psdl:IPersistenceStoreDataLoader, psrl:IPersistence
   override def loadCurrentSensorData(sensorName: String) =
     psdl.loadCurrentSensorData(sensorName)
 
+  override def loadMininumValue(sensorType: SensorType) =
+    psdl.loadMininumValue(sensorType)
+
+  override def loadAverageValue(sensorType: SensorType) =
+    psdl.loadAverageValue(sensorType)
+
+  override def loadMaximumValue(sensorType: SensorType) =
+    psdl.loadMaximumValue(sensorType)
+
   ///////////////////////////////////////
-  ////////////Sensorss Load Operations///
+  ////////////Sensors Load Operations///
   ///////////////////////////////////////
 
   override def loadSensors =
     pssl.loadSensors
+
 }

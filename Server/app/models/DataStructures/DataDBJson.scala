@@ -3,8 +3,8 @@ package models.DataStructures
 import play.api.libs.json._
 import reactivemongo.bson._
 import reactivemongo.play.json._
-import reflect.runtime.universe._
 
+import reflect.runtime.universe._
 import scala.util.Success
 
 /**
@@ -24,6 +24,11 @@ object DataDBJson {
   val dataType = "type"
   val value = "value"
   val DataDBCollectionName = "Data"
+  val analisysType = "analisysType"
+
+  //////////////////////////////////////////
+  //////////// Data Patterns ///////////////
+  //////////////////////////////////////////
 
   case class DataRangeViolationDBJson(delta : Double)
   case class DataDBJsonModel[T](id : BSONObjectID,
@@ -32,6 +37,12 @@ object DataDBJson {
                              sensorName : String,
                              dataType : Double,
                              value : T)
+
+  case class DataAnalizeDBJson(dataType : Int, analisysType : Int ,value : Double)
+  case class DataAnalizeDBJsonMerged(dataType : Int, keyValue : List[(Int, Double)])
+  //////////////////////////////////////////
+  //////////// JSON - BSON Convertors //////
+  //////////////////////////////////////////
 
   implicit val rangeViolationDBBsonHandler =  Macros.handler[DataRangeViolationDBJson]
 
@@ -96,7 +107,6 @@ object DataDBJson {
     )
   }
 
-
   implicit def DataDBJsonModelViolationReader[T](implicit fmt: Reads[T]): Reads[DataDBJsonModel[T]] = new Reads[DataDBJsonModel[T]] {
     def reads(json: JsValue): JsResult[DataDBJsonModel[T]] = JsSuccess(new DataDBJsonModel[T] (
       (json \ id).as[BSONObjectID],
@@ -118,6 +128,14 @@ object DataDBJson {
       dataType -> JsNumber(ts.dataType),
       value -> Json.toJson[T](ts.value)
     ))
+  }
+
+  implicit val DataAnalizeDBJsonWrites = new Writes[DataAnalizeDBJson] {
+    def writes(dataAnalizeDBJson: DataAnalizeDBJson) = Json.obj(
+      dataType -> dataAnalizeDBJson.dataType,
+      value -> dataAnalizeDBJson.value,
+      analisysType -> dataAnalizeDBJson.analisysType
+    )
   }
 
   def validateJsonData(Json: JsValue) = {
@@ -145,5 +163,28 @@ object DataDBJson {
   def DataJsonModelToBson[T: TypeTag](t: DataDBJsonModel[T]) = t match {
     case x if typeOf[T] <:< typeOf[Double]  => DataDBBsonDoubleHandler.write(new DataDBJsonModel[Double](x.id,x.dateCreation,x.rangeViolation,x.sensorName,x.dataType, x.value.asInstanceOf[Double]))
     case x if typeOf[T] <:< typeOf[Boolean] => DataDBBsonBooleanHandler.write(new DataDBJsonModel[Boolean](x.id,x.dateCreation,x.rangeViolation,x.sensorName,x.dataType, x.value.asInstanceOf[Boolean]))
+  }
+
+  def DataAnalizeModelToJson(t : DataAnalizeDBJson) = Json.toJson(t)
+
+  object AnalisysType extends Enumeration {
+    type AnalisysType = Value
+    val Min, Max, Average = Value
+
+    ////////////////////////////////////
+    // INTEGER
+    ////////////////////////////////////
+
+    def intToAnalisysType(id : Int): AnalisysType = id match {
+      case 1                             => AnalisysType.Average
+      case 2                             => AnalisysType.Max
+      case 3                             => AnalisysType.Min
+    }
+
+    def analisysTypeToInt(sensorType: AnalisysType) = sensorType match {
+      case AnalisysType.Average          => 1
+      case AnalisysType.Max              => 2
+      case AnalisysType.Min              => 3
+    }
   }
 }

@@ -41,7 +41,7 @@ object RangeCheckerFactory {
         case Some(x)  => x match {
           case y : RangeModel.Range => data match {
             case z : Double if (z > y.maxBound) => Some(DataRangeViolationDBJson(z-y.maxBound))
-            case z : Double if (z < y.minBound) => Some(DataRangeViolationDBJson(y.minBound-z))
+            case z : Double if (z < y.minBound) => Some(DataRangeViolationDBJson(((y.minBound-z)*(-1))))
             case _ => None
           }
           case y : RangeBoolean => if (data == y.value) None else Some(DataRangeViolationDBJson(0))
