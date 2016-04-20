@@ -42,7 +42,8 @@ class StatusEntryPoint @Inject() (system: ActorSystem) extends Controller{
     // Concurrent.broadcast returns (Enumerator, Concurrent.Channel)
     val (outRequestEnumerator, channel) = Concurrent.broadcast[JsValue]
 
-    val out : Enumerator[JsValue] = LoadDataStreamBuilder.getDataStreamSingle() >- outRequestEnumerator //LoadDataStreamBuilder.getDataStream(30.seconds)
+    //LoadDataStreamBuilder.getDataStream(30.seconds)
+    val out : Enumerator[JsValue] = LoadDataStreamBuilder.getDataStreamSingle() >- outRequestEnumerator 
 
     // log the message to stdout and send response back to client
     val in = Iteratee.foreach[JsValue] {

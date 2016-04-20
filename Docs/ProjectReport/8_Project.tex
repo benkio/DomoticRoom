@@ -35,7 +35,7 @@ Per indicare il tipo di range si riporta il listato scala che indica tale tipolo
 \begin{figure}[ht]
 \centering
 \includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/DataStructures/Ranges.png}
-\caption{Valore numerico dei Ranges}
+\caption{Valore Numerico dei Ranges}
 \end{figure}
 
 \begin{center}
@@ -46,9 +46,18 @@ Per quanto riguarda la collezione dei sensori si utilizza un'apposita collection
 
 \begin{figure}[ht]
 \centering
-\includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/DataStructures/Sensors.png}
+\includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/DataStructures/SensorsValues.png}
 \caption{Rappresentazione a DB dei Sensori}
 \end{figure}
+
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/DataStructures/Sensors.png}
+\caption{Valore Numerico dei Sensori}
+\end{figure}
+
+\afterpage{\clearpage}
 
 \newpage
 
@@ -91,6 +100,8 @@ In questo caso appunto il valore della violazione non e' piu' nullo ma contiene 
 \includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/DataStructures/BooleanDataViolation.png}
 \caption{Dato Non Booleano Non Corretto salvato in database}
 \end{figure}
+
+\afterpage{\clearpage}
 
 \newpage
 
@@ -136,17 +147,95 @@ Vista l'introduzione della tecnologia in questa fase si \'e deciso di apportare 
   \item \textit{Eliminazione del Presentator:} Anche in questo caso le funzionalit\'a di playframework ci hanno evitato questa implementazione.
   \item \textit{Eliminazione delle Factory:} Visto che la maggior parte delle classi che erano state pensate non inglobano uno stato, ma vengono utilizzate semplicemente per applicare delle computazioni allo stream allora sono state eliminate la maggior parte delle factory class. Grazie anche alla tecnologia scelta (scala) molte delle classi sono state convertite in objects (build-in singletons).
   \item \textit{Eliminazione della classe Configurator:} Si \'e deciso di eliminare tale classe in quando non \'e pi\'u possibile pensare a un entry point per l'applicazione, ma questa viene risvegliata attraverso chiamate rest e di conseguenza molti dei processi legati alla creazione di oggetti \'e stata ridotta.
-  \item \textit{Eliminazione del Data Analisys:} A fronte delle semplici operazioni di analisi sui dati (Min, Max, Average) si \'e decisodi sfruttare direttamente le capacit\'a forniteci dal database.
+  \item \textit{Eliminazione del Data Analysis:} A fronte delle semplici operazioni di analisi sui dati (Min, Max, Average) si \'e deciso di sfruttare direttamente le capacit\'a forniteci dal database.
+  \item \textit{StreamBuilder:} Le classi che implementano gli stream builder sono state leggermente modificate. In particolare si \'e previsto uno stream builder per la creazione dello stream riguardante i dati, uno per il salvataggio dei dati e uno per la gestione dei range. Si vedano poi lo schema della struttura e interazione.
 \end{itemize}
+
+Si di seguito riporta quindi lo schema della struttura di progetto. Purtroppo per\'o alcune delle astrazioni presenti nel linguaggio scala non possono essere completamente catturate dal linguaggio di modellazione UML. Per rendere poi lo schema pi\'u pulito si \'e deciso di omettere tutte le implementazioni che non aggiungono valore alle interfaccie.
+
+\begin{sidewaysfigure}[ht]
+\centering
+\includegraphics[scale=0.1]{Figures/Project/Server/Structure/DomoticRoomServerClassDiagram}
+\caption{Struttura di progetto del Server}
+\end{sidewaysfigure}
+
+\afterpage{\clearpage}
+
+\newpage
 
 \subsection{Interazione}
 
-In questa parte si riporta la tecnologia che si \'e utilizzata per effettuare l'interazione che si \'e analizzata e indicata in fase di analisi, lo stream. In particolare si \'e notato che, il framework play\cite{PlayFramework} gi\'a gestisce attraverso delle sue strutture la possibilit\'a di operare attraverso stream di dati. Questa possibilit\'a \'e stata introdotta dal framework per gestire meglio dati parziali o casi che richiederebbero molto tempo, come ad esempio un'upload di file cospiquo. Nonostante tutto per\'o questo rientra nelle nostre necessit\'a e quindi ci avvarremo di questa astrazione per risolvere il nostro problema. Si riporta in bibliografia quindi la documentazione del framework che spiega il funzionamento di \textit{Enumerators,Iteratees e Enumeratees.} \cite{PlayStreaming}
+In questa parte si riporta la tecnologia che si \'e utilizzata per effettuare l'interazione che si \'e analizzata e indicata in fase di analisi, lo stream. In particolare si \'e notato che, il framework play\cite{PlayFramework} gi\'a gestisce attraverso delle sue strutture la possibilit\'a di operare attraverso stream di dati. Questa possibilit\'a \'e stata introdotta dal framework per gestire meglio dati parziali o casi che richiederebbero molto tempo, come ad esempio un'upload di file cospiquo. Quindi ci avvarremo di questa astrazione per implementare quanto descritto nella fase di analisi del problema. Si riporta in bibliografia quindi la documentazione del framework che spiega il funzionamento di \textit{Enumerators,Iteratees e Enumeratees.} \cite{PlayStreaming}
 
-Un'ulteriore modifica che va apportata visto che ci si trova in ambito web e si dispone di questo framework \'e la necessit\'a di eliminare alcune entit\'a previste precedentemente perch\'e, in fase realizzativa sono risultate ridondanti, ad esempio:
+Un'ulteriore modifica che va apportata visto che ci si trova in ambito web e si dispone di questo framework \'e la necessit\'a di eliminare o aggiungere alcune entit\'a previste precedentemente perch\'e, in fase realizzativa sono risultate ridondanti, ad esempio:
 \begin{itemize}
-\item \textbf{NewRangeDataReceiver:} Viene rimpiazzato dal controller che gestisce direttamente le richieste POST al sistema per la gestione dei dati provenienti dai form HTTP. Sar\'a questo componente, chiamato \textit{RangeEntryPoint} a validare direttamente i dati in arrivo e a chiamare poi gli elementi successivi nel flusso di dati per il salvataggio di un nuovo range. Si veda l'analisi del problema.
+\item \textbf{DataInputs:} Viene rimpiazzato dai controller che gestiscono direttamente le richieste POST al sistema per la gestione dei dati provenienti dai form HTTP, o dal sistema embedded. Saranno questi componenti, come ad esempio il \textit{RangeEntryPoint} a validare direttamente i dati in arrivo e a chiamare poi gli elementi successivi nel flusso di dati per il salvataggio di un nuovo range. Si veda l'analisi del problema.
+  \item \textbf{DataReceiverActor: } Attore basato sul framework akka che consente di gestire lo stream di input, in particolare consente di aggiungere incrementalmente dati all stream mano a mano che questi arrivano senza che sia necessario ricrearlo.
 \end{itemize}
+
+Infine, visto che ci si trova in fase di progetto e che gli schemi principali sono gi\'a stati inseriti in fase di analisi, in questo punto si \'e deciso di inserire degli snippet di codice come schema di interazione in quanto, essendo provenienti dalla programmazione reactive risultano molto dichiarativi e quindi espressivi al fine della modellazione.
+
+\paragraph{Stream di Salvataggio Dati:} di seguito vengono inseriti gli snippet principali che mostrano il salvataggio dei dati attraverso la costruzione e l'esecuzione di uno stream, in particolare nella prima (fig.\ref{SaveDataStream1}) si pu\'o osservare come i dati, provenienti dalla rete vengono controllati inizialmente se sono conformi alla specifica JSON e poi passati all'attore (fig.\ref{SaveDataStream2}) che costruisce uno stream con un canale incui possono essere inseriti a mano a mano nuovi dati. Infine nell'ultima parte si costruisce effettivamente tutto lo stream attraverso vari steps che consentono di salvare tali dati e controllarne la correttezza. (fig.\ref{SaveDataStream3})
+
+\paragraph{Stream di Caricamento Dati:} Anche questo stream parte chiaramente dal controller in quanto, alla chiamata della pagina di stato dei sensori, viene prima richiesti i dati per il valore dei range (si veda il paragrafo apposito) i quali vengono passati alla vista che li user\'a per la visualizzazione dei limiti imposti da questi all'interno dei grafici. Successivamente sempre la vista richieder\'a i dati ad un tempo prefissato, in modo da comandare il flusso e evitare backpressure, attraverso l'utilizzo di una websocket instaurata tra client e server (fig \ref{LoadDataStream1}). Infine sempre lo streambuilder si occuper\'a di ottenere i dati attraverso una catena di computazioni come si pu\'o vedere in figura \ref{LoadDataStream2}
+
+\paragraph{Stream di Caricamento Ranges:} Per quanto riguarda il caricamento dei ranges, utilizzato anche in figura \ref{LoadDataStream1} e nella relativa pagina di visualizzazione dei sensori, si utilizza uno stream che recupera i dati a database attraverso una query di raggruppamento che ottiene solamente i valori pi\'u aggiornati. In particolare gli stream sono due distinti sulla base della tipologia dei range in quanto, un tipo mostra i dati all'interno di valori numerici, mentre l'altro si occupa dei valori booleani, si veda la figura \ref{LoadRangeStream}
+
+\paragraph{Stream di Caricamento Dati Analisi:} Anche per il recupero dei dati di analisi si utilizza l'astrazione a stream come si pu\'o vedere in figura \ref{AnalysisRangeStream}. La cosa notevole di questo stream riguarda l'utilizzo di un pattern map-reduce nella sua realizzazione.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/Project/Server/Interaction/SaveDataStream/DataStream1.png}
+\caption{Step 1 - Stream di Salvataggio D@ati}
+\label{SaveDataStream1}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/Project/Server/Interaction/SaveDataStream/DataStream2.png}
+\caption{Step 2 - Stream di Salvataggio Dati}
+\label{SaveDataStream2}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.3,natwidth=610,natheight=642]{Figures/Project/Server/Interaction/SaveDataStream/DataStream3.png}
+\caption{Step 3 - Stream di Salvataggio Dati}
+\label{SaveDataStream3}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.3,natwidth=610,natheight=642]{Figures/Project/Server/Interaction/LoadDataStream/LoadDataStream1.png}
+\caption{Step 1 - Stream di Caricamento Dati}
+\label{LoadDataStream1}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/Project/Server/Interaction/LoadDataStream/LoadDataStream2.png}
+\caption{Step 2 - Stream di Caricamento Dati}
+\label{LoadDataStream2}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.3,natwidth=610,natheight=642]{Figures/Project/Server/Interaction/RangeLoadStream/RangeLoadStream.png}
+\caption{Stream di Caricamento Ranges}
+\label{LoadRangeStream}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.3,natwidth=610,natheight=642]{Figures/Project/Server/Interaction/AnalysisLoadStream/AnalysisLoadStream.png}
+\caption{Stream di Caricamento Dati di Analysis}
+\label{AnalysisRangeStream}
+\end{figure}
+
+
+\afterpage{\clearpage}
+
+\newpage
 
 \subsection{Comportamento}
 
