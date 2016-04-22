@@ -239,6 +239,25 @@ Infine, visto che ci si trova in fase di progetto e che gli schemi principali so
 
 \subsection{Comportamento}
 
+Per quanto concerne il comportamento, verranno mostrati gli stati attraverso i quali il server transita durante il suo funzionamento. Avendo utilizzato un approccio reactive e funzionale dove possibile, il numero di stati collezionati all'interno delle varie entit\'a si riduce. Infatti si \'e cercato di utilizzare tipi \textit{object} dove possibile, che corrispondono a un singleton pattern, ma solamente che istanziati da parte del framework. In particolare questi oggetti non contengono dello stato.\\
+Solo la classe \textit{RangeChecker} contiene uno stato che corrisponde alla collezione dei range attualmente attivi all'interno del server. Le uniche altre classi che si sono implementate sono quelle che effettivamente costituiscono l'oggetto \textit{PersistenceStore} secondo uno strategy pattern. Si \'e scelto di lasciarle come classi in quanto possano essere dinamicamente interscambiabili con altri oggetti che possono operare su basi di dati differenti, ma mantenendo lo stesso contratto/interfaccia.\\
+Per quanto concerne la lista di stati necessari tutto si riduce a:
+\begin{enumerate}
+\item \textbf{Inizializzazione:} eseguita maggiormente dal sistema che si occupa di creare gli object e quindi instanziare tutte le loro dipendenze in base a quello che viene definito nei loro costruttori. Questa operazione viene effettuata in maniera lazy in modo da enfatizzare la velocit\'a di esecuzione e ridurre l'utilizzo di risorse inutili al momento.
+  \item \textbf{Modifica dei Range:} Alla modifica dei range deve conseguire anche una modifica in memoria della collection che contiene i range attivi al momento, quindi si attiva un processo di aggiornamento nell'oggetto \textit{RangeChecker}. Quando questo processo termina il suo decorso il tutto torna a funzionare sulla base della costruzione degli stream che si \'e discussa in  fase di analisi.
+\end{enumerate}
+
+Per quanto riguarda lo schema del comportamento quindi tutto diventa semplicemente:
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5,natwidth=610,natheight=642]{Figures/Project/Server/Behaviour/DomoticRoomServerStateDiagram.png}
+\caption{Schema di Behaviour del server}
+\label{BehaviourServerSchema}
+\end{figure}
+
+\newpage
+
 \begin{center}
   \textbf{Sistema Embedded}
 \end{center}
