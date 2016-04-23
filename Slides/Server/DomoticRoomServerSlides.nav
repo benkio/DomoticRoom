@@ -34,8 +34,10 @@
 \headcommand {\beamer@subsectionentry {0}{3}{2}{10}{Project Architecture Differences}}\headcommand {\beamer@subsectionpages {9}{9}}
 \headcommand {\slideentry {3}{2}{1}{10/10}{Project Architecture Differences}{0}}
 \headcommand {\beamer@framepages {10}{10}}
-\headcommand {\beamer@partpages {1}{10}}
-\headcommand {\beamer@subsectionpages {10}{10}}
-\headcommand {\beamer@sectionpages {9}{10}}
-\headcommand {\beamer@documentpages {10}}
-\headcommand {\def \inserttotalframenumber {10}}
+\headcommand {\slideentry {3}{2}{2}{11/11}{Project Architecture Differences}{0}}
+\headcommand {\beamer@framepages {11}{11}}
+\headcommand {\beamer@partpages {1}{11}}
+\headcommand {\beamer@subsectionpages {10}{11}}
+\headcommand {\beamer@sectionpages {9}{11}}
+\headcommand {\beamer@documentpages {11}}
+\headcommand {\def \inserttotalframenumber {11}}
