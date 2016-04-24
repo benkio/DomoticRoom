@@ -230,20 +230,51 @@ University of Bologna \\ % Your institution for the title page
 
 \begin{frame}
   \frametitle{Technologies and Tools}
+        \begin{figure}
+        \includegraphics[width=\linewidth]{../../Docs/ProjectReport/Figures/ToolsLogos.png}
+        \caption{Stream Builder Behaviour}
+      \end{figure}
 \end{frame}
 
 \subsection{Project Architecture Differences}
 
 \begin{frame}
   \frametitle{Project Architecture Differences}
+  \begin{itemize}
+    \item \textit{Web Pages:} vengono utilizzate come output dell'elaborazione, grazie anche al supporto del play framework.
+    \item \textit{Startup:} era stata prevista una classe che si occupasse della creazione dei vari elementi del sistema, mentre invece questo viene effettuato dal framework.
+    \item \textit{Data Analisys:} per computazioni di analisi sui dati erano stati previsti degli oggetti specifici, mentre, per semplicit\'a si \'e demandato tutto a primitive del DBMS (average, max, min).
+    \item \textit{Rappresentazione Interna delle Entit\'a di Dominio:} Per tutte le entit\'a di dominio interne al sistema \'e stata pensata una rappresentazione interna per rendere indipendende il sistema stesso dalle rappresentazioni provenienti dall'esterno e quelle necessarie per il persistence store. Sono state necessarie anche l'implementazione di operazioni di conversione.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{References}
 \footnotesize{
 \begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
-\bibitem[Reactive Manifesto]{reactiveManifesto} Reactive Manifesto
-\newblock \url{http://www.reactivemanifesto.org/}
+  \bibitem[Reactive Manifesto]{reactiveManifesto} Reactive Manifesto
+    \newblock \url{http://www.reactivemanifesto.org/}
+
+  \bibitem[Reactive Extensions]{reactiveExtensions} Reactive Extensions
+    \newblock \url{http://reactivex.io/}
+
+  \bibitem[Play Framework]{PlayFramework} Play Framework
+    \newblock \url{https://www.playframework.com/}
+
+  \bibitem[Scala Language]{ScalaLanguage} Scala Language
+    \newblock \url{http://www.scala-lang.org/}
+
+  \bibitem[MongoDB]{mongoDB} MongoDB
+    \newblock \url{https://www.mongodb.org/}
+
+
+  \bibitem[Akka Framework]{AkkaFramework} Akka Framework
+    \newblock \url{http://akka.io/}
+
+
+  \bibitem[Bootstrap]{bootstrap} Bootstrap
+    \newblock \url{http://getbootstrap.com/}
+
 \end{thebibliography}
 }
 \end{frame}
