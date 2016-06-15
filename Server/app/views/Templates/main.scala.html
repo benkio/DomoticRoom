@@ -26,12 +26,15 @@
     <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
 
     <!-- RxJS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.all.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs-dom/7.0.3/rx.dom.min.js"></script>
+    <script src="@routes.Assets.versioned("javascripts/rx.all.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/rx.dom.min.js")"></script>
 
     <!-- Script for charts -->
-    <script type="text/javascript" src="//pubnub.github.io/eon/v/eon/0.0.10/eon.js"></script>
-    <link type="text/css" rel="stylesheet" href="//pubnub.github.io/eon/v/eon/0.0.10/eon.css"/>
+    <script type="text/javascript" src="@routes.Assets.versioned("javascripts/eon.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.versioned("javascripts/d3.min.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.versioned("javascripts/c3.min.js")"></script>
+    <link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("stylesheets/eon.css")"/>
+    <link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("stylesheets/c3.css")"/>
 
     <!-- Custom utility functions-->
     <script src="@routes.Assets.versioned("javascripts/utilities.js")"></script>
