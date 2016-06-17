@@ -1,18 +1,18 @@
 \section{Acquisto Hardware}
 \labelsec{Hardware Procurement}
 
-Sfortunatamente il primo problema incontrato in un progetto come il seguente \'e stata la necessit\'a di acquistare la parte hardware del sistema che si andr\' a costruire. Di consequenza si \'e messo in atto un processo di ricerca dei sensori, cavi e quant'altro per riuscire a soddisfare i requisiti
+Sfortunatamente il primo problema incontrato in un progetto come il seguente \`e stata la necessit\`a di acquistare la parte hardware del sistema che si andr\` a costruire. Di consequenza si \`e messo in atto un processo di ricerca dei sensori, cavi e quant'altro per riuscire a soddisfare i requisiti
 
 \subsection{Dispositivi di Computazione}
 
-Prima di tutto necessitiamo di un dispositivo in grado di computare i dati emessi dai vari sensori e che sia interamente programmabile. Nel corso abbiamo visto due possibilit\'a che hanno avuto molto successo recentemente:
+Prima di tutto necessitiamo di un dispositivo in grado di computare i dati emessi dai vari sensori e che sia interamente programmabile. Nel corso abbiamo visto due possibilit\`a che hanno avuto molto successo recentemente:
 
 \begin{itemize}
   \item Arduino
   \item Raspberry Pi
 \end{itemize}
 
-Abbiamo scelto la seconda opzione data la maggior familiarit\'a con il dispositivo e dal momento in cui risulta piu' facile il riutilizzo dello stesso una volta terminato questo progetto.
+Abbiamo scelto la seconda opzione data la maggior familiarit\`a con il dispositivo e dal momento in cui risulta piu' facile il riutilizzo dello stesso una volta terminato questo progetto.
 
 \begin{figure}
 	\centering
@@ -21,7 +21,7 @@ Abbiamo scelto la seconda opzione data la maggior familiarit\'a con il dispositi
 	\label{fig:Pi2}
 \end{figure}
 
-IIl Rasberry Pi 2 (figura~\ref{fig:Pi2}) è un SoC (sistema integrato) cio\'e possiede un chip che integra al suo interno processore, chipset, RAM ed eventuale circuteria input/output. \'E dotato delle seguenti uscite:
+IIl Rasberry Pi 2 (figura~\ref{fig:Pi2}) è un SoC (sistema integrato) cio\`e possiede un chip che integra al suo interno processore, chipset, RAM ed eventuale circuteria input/output. \`E dotato delle seguenti uscite:
 
 \begin{itemize}
 	\item USB 2.0 (4)
@@ -77,14 +77,14 @@ Ogni sensore possiede 3 o 4 pin:
 \label{fig:dht11}
 \end{figure}
 
- Il sensore DHT11 (figura~\ref{fig:dht11}) \'e in grado rilevare la temperatura e l'umidità dell'ambiente circostante. Possiede tre Pin per interfacciarsi.
+ Il sensore DHT11 (figura~\ref{fig:dht11}) \`e in grado rilevare la temperatura e l'umidità dell'ambiente circostante. Possiede tre Pin per interfacciarsi.
  Le sue caratteristiche tecniche sono:
  
  \begin{itemize}
  	\item Vcc: 3.3$\sim$5.5V
  	\item Range: Temperatura 0 \textasciitilde 50℃, Umidità:  20-90%RH
- 	\item Accuratezza: Temperatura +-2℃, Umidit\'a +-5%RH
- 	\item Risoluzione: Temperatura  1℃, Umidit\'a  1%RH
+ 	\item Accuratezza: Temperatura +-2℃, Umidit\`a +-5%RH
+ 	\item Risoluzione: Temperatura  1℃, Umidit\`a  1%RH
  \end{itemize}
  
  \newpage
@@ -97,7 +97,7 @@ Ogni sensore possiede 3 o 4 pin:
 \end{figure}
 
 
-Il sensore di luminosit\'a (figura~\ref{fig:light} ) \'e un sensore dotato di un fotoresistore (componente circolare posizionato in fondo al circuito), un trimmer e due led. Il trimmer (equivalente ad un potenziometro) permette di regolare la sensibilità alla luce del sensore. Un led rimane costantemente acceso per indicare che il sensore \'e correttamente alimentato ed in funzione, l'altro si accende o si spegne nel momento in cui la luce percepita dal fotoresistore risulta sotto o sopra la soglia. Il sensore possiede quattro Pin per interfacciarsi.
+Il sensore di luminosit\`a (figura~\ref{fig:light} ) \`e un sensore dotato di un fotoresistore (componente circolare posizionato in fondo al circuito), un trimmer e due led. Il trimmer (equivalente ad un potenziometro) permette di regolare la sensibilità alla luce del sensore. Un led rimane costantemente acceso per indicare che il sensore \`e correttamente alimentato ed in funzione, l'altro si accende o si spegne nel momento in cui la luce percepita dal fotoresistore risulta sotto o sopra la soglia. Il sensore possiede quattro Pin per interfacciarsi.
 Le sue caratteristiche tecniche sono:
 
 \begin{itemize}
@@ -114,7 +114,7 @@ Le sue caratteristiche tecniche sono:
 	\label{fig:pir}
 \end{figure}
 
-Il sensore di prossimit\'a (figura~\ref{fig:pir}) permette di individuare gli spostamenti in una determinata area. Il suo funzionamento \'e dato da un componente chiamato "PIR" (Passive InfraRed) che per mezzo dei raggi infrarossi emanati dagli oggetti in uno spazio \'e in grado di percepire variazioni di movimento. Vi sono inoltre due trimmer arancioni per permettere di regolare il range di movimento e il tempo di delay. La semisfera di plastica trasparente posta sopra al modulo serve per poter massimizzare l'area di visibilità del sensore. Questa infatti, al suo interno, possiede particolari scanalature per che permettono di ridirigere correttamente i raggi al sensore. Vi sono tre Pin per interfacciarsi.
+Il sensore di prossimit\`a (figura~\ref{fig:pir}) permette di individuare gli spostamenti in una determinata area. Il suo funzionamento \`e dato da un componente chiamato "PIR" (Passive InfraRed) che per mezzo dei raggi infrarossi emanati dagli oggetti in uno spazio \`e in grado di percepire variazioni di movimento. Vi sono inoltre due trimmer arancioni per permettere di regolare il range di movimento e il tempo di delay. La semisfera di plastica trasparente posta sopra al modulo serve per poter massimizzare l'area di visibilità del sensore. Questa infatti, al suo interno, possiede particolari scanalature per che permettono di ridirigere correttamente i raggi al sensore. Vi sono tre Pin per interfacciarsi.
 Le sue caratteristiche tecniche sono:
 
 \begin{itemize}
@@ -146,7 +146,7 @@ Le sue caratteristiche tecniche sono:
 
 \subsection{Hardware Aggiuntivo}
 
-Abbiamo cercato di realizzare il progetto provando a semplificare il pi\'u possibile la parte hardware.
+Abbiamo cercato di realizzare il progetto provando a semplificare il pi\`u possibile la parte hardware.
 In particolare ci siamo impegnati ad acquistare moduli (schede provviste di sensori e le resistenze necessarie al loro funzionamento) provvisti di sensore invece dei singoli sensori.
 
 \begin{figure}
@@ -168,10 +168,10 @@ Strumento in grado di effettuare collegamenti, utilizzato molto spesso per reali
 
 \newpage
 
-Tuttavia \'e stato necessario acquistare un set di cavi di collegamento (esempio in figura~\ref{fig:cables}), cio\'e cavi di metallo rivestiti in plastica, per permettere il collegamento dei vari pin dei sensori alla gpio del Rapberry.
+Tuttavia \`e stato necessario acquistare un set di cavi di collegamento (esempio in figura~\ref{fig:cables}), cio\`e cavi di metallo rivestiti in plastica, per permettere il collegamento dei vari pin dei sensori alla gpio del Rapberry.
 
 Questi cavi possono essere di tre tipi a seconda delle combinazioni (maschio-maschio, maschio-femmina, femmina-femmina).
 
-Il costo del set di cavi, composto da 50 cavi M-M , M-F, F-F \'e stato di 8€.
+Il costo del set di cavi, composto da 50 cavi M-M , M-F, F-F \`e stato di 8€.
 
 \newpage
